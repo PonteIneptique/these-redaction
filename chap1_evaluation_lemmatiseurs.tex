@@ -74,6 +74,21 @@ Neut     & 46 479 & 11 151 & 25 381 \\ \bottomrule
 \caption{Répartition des genres en fonction des POS}
 \end{table}
 
+
+\begin{table}[]
+\centering
+\begin{tabular}{l|lll}
+\toprule
+         & MascNeut & MascFem & Com    \\ \midrule
+0        & 783      & 653     & 1 478  \\
+1        & 219      & 3 863   & 33     \\
+2        & 65 852   & 25 155  & 2 512  \\
+3        & 1 591    & 172     & 67 206 \\ \bottomrule
+\end{tabular}
+\label{table:lasla:genders-alignement}
+\caption{Nombre de genres possibles par alignement Forme+Cas+Nombre via PyCollatinus}
+\end{table}
+
 \newpara
 
 Un autre choix du LASLA a été d'annoté les participes avec le temps de la forme composée: pour amatus sum, amatus portera l'information du temps (parfait), du mode (indicatif), de la personne (1) et du genre (Masc) sans porter l'information du cas pourtant présent morphologiquement. Au contraire, \textit{sum} portera la simple annotation de verbe auxiliaire. Cela pose un problème de confusion pour une même forme amatus qui peut être annoté comme simple participe parfait passif avec une annotation Mode Voix Temps ajoutée à une annotation Genre Nombre Cas, et une forme amatus (elipse ou présence de) sum qui elle sera annotée aussi avec Mode Voix Temps mais le triplet Genre Nombre Personne. Dans cette optique, \textit{amatus} peut représenter 6 formes conjuguées hors participes, 7 pour le neutre \textit{amatum} (\textit{cf.} Table \ref{table:amatus_forms}). %
@@ -167,3 +182,5 @@ Out Of Domain avec Priapées et un autre corpus.
 \subsubsection{Analyse exploratoire et tentative d'interprétation}
 
 Projection 2D des embeddings ?
+
+\subsection{Étiquetage automatique du corpus}
