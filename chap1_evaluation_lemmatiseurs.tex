@@ -37,9 +37,24 @@ Le corpus du LASLA utilisé présente 1 630 825 mots dans la version à laquelle
 
 \newpara
 
-Le LASLA a fait le choix de réserver \say{l'indication du genre pour les adjectifs, numéraux, les adjectifs-pronoms, les formes déclinées du verbe, hormis le gérondif} (\textit{cf.} \cite[27]{bodson_codification_1966}). Ce choix a pour conséquence de laisser en partie le genre des noms inconnus: on ne pourra distinguer, dans le contexte de notre recherche, les noms par leur genre masculin ou féminin dansdu LASLA. On pourrait imaginer un travail de réannotation de tous les lemmes de POS NOM avec leur genre quand il est fixe. Ce travail serait potentiellement riche d'influence sur les statistiques finales. Par ailleurs, le genre, à l'inverse du cas et du nombre, n'a pas été analysé en contexte (et donc syntaxiquement) mais en hors contexte (et donc morphologiquement), ce qui laisse des ambiguités comme \textit{bonum} qui est à la fois masculin et neutre à l'accusatif singulier. Dans ce contexte, le LASLA crée trois genres morphologiques supplémentaires des genres classiques: les genres Commun, Masculin-Féminin, Masculin-Neutre. L'explication derrière ce choix, disponible dans l'article de \cite{bodson_codification_1966}, réside dans un problème technique de 1966, qui risquait de poser un problème d'export. Malheureusement, ce choix, aujourd'hui pourtant possible à résoudre, crée une forme de dette technique pour plus de 300 000 mots.
+Le LASLA a fait le choix de réserver \say{l'indication du genre pour les adjectifs, numéraux, les adjectifs-pronoms, les formes déclinées du verbe, hormis le gérondif}  \cite[p.~27]{BodsonCodification1966} dont la répartition est décrite en table \ref{table:lasla:genders-par-pos}. Ce choix a pour conséquence de laisser en partie le genre des noms inconnus: on ne pourra distinguer, dans le contexte de notre recherche, les noms par leur genre masculin ou féminin. On pourrait imaginer un travail de réannotation de tous les lemmes de POS NOM avec leur genre quand il est fixe. Ce travail serait potentiellement riche d'influence sur les statistiques finales. Par ailleurs, le genre, à l'inverse du cas et du nombre, n'a pas été analysé en contexte (et donc syntaxiquement) mais en hors contexte (et donc morphologiquement), ce qui laisse des ambiguités comme \textit{bonum} qui est à la fois masculin et neutre à l'accusatif singulier. Dans ce contexte, le LASLA crée trois genres morphologiques supplémentaires des genres classiques: les genres Commun, Masculin-Féminin, Masculin-Neutre (dont la répartition dans le corpus d'entraînement est visible en \ref{table:lasla:genders-par-corpus}. L'explication derrière ce choix, disponible dans l'article de \citep{BodsonCodification1966}, réside dans un problème technique de 1966, qui risquait de poser un problème d'export. Malheureusement, ce choix, aujourd'hui pourtant possible à résoudre, crée une forme de dette technique pour plus de 300 000 mots. On remarque cependant, à la marge, par alignement avec les formes possibles sur collatinus \footnote{\textit{Cf.} annexes numériques} qu'une analyse en contexte a été faite à la marge (\textit{cf.} table \ref{table:lasla:genders-alignement}).
 
-% Insérer des exemples + une analyse plus fine
+\begin{table}[]
+\centering
+\begin{tabular}{l|lll}
+\toprule
+         & PRO    & VER    & ADJ    \\ \midrule
+Com      & 30 004 & 14 841 & 26 384 \\
+Fem      & 37 177 & 16 393 & 34 292 \\
+Masc     & 42 598 & 18 785 & 24 331 \\
+MascFem  & 8 398  & 3 968  & 17 477 \\
+MascNeut & 25 459 & 12 170 & 30 815 \\
+Neut     & 46 479 & 11 151 & 25 381 \\ \bottomrule
+\end{tabular}
+\label{table:lasla:genders-par-pos}
+\caption{Répartition des genres en fonction des POS}
+\end{table}
+
 \begin{table}[]
 \centering
 \begin{tabular}{l|rrr}
@@ -56,22 +71,6 @@ N/A        & 1 153 885 & 14 788 & 130 465 \\
 \end{tabular}
 \label{table:lasla:genders-par-corpus}
 \caption{Répartition des genres traditionnels et des genres morpho-syntaxiques du LASLA}
-\end{table}
-
-\begin{table}[]
-\centering
-\begin{tabular}{l|lll}
-\toprule
-         & PRO    & VER    & ADJ    \\ \midrule
-Com      & 30 004 & 14 841 & 26 384 \\
-Fem      & 37 177 & 16 393 & 34 292 \\
-Masc     & 42 598 & 18 785 & 24 331 \\
-MascFem  & 8 398  & 3 968  & 17 477 \\
-MascNeut & 25 459 & 12 170 & 30 815 \\
-Neut     & 46 479 & 11 151 & 25 381 \\ \bottomrule
-\end{tabular}
-\label{table:lasla:genders-par-pos}
-\caption{Répartition des genres en fonction des POS}
 \end{table}
 
 
