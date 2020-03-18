@@ -1,0 +1,73 @@
+\documentclass{book}
+
+\usepackage[a4paper]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[frenchb]{babel}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{glossaries}
+\usepackage{dirtytalk}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{microtype}
+\usepackage{newtxtext}
+%\usepackage{showframe}
+
+% permet de faire une table des matieres par chapitre
+\usepackage[french]{minitoc}
+
+% ajoute (entre autre) la bibliographie dans la table des matieres 
+\usepackage[nottoc]{tocbibind}
+\usepackage{minted}
+
+% biblio ordonnee classique
+\bibliographystyle{unsrt}
+\title{Exemple de thèse \LaTeX{} qui se veut minimal}
+\author{G. Vallverdu}
+\date{\today}
+
+\makeglossaries
+
+\newcommand{\newpara} {
+    \vskip 0.5cm
+}
+    
+\begin{document}
+
+% le titre
+\maketitle
+
+% preparation des minitocs
+\dominitoc
+
+% table des matieres generale
+\tableofcontents
+
+\include{glossaire}
+
+% inclusion des chapitres
+\include{intro}
+
+\include{chap1}
+
+\include{chap1_digitalclassics}
+\include{chap1_corpus}
+\include{chap1_evaluation_treebank}
+\include{chap1_evaluation_lemmatiseurs}
+
+\include{chap2}
+
+\include{conclu}
+
+\appendix
+
+\include{annexe}
+
+\printglossary
+
+
+% bibliographie
+\bibliography{allbiblio}
+
+\end{document}
+

@@ -1,0 +1,136 @@
+\section{Lemmatisation}
+\label{sec:lemmatiseurs}
+
+\subsection{Introduction}
+\label{subsec:lemma_intro}
+
+Afin de traiter un texte et d'établir des statistiques sur celui-ci, il est courant de le lemmatiser. La lemmatisation d'un texte, et \textit{a fortiori} d'un mot, correspond à sa transformation en une forme canonique, le \textit{lemme}. Traditionnellement identique à la forme d'entrée d'un dictionnaire, le lemme permet de rassembler sous une même étiquette l'ensemble des flexions et variations graphiques qu'il peut connaître. Pour le latin, il s'agira de rassembler ensemble \textsc{me} et \textsc{mihi} sous une racine commune \textsc{ego}. Cet étiquetage permet de clarifier le signal statistique en éliminant où cela est nécessaire un bruit inhérent aux langues flexionnelles (voire aux langues dont l'orthographe est variable ou localement influencé, commen l'ancien francais ou le latin des inscriptions) %Pas convaincu ici%
+
+La lemmatisation est donc un effort de traduction d'un texte en un ensemble de formes normalisées, de telle facon qu'\textit{un mot} ne doit connaître qu'une seule annotation de lemme. Cette définition exclut \textit{ipso facto} les outils d'analyse du vocabulaire tels que Collatinus. En effet, ce dernier ne propose pas un étiquettage unique mais un ensemble de possibilités pour chacun des éléments trouvés dans le texte. Pour exemple, là où \textsc{est} est identifiable comme \textsc{edo} et \textsc{sum} par collatinus, un lemmatiseur fait un choix unique, lié généralement au contexte et à la probabilité d'un des deux lemmes d'apparaître à cet endroit.
+
+Enfin, dans le cadre de la lemmatisation, on préfèra l'utilisation du terme token. Un token est un élément qui correspond à la fois aux mots, aux nombres, aux enclitiques pour le latin mais aussi aux signes de ponctuations. La \textit{tokenisation}, l'effort de découper un texte en un ensemble d'éléments qui seront ensuite la source d'une analyse ou d'un pré-traitement. Pour le latin, la tokenisation cherchera donc à extraire les enclitiques: \mintinline{python}{"lascivusque"} se découpera ainsi en \mintinline{python}{["lascivus", "-que"]}. Ce travail est d'autant plus important qu'il peut faire une différence notable dans le cadre de l'annotation: ainsi, identifier \mintinline{python}{"P. Naso."} en \mintinline{python}{["P", ".", "Naso", "."]} induira une rupture de syntaxe sur le premier "." là où \mintinline{python}{["P.", "Naso", "."]} indiquera une abbréviation.
+
+Les lemmatiseurs ont quoiqu'il arrive une idée de la langue. Dans le cadre de l'annotation du latin, cela se trouve par exemple dans la différenciation ou non des lettres u/v et i/j dans les formes d'entrées. Dans ce cadre, il faut alors adapter la forme d'entrée au lemmatiseur afin d'éviter à tout prix une incapacité à traiter les données, tout simplement parce qu'elles n'ont pas été prévues.
+
+Au delà de la lemmatisation, deux autres tâches sont souvent adjointes: elles correspondent à des informations syntaxiques et morphosyntaxiques liées aux termes.
+
+D'une part, on adjoint en général à la lemmatisation une Part-Of-Speech (POS).
+
+D'autre part, on pourra ajouter à l'annotation une information morphologique ou morphosyntaxique liée pour le latin à la flexion.
+
+\subsection{Les différents types d'outil}
+
+\subsubsection{Les outils à base de règles}
+
+Collatinus, TreeTagger, etc.
+
+\subsubsection{Les outils à entraînement semi-supervisé}
+
+Pie
+
+\subsection{Corpus et méthodes d'évaluation}
+\label{subsec:lemma_corpus}
+
+\subsubsection{Le corpus du LASLA: choix d'étiquettage}
+
+Le corpus du LASLA utilisé présente 1 630 825 mots dans la version à laquelle nous avons accès. Il est constitué de 25 135 lemmes, 1 008 types d'annotation morphologique (\textit{par exemple}  `Ablatif Pluriel` et `2eme personne Pluriel Indicatif Parfait Actif`) pour 28 grandes catégories syntaxiques (Nom, verbes, etc.) divisées là où il est possible de le faire en déclinaisons (nom1, nom2, etc.). On trouve dans le corpus de rares erreurs d'annotations, principalement des annotations incomplètes. Ces erreurs semblent marginales au regard du nombre de tokens.
+
+\newpara
+
+Le LASLA a fait le choix d'un étiquettage en partie morphio-syntaxiques. Par exemple, il crée les genres Commun, Masculin-Féminin, Masculin-Neutre. Cet élément aura nécessairement des implications sur la capacité d'un modèle d'inférer le genre d'un mot. Par ailleurs, le genre n'est annoté que sur les éléments hors substantifs (adjectifs, participes principalement). 
+
+% Insérer des exemples + une analyse plus fine
+
+\newpara
+
+Un autre choix du LASLA a été d'annoté les participes avec le temps de la forme composée: pour amatus sum, amatus portera l'information du temps (parfait), du mode (indicatif), de la personne (1) et du genre (Masc) sans porter l'information du cas pourtant présent morphologiquement. Au contraire, \textit{sum} portera la simple annotation de verbe auxiliaire. Cela pose un problème de confusion pour une même forme amatus qui peut être annoté comme simple participe parfait passif avec une annotation Mode Voix Temps ajoutée à une annotation Genre Nombre Cas, et une forme amatus (elipse ou présence de) sum qui elle sera annotée aussi avec Mode Voix Temps mais le triplet Genre Nombre Personne. Dans cette optique, \textit{amatus} peut représenter 6 formes conjuguées hors participes, 7 pour le neutre \textit{amatum} (\textit{cf.} Table \ref{table:amatus_forms}). %
+%
+% Exemple pour le parfait passif
+%
+Ainsi, dans la phrase du \textit{De Amicitia} de Cicéron, \say{\textbf{uidetis} in tabella iam ante quanta \textbf{facta} labes primo Gabinia lege biennio post Cassia }, \textit{uidetis} est annoté à la 2ème personne du pluriel indicatif présent actif là où \textit{facta} est annoté à la 3ème du singulier subjonctif parfait passif. Si cette approche est particulièrement intéressante dans un contexte d'analyse morpho-syntaxique, elle est d'autant plus difficile à différencier d'un \textit{facta} nominatif pour un lemmatiseur automatique. Quelle différence en effet peut être faite dans la phrase \say{non oculi tacuere tui \textbf{conscriptaque} uino mensa nec in digitis littera nulla fuit} (Ovid. Her. 2.5.17 sqq.) avec le cas précédent ? % D'ailleurs, n'est-ce pas un raté ??
+
+% Fin d'exemple
+
+\newpara
+
+\begin{table}[]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+Forme & Mode & Temps \\ \midrule
+amatus (sum) & Indicatif & Parfait \\
+amatus (eram) & Indicatif & Plus-que-parfait \\
+amatus (ero) & Indicatif & Futur antérieur \\
+amatus (sim) & Subjonctif & Parfait \\
+amatus (essem) & Subjonctif & Plus-que-parfait \\
+amatus (esse) & Infinitif & Parfait \\
+amatum (iri) & Infinitif & Futur \\ \bottomrule
+\end{tabular}
+\caption{Annotations possible pour la forme \textit{amatus} dans le LASLA, hors participes}
+\label{table:amatus_forms}
+\end{table}
+
+Cette multiplicité d'annotation peut rendre le travail de l'annotation automatique, car elle sous-entend une capacité pour le lemmatiseur de reconnaître les formes au nominatif utilisées de manière adjectivales des formes utilisées comme verbe principal ou verbe subordonné. Nous proposons en \ref{subsec:training:lasla-modification} une analyse de modifications pour une simplification du travail du modèle, en vue de la création d'un modèle morphologique et non morpho-syntaxique plus performant.
+
+\subsection{Configurations évaluées et processus décisionnel}
+
+\subsubsection{Arbre décisionnel d'entraînement.}
+
+\subsubsection{Impact du choix d'étiquettage des formes passives ou déponentes composées}
+\label{subsec:training:lasla-modification}
+
+Le choix d'annoter des formes simples (les participes) par le temps de la forme composée provoque une difficulté d'apprentissage importante. En retirant du lot les formes adjectivales, le \gls{micro-average} des formes simples est de 0.9767 là où la même mesure pour les formes composées stagne à 0.7330. Par ailleurs, le \gls{macro-average} et l'\gls{ecart-type} montre ces disparités (\textit{cf.} Table \ref{table:lasla:formes-simples-formes-composees}. La déviation standard des temps simples peut-être majoritairement expliquée par des formes extrêmement rares comme l'impératif présent passif (1 occurence sur le corpus de test, 0 de précision) ce qui appuie l'importance des deux mesures de micro et de macro-average. Pour gérer ce problème, on propose de traduire les annotations automatiquement pour ces parfaits: les temps composés utilisant le parfait passif passent de \textsc{Mode-Temps-Voix} à \textsc{Par-Pft-Voix} (où voix correspondra donc à passif, déponent ou semi-déponent. Les modes composés de l'infinitif sont annotés avec le cas, il sera donc conservé. Les autres modes passent automatiquement au nominatif et perdent l'annotation de personne. Cette conversion double le nombre de participes futurs, augmente de moitié le nombre de participes parfaits passifs et n'a bien sûr aucune incidence sur les participes présents (\textit{cf.} Table \ref{table:lasla:correction-temps}.)
+
+% ToDo: L'annotation de l'auxiliaire ?
+
+\begin{table}[]
+\centering
+\begin{tabular}{@{}l|r|lll|lll@{}}
+\toprule
+                      &         & \multicolumn{3}{l}{Pré-correction} & \multicolumn{3}{l}{Post-correction} \\
+                       \midrule
+Précision             & Support & Macro    & Écart-Type   & Micro    & Macro     & Écart-Type   & Micro    \\ 
+                       \midrule
+Verbes (hors N/A)     & 39465   & 0.6524   & 0.3992       & 0.9336   & 0.8533    & 0.2979       & 0.9668   \\
+Formes simples        & 31254   & 0.9400   & 0.1701       & 0.9780   & 0.9400    & 0.1701       & 0.9781   \\
+Formes Composées      & 7031    & 0.3716   & 0.3655       & 0.7379   & 0.6231    & 0.4502       & 0.9213   \\
+- \textit{dont participe}      & 11430   & 0.5997   & 0.4070       & 0.8860   & 0.8015    & 0.3543       & 0.9481   \\
+Formes “adjectivales” & 1173    & 0.9067   & 0.1539       & 0.9227   & 0.9256    & 0.0819       & 0.9388  \\ \bottomrule
+\end{tabular}
+\label{table:lasla:formes-simples-formes-composees}
+\caption{\Gls{precision} en fonction des catégories de temps sur la base forme composée/simple et les scores de la table \ref{table:lasla:verb-scores}. Les formes autres correspondent au supin, au gérondif, et à l'adjectif verbal, les formes composées contiennent la catégorie participe.}
+\end{table}
+
+\begin{table}[]
+\centering
+\begin{tabular}{l|rrr|rrr}
+\toprule
+ & \multicolumn{3}{c}{Pré-correction} & \multicolumn{3}{c}{Post-correction} \\ 
+ & Test & Dev & Train & Test & Dev & Train \\ \midrule
+Par-Fut-Act & 214 & 20 & 1726 & 445 & 46 & 3908 \\
+Par-Fut-Dep & 14 & 1 & 121 & 30 & 2 & 209 \\
+Par-Fut-Pass & 0 & 0 & 0 & 3 & 0 & 54 \\
+Par-Fut-SemDep & 1 & 0 & 13 & 3 & 1 & 28 \\
+Par-Perf-Act & 1 & 0 & 2 & 1 & 0 & 2 \\
+Par-Perf-Dep & 363 & 32 & 3267 & 653 & 65 & 6203 \\
+Par-Perf-Pass & 2927 & 309 & 25334 & 4391 & 526 & 38030 \\
+Par-Perf-SemDep & 23 & 5 & 217 & 58 & 11 & 537 \\
+Par-Pres-Act & 1210 & 137 & 10935 & 1210 & 137 & 10935 \\
+Par-Pres-Dep & 188 & 20 & 1493 & 188 & 20 & 1493 \\
+Par-Pres-Pass & 0 & 0 & 1 & 0 & 0 & 1 \\
+Par-Pres-SemDep & 5 & 5 & 70 & 5 & 5 & 70 \\ \bottomrule
+\end{tabular}
+\label{table:lasla:correction-temps}
+\caption{Résultats sur le décompte de participes des conversions automatiques temps composés vers participe. On remarque a posteriori au moins 2 lignes problématiques (Par-Perf-Act) et (Par-Pres-Pass). Le poids de cette erreur sur un macro-average sera important mais négligeable sur le micro-average}
+\end{table}
+
+\subsection{Analyse des résultats}
+\label{subsec:lemma_resultats}
+
+\subsubsection{Extensibilité des résultats}
+
+Out Of Domain avec Priapées et un autre corpus.
+
+\subsubsection{Analyse exploratoire et tentative d'interprétation}
+
+Projection 2D des embeddings ?
