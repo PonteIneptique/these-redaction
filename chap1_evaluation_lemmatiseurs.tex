@@ -37,9 +37,42 @@ Le corpus du LASLA utilisé présente 1 630 825 mots dans la version à laquelle
 
 \newpara
 
-Le LASLA a fait le choix d'un étiquettage en partie morphio-syntaxiques. Par exemple, il crée les genres Commun, Masculin-Féminin, Masculin-Neutre. Cet élément aura nécessairement des implications sur la capacité d'un modèle d'inférer le genre d'un mot. Par ailleurs, le genre n'est annoté que sur les éléments hors substantifs (adjectifs, participes principalement). 
+Le LASLA a fait le choix d'un étiquettage en partie morphio-syntaxiques. Par exemple, il crée les genres Commun, Masculin-Féminin, Masculin-Neutre. Cet élément aura nécessairement des implications sur la capacité d'un modèle d'inférer le genre d'un mot. Par ailleurs, le genre n'est annoté que sur les éléments hors substantifs (adjectifs, participes principalement). Les genres 
 
 % Insérer des exemples + une analyse plus fine
+\begin{table}[]
+\centering
+\begin{tabular}{l|rrr}
+\toprule
+           & Train   & Dev   & Test   \\ \midrule
+Fem        & 77 907   & 986   & 8 971   \\
+Masc       & 76 213   & 925   & 8 576   \\
+Neut       & 73 899   & 993   & 8 119   \\
+Com        & 63 304   & 789   & 7 136   \\
+MascFem    & 26 492   & 322   & 3 030   \\
+MascNeut   & 61 031   & 743   & 6 671   \\
+N/A        & 1 153 885 & 14 788 & 130 465 \\
+\textit{- Dont noms} & 433 117  & 5 634  & 48 840  \\ \bottomrule
+\end{tabular}
+\label{table:lasla:genders-par-corpus}
+\caption{Répartition des genres traditionnels et des genres morpho-syntaxiques du LASLA}
+\end{table}
+
+\begin{table}[]
+\centering
+\begin{tabular}{l|lll}
+\toprule
+         & PRO    & VER    & ADJ    \\ \midrule
+Com      & 30 004 & 14 841 & 26 384 \\
+Fem      & 37 177 & 16 393 & 34 292 \\
+Masc     & 42 598 & 18 785 & 24 331 \\
+MascFem  & 8 398  & 3 968  & 17 477 \\
+MascNeut & 25 459 & 12 170 & 30 815 \\
+Neut     & 46 479 & 11 151 & 25 381 \\ \bottomrule
+\end{tabular}
+\label{table:lasla:genders-par-pos}
+\caption{Répartition des genres en fonction des POS}
+\end{table}
 
 \newpara
 
