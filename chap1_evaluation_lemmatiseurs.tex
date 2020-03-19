@@ -39,38 +39,44 @@ Le corpus du LASLA utilisé présente 1 630 825 mots dans la version à laquelle
 
 Le LASLA a fait le choix de réserver \say{l'indication du genre pour les adjectifs, numéraux, les adjectifs-pronoms, les formes déclinées du verbe, hormis le gérondif}  \cite[p.~27]{BodsonCodification1966} dont la répartition est décrite en table \ref{table:lasla:genders-par-pos}. Ce choix a pour conséquence de laisser en partie le genre des noms inconnus: on ne pourra distinguer, dans le contexte de notre recherche, les noms par leur genre masculin ou féminin. On pourrait imaginer un travail de réannotation de tous les lemmes de POS NOM avec leur genre quand il est fixe. Ce travail serait potentiellement riche d'influence sur les statistiques finales. Par ailleurs, le genre, à l'inverse du cas et du nombre, n'a pas été analysé en contexte (et donc syntaxiquement) mais en hors contexte (et donc morphologiquement), ce qui laisse des ambiguités comme \textit{bonum} qui est à la fois masculin et neutre à l'accusatif singulier. Dans ce contexte, le LASLA crée trois genres morphologiques supplémentaires des genres classiques: les genres Commun, Masculin-Féminin, Masculin-Neutre (dont la répartition dans le corpus d'entraînement est visible en \ref{table:lasla:genders-par-corpus}. L'explication derrière ce choix, disponible dans l'article de \citep{BodsonCodification1966}, réside dans un problème technique de 1966, qui risquait de poser un problème d'export. Malheureusement, ce choix, aujourd'hui pourtant possible à résoudre, crée une forme de dette technique pour plus de 300 000 mots. On remarque cependant, à la marge, par alignement avec les formes possibles sur collatinus \footnote{\textit{Cf.} annexes numériques} qu'une analyse en contexte a été faite à la marge (\textit{cf.} table \ref{table:lasla:genders-alignement}).
 
-\begin{table}[]
-\centering
-\begin{tabular}{l|lll}
-\toprule
-         & PRO    & VER    & ADJ    \\ \midrule
-Com      & 30 004 & 14 841 & 26 384 \\
-Fem      & 37 177 & 16 393 & 34 292 \\
-Masc     & 42 598 & 18 785 & 24 331 \\
-MascFem  & 8 398  & 3 968  & 17 477 \\
-MascNeut & 25 459 & 12 170 & 30 815 \\
-Neut     & 46 479 & 11 151 & 25 381 \\ \bottomrule
-\end{tabular}
-\label{table:lasla:genders-par-pos}
-\caption{Répartition des genres en fonction des POS}
-\end{table}
-
-\begin{table}[]
-\centering
-\begin{tabular}{l|rrr}
-\toprule
-           & Train   & Dev   & Test   \\ \midrule
-Fem        & 77 907   & 986   & 8 971   \\
-Masc       & 76 213   & 925   & 8 576   \\
-Neut       & 73 899   & 993   & 8 119   \\
-Com        & 63 304   & 789   & 7 136   \\
-MascFem    & 26 492   & 322   & 3 030   \\
-MascNeut   & 61 031   & 743   & 6 671   \\
-N/A        & 1 153 885 & 14 788 & 130 465 \\
-\textit{- Dont noms} & 433 117  & 5 634  & 48 840  \\ \bottomrule
-\end{tabular}
-\label{table:lasla:genders-par-corpus}
-\caption{Répartition des genres traditionnels et des genres morpho-syntaxiques du LASLA}
+\begin{table}[!htb]
+    \begin{minipage}[t]{.4\linewidth}
+        \centering
+        \resizebox{\textwidth}{!}{%
+            \begin{tabular}{l|lll}
+            \toprule
+                     & PRO    & VER    & ADJ    \\ \midrule
+            Com      & 30 004 & 14 841 & 26 384 \\
+            Fem      & 37 177 & 16 393 & 34 292 \\
+            Masc     & 42 598 & 18 785 & 24 331 \\
+            MascFem  & 8 398  & 3 968  & 17 477 \\
+            MascNeut & 25 459 & 12 170 & 30 815 \\
+            Neut     & 46 479 & 11 151 & 25 381 \\ \bottomrule
+            \end{tabular}
+        }
+        \label{table:lasla:genders-par-pos}
+        \caption{Répartition des genres par POS}
+    \end{minipage}% \quad
+    \hspace{0.19\linewidth} 
+    \begin{minipage}[t]{.4\linewidth}
+        \centering
+        \resizebox{\textwidth}{!}{%
+            \begin{tabular}{l|rrr}
+            \toprule
+                       & Train   & Dev   & Test   \\ \midrule
+            Fem        & 77 907   & 986   & 8 971   \\
+            Masc       & 76 213   & 925   & 8 576   \\
+            Neut       & 73 899   & 993   & 8 119   \\
+            Com        & 63 304   & 789   & 7 136   \\
+            MascFem    & 26 492   & 322   & 3 030   \\
+            MascNeut   & 61 031   & 743   & 6 671   \\
+            N/A        & 1 153 885 & 14 788 & 130 465 \\
+            \textit{- Dont noms} & 433 117  & 5 634  & 48 840  \\ \bottomrule
+            \end{tabular}
+        }
+        \label{table:lasla:genders-par-corpus}
+        \caption{Répartition des genres par corpus}
+    \end{minipage} 
 \end{table}
 
 
@@ -126,7 +132,7 @@ Cette multiplicité d'annotation peut rendre le travail de l'annotation automati
 \subsubsection{Impact du choix d'étiquettage des formes passives ou déponentes composées}
 \label{subsec:training:lasla-modification}
 
-Le choix d'annoter des formes simples (les participes) par le temps de la forme composée provoque une difficulté d'apprentissage importante. En retirant du lot les formes adjectivales, le \gls{micro-average} des formes simples est de 0.9767 là où la même mesure pour les formes composées stagne à 0.7330. Par ailleurs, le \gls{macro-average} et l'\gls{ecart-type} montre ces disparités (\textit{cf.} Table \ref{table:lasla:formes-simples-formes-composees}. La déviation standard des temps simples peut-être majoritairement expliquée par des formes extrêmement rares comme l'impératif présent passif (1 occurence sur le corpus de test, 0 de précision) ce qui appuie l'importance des deux mesures de micro et de macro-average. Pour gérer ce problème, on propose de traduire les annotations automatiquement pour ces parfaits: les temps composés utilisant le parfait passif passent de \textsc{Mode-Temps-Voix} à \textsc{Par-Pft-Voix} (où voix correspondra donc à passif, déponent ou semi-déponent. Les modes composés de l'infinitif sont annotés avec le cas, il sera donc conservé. Les autres modes passent automatiquement au nominatif et perdent l'annotation de personne. Cette conversion double le nombre de participes futurs, augmente de moitié le nombre de participes parfaits passifs et n'a bien sûr aucune incidence sur les participes présents (\textit{cf.} Table \ref{table:lasla:correction-temps}.)
+Le choix d'annoter des formes simples (les participes) par le temps de la forme composée provoque une difficulté d'apprentissage importante. En retirant du lot les formes adjectivales, le \gls{micro-average} des formes simples est de 0.9767 là où la même mesure pour les formes composées stagne à 0.7330. Par ailleurs, le \gls{macro-average} et l'\gls{ecart-type} montre ces disparités (\textit{cf.} Table \ref{table:lasla:formes-simples-formes-composees}. La déviation standard des temps simples peut-être majoritairement expliquée par des formes extrêmement rares comme l'impératif présent passif (1 occurence sur le corpus de test, 0 de précision) ce qui appuie l'importance des deux mesures de micro et de macro-average. Pour gérer ce problème, on propose de traduire les annotations automatiquement pour ces parfaits: les temps composés utilisant le parfait passif passent de \textsc{Mode-Temps-Voix} à \textsc{Par-Pft-Voix} (où voix correspondra donc à passif, déponent ou semi-déponent. Les modes composés de l'infinitif sont annotés avec le cas, il sera donc conservé. Les autres modes passent automatiquement au nominatif et perdent l'annotation de personne. Cette conversion double le nombre de participes futurs, augmente de moitié le nombre de participes parfaits passifs et n'a bien sûr aucune incidence sur les participes présents (\textit{cf.} Table \ref{table:lasla:correction-temps}.) Les résultats (Table \ref{table:lasla:formes-simples-formes-composees}) sont sans appel: l'intégralité des annotations de formes composées (qui correspondent désormais aux participes) sont connaissent un bond de 40 points en macro-average et 18 points en micro-average. L'écart-type reste fort dans la mesure où certaines classes sont trop rares ou fautives (par exemple, les participes futur passifs sont dans leur intégralité des participes parfaits passifs.). Les classes fautives restantes posent un problème mais leur poid dans l'entraînement est assez négligeable pour ne pas influer la reconnaissance des participes parfaits passifs, participes futurs actifs et participes présents actifs (Table \ref{table:lasla:main-particips}).
 
 % ToDo: L'annotation de l'auxiliaire ?
 
@@ -169,6 +175,22 @@ Par-Pres-SemDep & 5 & 5 & 70 & 5 & 5 & 70 \\ \bottomrule
 \end{tabular}
 \label{table:lasla:correction-temps}
 \caption{Résultats sur le décompte de participes des conversions automatiques temps composés vers participe. On remarque a posteriori au moins 2 lignes problématiques (Par-Perf-Act) et (Par-Pres-Pass). Le poids de cette erreur sur un macro-average sera important mais négligeable sur le micro-average}
+\end{table}
+
+\begin{table}[]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l|rrrr|rrrr}
+\toprule
+ & \multicolumn{4}{c}{Pré-correction}     & \multicolumn{4}{c}{Post-correction} \\ \midrule
+              & Précision & Rappel        & F1-Score & Support & Précision     & Rappel        & F1-Score      & Support \\ \midrule
+Par-Fut-Act   & 0.91      & 0.89          & 0.90     & 214     & \textbf{0.97} & \textbf{0.99} & \textbf{0.98} & 445     \\
+Par-Perf-Pass & 0.76      & 0.83          & 0.79     & 2927    & \textbf{0.91} & \textbf{0.94} & \textbf{0.93} & 4391    \\
+Par-Pres-Act  & 0.94      & \textbf{0.98} & 0.96     & 1210    & \textbf{0.95} & 0.96          & 0.96          & 1210    \\ \bottomrule
+\end{tabular}{}%
+}
+\label{table:lasla:main-particips}
+\caption{Résultats sur les trois formes principales du participe. En dehors d'un avantage de 2 points sur le rappel des participes présents actifs, tous les autres scores connaissent une augmentation notable, malgré une augmentation nette du nombre de données à tester.}
 \end{table}
 
 \subsection{Analyse des résultats}
