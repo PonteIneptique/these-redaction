@@ -193,15 +193,113 @@ Par-Pres-Act  & 0.94      & \textbf{0.98} & 0.96     & 1210    & \textbf{0.95} &
 \caption{Résultats sur les trois formes principales du participe. En dehors d'un avantage de 2 points sur le rappel des participes présents actifs, tous les autres scores connaissent une augmentation notable, malgré une augmentation nette du nombre de données à tester.}
 \end{table}
 
-\subsection{Analyse des résultats}
-\label{subsec:lemma_resultats}
+\subsection{Pie: extensibilité des résultats}
 
-\subsubsection{Extensibilité des résultats}
+\subsubsection{Corpus divers, tailles variées}
+\label{lemmatisation:extensibilite:tailles}
+
+lala
+
+\subsubsection{Corpus Perseus (et Proiel ?)}
+\label{lemmatisation:extensibilite:perseus}
+
+Nous avons vu en \ref{subsec:treebank_corpora} que le corpus de Perseus pour le treebank, mis en forme pour le projet Universal Dependencies (\Gls{UD}), présente une corpus comprenant peu de textes et peu de mots comparé au corpus du LASLA (26 000 mots contre 1.7 millions) mais cependant une variété de style et d'époque assez forte parmi les corpus de ce genre.
+
+\newpara
+
+Pour compléter l'analyse précédente \ref{lemmatisation:extensibilite:tailles}, on reproduit un corpus similaire à celui de Perseus, dans la limite où 4 oeuvres présentes dans ce dernier ne le sont pas dans le corpus LASLA, à savoir les \textit{Fables} de Phèdres, les \textit{Res Gestae} d'Auguste, la \textit{Vie d'Auguste} de Suétone, la \textit{Vulgate} de Jérôme. On propose de remplacer pour le même nombre de phrases par deux autres oeuvres \footnote{Ces oeuvres sont mentionnées dans le corpus de Perseus original mais n'ont pas été nettoyées pour le projet \Glspl{UD})} à savoir les Fastes d'Ovides et le Satyricon de Pétrone. Le corpus d'entraînement, de développement et de test sont constitués à partir du seul corpus d'entraînement en \ref{lemmatisation:extensibilite:tailles}: les séquences sont prises aléatoirement, sans prendre en compte la position de la séquence dans l'oeuvre originale de Perseus, l'équivalent de 10\% et 20\% du nombres de phrases en entraînement sont utilisées pour le corpus spécifique de développement et de test (ci-après \texttt{perseus-test}). Le résultat de cette génération de corpus donne 1361 séquences contre 1334 originellement, mais surtout une forte augmentation du nombre de mots 26 081 contre 18 184 démontrant des tailles de séquences plus grandes dans le corpus LASLA (\textit{cf.} tables \ref{table:perseus-ud:chunks-and-tokens}, \ref{table:lasla:perseus-ud}).  Pour l'évaluation, nous proposons à la fois le résultat sur un corpus \texttt{perseus-test} qui représente la même diversité d'oeuvres, mais aussi le corpus test utilisés pour nos mesures. Nous n'évaluons que les tâches \texttt{lemma}, \texttt{pos} et \texttt{Gend} pour les raisons mentionnées plus haut. 
+
+\newpara
+
+% Analyse des résultats
+
+\begin{table}[]
+\centering
+\begin{tabular}{lll}
+\toprule
+ Title                  & Chunks & Tokens \\ \midrule
+ Auguste, Res Gestae    & 38     & 708    \\
+ Caesar                 & 24     & 352    \\
+ Cicero, In Catilinam   & 137    & 1897   \\
+ Phèdre, Fables         & 233    & 2397   \\
+ Properce               & 224    & 2776   \\
+ Salluste, Catilina     & 336    & 4999   \\
+ Suétone, Vie d'Auguste & 109    & 2046   \\
+ Tacite, Histoires      & 64     & 866    \\
+ Virgile, Énéide        & 15     & 142    \\
+ Vulgate                & 154    & 2001   \\ \midrule
+ Total                  & 1334   & 18184  \\ \bottomrule
+\hline
+\end{tabular}
+\label{table:perseus-ud:chunks-and-tokens}
+\caption{Répartition par oeuvres du nombres de séquences et de tokens dans le corpus Perseus UD 2.1}
+\end{table}
+
+\begin{table}[]
+\centering
+\begin{tabular}{l|lll|lll}
+\toprule
+ File         & Tokens &      &      & Chunks &     &      \\
+              & Train  & Dev  & Test & Train  & Dev & Test \\ \midrule
+ Petron, Sa   & 1955   & 176  & 402  & 136    & 14  & 28   \\
+ Ov, Fasti, 1 & 2251   & 208  & 455  & 136    & 14  & 28   \\
+ Ov, Fasti, 2 & 1901   & 186  & 445  & 136    & 14  & 28   \\
+ Ov, Fasti, 3 & 2225   & 154  & 439  & 136    & 14  & 28   \\
+ Tac, Hist, 1 & 281    & 72   & 51   & 13     & 2   & 3    \\
+ Tac, Hist, 2 & 251    & 70   & 88   & 13     & 2   & 3    \\
+ Tac, Hist, 3 & 269    & 40   & 57   & 13     & 2   & 3    \\
+ Tac, Hist, 4 & 592    & 30   & 95   & 13     & 2   & 3    \\
+ Tac, Hist, 5 & 516    & 126  & 144  & 13     & 2   & 3    \\
+ Caes, BG, 1  & 146    & 26   & 54   & 4      & 1   & 1    \\
+ Caes, BG, 2  & 110    & 63   & 23   & 4      & 1   & 1    \\
+ Caes, BG, 3  & 76     & 32   & 19   & 4      & 1   & 1    \\
+ Caes, BG, 4  & 99     & 32   & 30   & 4      & 1   & 1    \\
+ Caes, BG, 5  & 73     & 10   & 16   & 4      & 1   & 1    \\
+ Caes, BG, 6  & 132    & 7    & 8    & 4      & 1   & 1    \\
+ Caes, BG, 7  & 69     & 15   & 22   & 4      & 1   & 1    \\
+ Cic, Cat, 1  & 705    & 90   & 157  & 35     & 4   & 7    \\
+ Cic, Cat, 2  & 819    & 101  & 138  & 35     & 4   & 7    \\
+ Cic, Cat, 3  & 1014   & 149  & 102  & 35     & 4   & 7    \\
+ Cic, Cat, 4  & 933    & 111  & 192  & 35     & 4   & 7    \\
+ Propert, 1   & 952    & 113  & 250  & 56     & 6   & 12   \\
+ Propert, 2   & 1002   & 75   & 314  & 56     & 6   & 12   \\
+ Propert, 3   & 875    & 67   & 258  & 56     & 6   & 12   \\
+ Propert, 4   & 1029   & 88   & 149  & 56     & 6   & 12   \\
+ Sal, Catil   & 7389   & 617  & 1562 & 336    & 34  & 67   \\
+ Ver, Aen, 1  & 27     & 29   & 7    & 2      & 1   & 1    \\
+ Ver, Aen, 2  & 24     & 29   & 27   & 2      & 1   & 1    \\
+ Ver, Aen, 3  & 42     & 39   & 24   & 2      & 1   & 1    \\
+ Ver, Aen, 4  & 35     & 9    & 56   & 2      & 1   & 1    \\
+ Ver, Aen, 5  & 41     & 33   & 20   & 2      & 1   & 1    \\
+ Ver, Aen, 6  & 30     & 49   & 22   & 2      & 1   & 1    \\
+ Ver, Aen, 7  & 31     & 25   & 6    & 2      & 1   & 1    \\
+ Ver, Aen, 8  & 43     & 19   & 30   & 2      & 1   & 1    \\
+ Ver, Aen, 9  & 19     & 35   & 15   & 2      & 1   & 1    \\
+ Ver, Aen, 10 & 47     & 44   & 3    & 2      & 1   & 1    \\
+ Ver, Aen, 11 & 33     & 14   & 31   & 2      & 1   & 1    \\
+ Ver, Aen, 12 & 45     & 15   & 7    & 2      & 1   & 1    \\ \midrule
+ Total        & 26081  & 2998 & 5718 & 1361   & 159 & 289  \\ \bottomrule
+\hline
+\end{tabular}
+\label{table:lasla:perseus-ud}
+\caption{Répartition par oeuvres du nombres de séquences et de tokens dans les corpus d'entraînement PerseusUD en LASLA}
+\end{table}
+
+\subsubsection{Prose et Vers}
+\label{lemmatisation:extensibilite:prose-vers}
+
+\subsubsection{Données hors-domaine: les Priapées et texte gynécologique (?)}
 
 Out Of Domain avec Priapées et un autre corpus.
+
 
 \subsubsection{Analyse exploratoire et tentative d'interprétation}
 
 Projection 2D des embeddings ?
+
+
+\subsection{Analyse des résultats}
+\label{subsec:lemma_resultats}
+
 
 \subsection{Étiquetage automatique du corpus}
