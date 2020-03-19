@@ -285,8 +285,18 @@ Pour compléter l'analyse précédente \ref{lemmatisation:extensibilite:tailles}
 \caption{Répartition par oeuvres du nombres de séquences et de tokens dans les corpus d'entraînement PerseusUD en LASLA}
 \end{table}
 
-\subsubsection{Prose et Vers}
+\subsubsection{Variation de genre, variation de style}
 \label{lemmatisation:extensibilite:prose-vers}
+
+Afin d'aller encore plus loin dans l'analyse de l'effet du corpus, nous proposons de reproduire les principes de l'étude de \cite{poudat2009variations}. Dans cette étude, les auteurs analysent l'impact de l'unicité de genre, de style, chronologique sur l'entrainement de tagger automatiques, en particulier TreeTagger cité plus haut. Nous proposons de reproduire les memes catégories de tests, à savoir
+\begin{itemize}
+    \item Style d'ouvrage contre style d'auteur (César, Guerre des Gaules; César, Guerre Civile)
+    \item Style d'auteur contre style de genre (César; Pseudo-César et Salluste)
+    \item Style du genre à travers le temps (César, Pseudo-César et Salluste; Quinte-Curce et Tacite)
+    \item Style de la prose à l'épreuve des variations génériques (histoire; traités, dialogues)
+\end{itemize}{}
+
+La reproduction dévie en trois points, en dehors bien sur du changement d'outil: pour l'étude de l'utilité de la prose pour lemmatiser le vers, l'oeuvre de Catulle n'est pas inclue dans le corpus d'entrainement, et est dans son intégralité utilisée pour le test; nous réservons 10\% du corpus source à la création d'un corpus de développement.; comme nous l'avons précédemment indiqué, nous ne cherchons pas à désambiguiser les racines homographes. Nous ajoutons aux tests un corpus entierement constitué de poésie pour évaluer son utilité pour la prose (Juvenal, Ovide, Virgile). Cette étude, comme l'explique les auteurs originaux de l'article, permettra d'évaluer en partie l'extensibilité des résultats, sur des corpus en partie plus important qu'en \ref{lemmatisation:extensibilite:perseus} et possédant une unité de constitution plus évidente.
 
 \subsubsection{Données hors-domaine: les Priapées et texte gynécologique (?)}
 
