@@ -198,7 +198,14 @@ Par-Pres-Act  & 0.94      & \textbf{0.98} & 0.96     & 1210    & \textbf{0.95} &
 \subsubsection{Corpus divers, tailles variées}
 \label{lemmatisation:extensibilite:tailles}
 
-lala
+\begin{figure}
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \includegraphics{results/lemmatisation/EntrainementPourcentageCorpusComplexe.png}
+    }%
+    \caption{Progression des scores en fonction du pourcentage de données d'entraînement pris, à corpus de test et de développement constant}
+    \label{fig:lemmatisation:extensibilite:graph}
+\end{figure}
 
 \subsubsection{Corpus Perseus (et Proiel ?)}
 \label{lemmatisation:extensibilite:perseus}
@@ -283,6 +290,31 @@ Pour compléter l'analyse précédente \ref{lemmatisation:extensibilite:tailles}
 \end{tabular}
 \label{table:lasla:perseus-ud}
 \caption{Répartition par oeuvres du nombres de séquences et de tokens dans les corpus d'entraînement PerseusUD en LASLA}
+\end{table}
+
+\begin{table}[]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l|llll|llll}
+\toprule
+                  & \multicolumn{4}{l}{Test Perseus}        & \multicolumn{4}{l}{Test LASLA}          \\ 
+                  & Accuracy & Précision & Recall & Support & Accuracy & Précision & Recall & Support \\ \midrule
+\textbf{Lemma}    &          &           &        &         &          &           &        &         \\
+\textit{Tous}     & 0.6550   & 0.2864    & 0.2919 & 5754    & 0.6132   & 0.0990    & 0.0858 & 172968  \\
+\textit{Inconnus} & 0.0306   & 0.0094    & 0.0155 & 1534    & 0.7480   & 0.2760    & 0.2438 & 12790   \\
+\textit{Ambigus}  & 0.7558   & 0.4873    & 0.5027 & 434     & 0.019    & 0.0035    & 0.0061 & 53069   \\ \midrule
+\textbf{POS}      &          &           &        &         &          &           &        &         \\
+\textit{Tous}     & 0.8427   & 0.7991    & 0.7482 & 5754    & 0.8183   & 0.6831    & 0.6062 & 172968  \\
+\textit{Inconnus} & 0.5913   & 0.0947    & 0.0790 & 1534    & 0.7835   & 0.5866    & 0.5358 & 12790   \\
+\textit{Ambigus}  & 0.7672   & 0.5453    & 0.5678 & 799     & 0.5671   & 0.0755    & 0.0691 & 53069   \\ \midrule
+\textbf{Gender}   &          &           &        &         &          &           &        &         \\ 
+\textit{Tous}     & 0.8637   & 0.8448    & 0.6139 & 5754    & 0.8646   & 0.6315    & 0.4288 & 172968  \\
+\textit{Inconnus} & 0.6780   & 0.2043    & 0.1463 & 1534    & 0.6604   & 0.6981    & 0.6698 & 12790   \\
+\textit{Ambigus}  & 0.6506   & 0.7027    & 0.6620 & 538     & 0.7067   & 0.1615    & 0.1274 & 53069   \\ \bottomrule
+\end{tabular}%
+}
+\caption{Évaluation d'un modèle linéaire entraîné sur le corpus \texttt{perseus-train} (26 081 tokens, 9 textes) dans Pie contre un corpus test de Perseus et un corpus LASLA plus générique (les modèles avec decodeur plafonnant à 0 pour la tâche \texttt{lemma})}
+\label{table:lemmatisation:perseus-scores}
 \end{table}
 
 \subsubsection{Variation de genre, variation de style}
