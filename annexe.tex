@@ -61,8 +61,8 @@
  Inf-Pres-SemDep   & 1.00      & 1.00   & 1.00     & 16      \\ 
  avg / total       & 0.67      & 0.66   & 0.66     & 172968  \\ \bottomrule
 \end{tabular}}
-\label{table:lasla:verb-scores}
 \caption{Résultat sur les données brutes du LASLA pour les annotations verbales hors personne}
+\label{table:lasla:verb-scores}
 \end{table}
 
 
@@ -96,6 +96,57 @@
  Total         & 16811    & 84682    & 163394   & 318374   & 393492    & 467240   & 618619   & 767918   \\
 \hline
 \end{tabular}
-\label{table:lasla:extensibilite}
 \caption{Nombre de tokens par auteur en fonction du pourcentage de coupe }
+\label{table:lasla:extensibilite}
+\end{table}
+
+
+\begin{table}[]
+\centering
+\begin{tabular}{l|lll|lll}
+\toprule
+ File         & Tokens &      &      & Chunks &     &      \\
+              & Train  & Dev  & Test & Train  & Dev & Test \\ \midrule
+ Petron, Sa   & 1955   & 176  & 402  & 136    & 14  & 28   \\
+ Ov, Fasti, 1 & 2251   & 208  & 455  & 136    & 14  & 28   \\
+ Ov, Fasti, 2 & 1901   & 186  & 445  & 136    & 14  & 28   \\
+ Ov, Fasti, 3 & 2225   & 154  & 439  & 136    & 14  & 28   \\
+ Tac, Hist, 1 & 281    & 72   & 51   & 13     & 2   & 3    \\
+ Tac, Hist, 2 & 251    & 70   & 88   & 13     & 2   & 3    \\
+ Tac, Hist, 3 & 269    & 40   & 57   & 13     & 2   & 3    \\
+ Tac, Hist, 4 & 592    & 30   & 95   & 13     & 2   & 3    \\
+ Tac, Hist, 5 & 516    & 126  & 144  & 13     & 2   & 3    \\
+ Caes, BG, 1  & 146    & 26   & 54   & 4      & 1   & 1    \\
+ Caes, BG, 2  & 110    & 63   & 23   & 4      & 1   & 1    \\
+ Caes, BG, 3  & 76     & 32   & 19   & 4      & 1   & 1    \\
+ Caes, BG, 4  & 99     & 32   & 30   & 4      & 1   & 1    \\
+ Caes, BG, 5  & 73     & 10   & 16   & 4      & 1   & 1    \\
+ Caes, BG, 6  & 132    & 7    & 8    & 4      & 1   & 1    \\
+ Caes, BG, 7  & 69     & 15   & 22   & 4      & 1   & 1    \\
+ Cic, Cat, 1  & 705    & 90   & 157  & 35     & 4   & 7    \\
+ Cic, Cat, 2  & 819    & 101  & 138  & 35     & 4   & 7    \\
+ Cic, Cat, 3  & 1014   & 149  & 102  & 35     & 4   & 7    \\
+ Cic, Cat, 4  & 933    & 111  & 192  & 35     & 4   & 7    \\
+ Propert, 1   & 952    & 113  & 250  & 56     & 6   & 12   \\
+ Propert, 2   & 1002   & 75   & 314  & 56     & 6   & 12   \\
+ Propert, 3   & 875    & 67   & 258  & 56     & 6   & 12   \\
+ Propert, 4   & 1029   & 88   & 149  & 56     & 6   & 12   \\
+ Sal, Catil   & 7389   & 617  & 1562 & 336    & 34  & 67   \\
+ Ver, Aen, 1  & 27     & 29   & 7    & 2      & 1   & 1    \\
+ Ver, Aen, 2  & 24     & 29   & 27   & 2      & 1   & 1    \\
+ Ver, Aen, 3  & 42     & 39   & 24   & 2      & 1   & 1    \\
+ Ver, Aen, 4  & 35     & 9    & 56   & 2      & 1   & 1    \\
+ Ver, Aen, 5  & 41     & 33   & 20   & 2      & 1   & 1    \\
+ Ver, Aen, 6  & 30     & 49   & 22   & 2      & 1   & 1    \\
+ Ver, Aen, 7  & 31     & 25   & 6    & 2      & 1   & 1    \\
+ Ver, Aen, 8  & 43     & 19   & 30   & 2      & 1   & 1    \\
+ Ver, Aen, 9  & 19     & 35   & 15   & 2      & 1   & 1    \\
+ Ver, Aen, 10 & 47     & 44   & 3    & 2      & 1   & 1    \\
+ Ver, Aen, 11 & 33     & 14   & 31   & 2      & 1   & 1    \\
+ Ver, Aen, 12 & 45     & 15   & 7    & 2      & 1   & 1    \\ \midrule
+ Total        & 26081  & 2998 & 5718 & 1361   & 159 & 289  \\ \bottomrule
+\hline
+\end{tabular}
+\caption{Répartition par oeuvres du nombres de séquences et de tokens dans les corpus d'entraînement PerseusUD en LASLA}
+\label{table:lasla:perseus-ud}
 \end{table}

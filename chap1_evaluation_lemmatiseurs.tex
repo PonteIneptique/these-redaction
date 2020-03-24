@@ -54,8 +54,8 @@ Le LASLA a fait le choix de réserver \say{l'indication du genre pour les adject
             Neut     & 46 479 & 11 151 & 25 381 \\ \bottomrule
             \end{tabular}
         }
-        \label{table:lasla:genders-par-pos}
         \caption{Répartition des genres par POS}
+        \label{table:lasla:genders-par-pos}
     \end{minipage}% \quad
     \hspace{0.19\linewidth} 
     \begin{minipage}[t]{.4\linewidth}
@@ -74,8 +74,8 @@ Le LASLA a fait le choix de réserver \say{l'indication du genre pour les adject
             \textit{- Dont noms} & 433 117  & 5 634  & 48 840  \\ \bottomrule
             \end{tabular}
         }
-        \label{table:lasla:genders-par-corpus}
         \caption{Répartition des genres par corpus}
+        \label{table:lasla:genders-par-corpus}
     \end{minipage} 
 \end{table}
 
@@ -90,8 +90,8 @@ Le LASLA a fait le choix de réserver \say{l'indication du genre pour les adject
 2        & 65 852   & 25 155  & 2 512  \\
 3        & 1 591    & 172     & 67 206 \\ \bottomrule
 \end{tabular}
-\label{table:lasla:genders-alignement}
 \caption{Nombre de genres possibles par alignement Forme+Cas+Nombre via PyCollatinus}
+\label{table:lasla:genders-alignement}
 \end{table}
 
 \newpara
@@ -148,8 +148,8 @@ Formes Composées                & 7027    & 0.3570   & 0.3566       & 0.7378   
 - \textit{dont participe}       & 4946/7027    & 0.6430   & 0.3610       & 0.8087   & 0.7636    & 0.3810       & 0.9174   \\
 Formes “adjectivales”           & 1173    & 0.9067   & 0.1539       & 0.9227   & 0.9378    & 0.0595       & 0.9433   \\ \bottomrule
 \end{tabular}
-\label{table:lasla:formes-simples-formes-composees}
 \caption{\Gls{precision} en fonction des catégories de temps sur la base forme composée/simple et les scores de la table \ref{table:lasla:verb-scores}. Les formes autres correspondent au supin, au gérondif, et à l'adjectif verbal, les formes composées contiennent la catégorie participe.}
+\label{table:lasla:formes-simples-formes-composees}
 \end{table}
 
 % Check participe futur passif ?
@@ -173,8 +173,8 @@ Par-Pres-Dep & 188 & 20 & 1493 & 188 & 20 & 1493 \\
 Par-Pres-Pass & 0 & 0 & 1 & 0 & 0 & 1 \\
 Par-Pres-SemDep & 5 & 5 & 70 & 5 & 5 & 70 \\ \bottomrule
 \end{tabular}
-\label{table:lasla:correction-temps}
 \caption{Résultats sur le décompte de participes des conversions automatiques temps composés vers participe. On remarque a posteriori au moins 2 lignes problématiques (Par-Perf-Act) et (Par-Pres-Pass). Le poids de cette erreur sur un macro-average sera important mais négligeable sur le micro-average}
+\label{table:lasla:correction-temps}
 \end{table}
 
 \begin{table}[]
@@ -189,25 +189,26 @@ Par-Perf-Pass & 0.76      & 0.83          & 0.79     & 2927    & \textbf{0.91} &
 Par-Pres-Act  & 0.94      & \textbf{0.98} & 0.96     & 1210    & \textbf{0.95} & 0.96          & 0.96          & 1210    \\ \bottomrule
 \end{tabular}{}%
 }
-\label{table:lasla:main-particips}
 \caption{Résultats sur les trois formes principales du participe. En dehors d'un avantage de 2 points sur le rappel des participes présents actifs, tous les autres scores connaissent une augmentation notable, malgré une augmentation nette du nombre de données à tester.}
+\label{table:lasla:main-particips}
 \end{table}
 
 \subsection{Pie: extensibilité des résultats}
 
-\subsubsection{Corpus divers, tailles variées}
+L'entraînement de Pie sur un corpus test donné nous informe de sa valeur sur le corpus en tant que tel. Se pose la question cependant de la capacité de nos modèles à s'appliquer à un corpus étranger, de quantifier l'impact d'une potentielle spécialisation. Pour étudier cet impact, nous proposons 3 expériences qui permettront d'évaluer l'impact de la taille du corpus d'entraînement, de sa variété en style et en genre, et enfin une étude hors-domaine s'appliquant à un texte de notre corpus.
+
+\subsubsection{Impact de la taille du corpus}
 \label{lemmatisation:extensibilite:tailles}
 
-\begin{figure}
-    \centering
-    \resizebox{\textwidth}{!}{%
-    \includegraphics{results/lemmatisation/EntrainementPourcentageCorpusComplexe.png}
-    }%
-    \caption{Progression des scores en fonction du pourcentage de données d'entraînement pris, à corpus de test et de développement constant}
-    \label{fig:lemmatisation:extensibilite:graph}
-\end{figure}
+Pour la première expérience, nous voulons évaluer l'impact de la taille d'un corpus sur les différents éléments de mesure à notre disposition. Nous proposons donc des coupes de corpus du corpus LASLA à 1\%, 5\%, 7.5\%, 10\%, 20\%, 40\%, et enfin 80\% du corpus. Dans chacun des corpus d'entraînement, le corpus de développement représentera lui aussi, 10\% de la portion de corpus utilisée pour l'entraînement. La découpe se fait au niveau de chacun des fichiers d'entraînement du LASLA, à savoir un découpage au niveau de l'oeuvre (Poésie de Catulle) ou à un sous-niveau de l'oeuvre (César, Guerre des Gaules, 1). Chaque découpe du corpus connait alors la même variété d'auteur, la même variété de genre et de thème. Les découpes sont prises aléatoirement dans les séquences constituées par le LASLA. Nous mesurons trois tâches, à savoir:
 
-\subsubsection{Corpus Perseus (et Proiel ?)}
+\begin{itemize}
+    \item la tâche lemma, qui indique une compréhension du vocabulaire, de la syntaxe et de la morphologie,
+    \item la tâche POS, qui indique une compréhension morpho-syntaxique
+    \item la tâche Gend, qui indique une compréhension de la morphologie.
+\end{itemize}
+
+\subsubsection{Taille et diversité: corpus Perseus}
 \label{lemmatisation:extensibilite:perseus}
 
 Nous avons vu en \ref{subsec:treebank_corpora} que le corpus de Perseus pour le treebank, mis en forme pour le projet Universal Dependencies (\Gls{UD}), présente une corpus comprenant peu de textes et peu de mots comparé au corpus du LASLA (26 000 mots contre 1.7 millions) mais cependant une variété de style et d'époque assez forte parmi les corpus de ce genre.
@@ -238,58 +239,8 @@ Pour compléter l'analyse précédente \ref{lemmatisation:extensibilite:tailles}
  Total                  & 1334   & 18184  \\ \bottomrule
 \hline
 \end{tabular}
-\label{table:perseus-ud:chunks-and-tokens}
 \caption{Répartition par oeuvres du nombres de séquences et de tokens dans le corpus Perseus UD 2.1}
-\end{table}
-
-\begin{table}[]
-\centering
-\begin{tabular}{l|lll|lll}
-\toprule
- File         & Tokens &      &      & Chunks &     &      \\
-              & Train  & Dev  & Test & Train  & Dev & Test \\ \midrule
- Petron, Sa   & 1955   & 176  & 402  & 136    & 14  & 28   \\
- Ov, Fasti, 1 & 2251   & 208  & 455  & 136    & 14  & 28   \\
- Ov, Fasti, 2 & 1901   & 186  & 445  & 136    & 14  & 28   \\
- Ov, Fasti, 3 & 2225   & 154  & 439  & 136    & 14  & 28   \\
- Tac, Hist, 1 & 281    & 72   & 51   & 13     & 2   & 3    \\
- Tac, Hist, 2 & 251    & 70   & 88   & 13     & 2   & 3    \\
- Tac, Hist, 3 & 269    & 40   & 57   & 13     & 2   & 3    \\
- Tac, Hist, 4 & 592    & 30   & 95   & 13     & 2   & 3    \\
- Tac, Hist, 5 & 516    & 126  & 144  & 13     & 2   & 3    \\
- Caes, BG, 1  & 146    & 26   & 54   & 4      & 1   & 1    \\
- Caes, BG, 2  & 110    & 63   & 23   & 4      & 1   & 1    \\
- Caes, BG, 3  & 76     & 32   & 19   & 4      & 1   & 1    \\
- Caes, BG, 4  & 99     & 32   & 30   & 4      & 1   & 1    \\
- Caes, BG, 5  & 73     & 10   & 16   & 4      & 1   & 1    \\
- Caes, BG, 6  & 132    & 7    & 8    & 4      & 1   & 1    \\
- Caes, BG, 7  & 69     & 15   & 22   & 4      & 1   & 1    \\
- Cic, Cat, 1  & 705    & 90   & 157  & 35     & 4   & 7    \\
- Cic, Cat, 2  & 819    & 101  & 138  & 35     & 4   & 7    \\
- Cic, Cat, 3  & 1014   & 149  & 102  & 35     & 4   & 7    \\
- Cic, Cat, 4  & 933    & 111  & 192  & 35     & 4   & 7    \\
- Propert, 1   & 952    & 113  & 250  & 56     & 6   & 12   \\
- Propert, 2   & 1002   & 75   & 314  & 56     & 6   & 12   \\
- Propert, 3   & 875    & 67   & 258  & 56     & 6   & 12   \\
- Propert, 4   & 1029   & 88   & 149  & 56     & 6   & 12   \\
- Sal, Catil   & 7389   & 617  & 1562 & 336    & 34  & 67   \\
- Ver, Aen, 1  & 27     & 29   & 7    & 2      & 1   & 1    \\
- Ver, Aen, 2  & 24     & 29   & 27   & 2      & 1   & 1    \\
- Ver, Aen, 3  & 42     & 39   & 24   & 2      & 1   & 1    \\
- Ver, Aen, 4  & 35     & 9    & 56   & 2      & 1   & 1    \\
- Ver, Aen, 5  & 41     & 33   & 20   & 2      & 1   & 1    \\
- Ver, Aen, 6  & 30     & 49   & 22   & 2      & 1   & 1    \\
- Ver, Aen, 7  & 31     & 25   & 6    & 2      & 1   & 1    \\
- Ver, Aen, 8  & 43     & 19   & 30   & 2      & 1   & 1    \\
- Ver, Aen, 9  & 19     & 35   & 15   & 2      & 1   & 1    \\
- Ver, Aen, 10 & 47     & 44   & 3    & 2      & 1   & 1    \\
- Ver, Aen, 11 & 33     & 14   & 31   & 2      & 1   & 1    \\
- Ver, Aen, 12 & 45     & 15   & 7    & 2      & 1   & 1    \\ \midrule
- Total        & 26081  & 2998 & 5718 & 1361   & 159 & 289  \\ \bottomrule
-\hline
-\end{tabular}
-\label{table:lasla:perseus-ud}
-\caption{Répartition par oeuvres du nombres de séquences et de tokens dans les corpus d'entraînement PerseusUD en LASLA}
+\label{table:perseus-ud:chunks-and-tokens}
 \end{table}
 
 \begin{table}[]
@@ -320,15 +271,58 @@ Pour compléter l'analyse précédente \ref{lemmatisation:extensibilite:tailles}
 \subsubsection{Variation de genre, variation de style}
 \label{lemmatisation:extensibilite:prose-vers}
 
-Afin d'aller encore plus loin dans l'analyse de l'effet du corpus, nous proposons de reproduire les principes de l'étude de \cite{poudat2009variations}. Dans cette étude, les auteurs analysent l'impact de l'unicité de genre, de style, chronologique sur l'entrainement de tagger automatiques, en particulier TreeTagger cité plus haut. Nous proposons de reproduire les memes catégories de tests, à savoir
+Afin d'aller encore plus loin dans l'analyse de l'effet du corpus, nous proposons de reproduire les principes de l'étude de \cite{poudat2009variations}. Dans cette étude, les auteurs analysent l'impact de l'unicité de genre, de style, chronologique sur l'entrainement de tagger automatiques, en particulier TreeTagger cité plus haut. L'expérience repose sur les comparaisons suivantes:
 \begin{itemize}
     \item Style d'ouvrage contre style d'auteur (César, Guerre des Gaules; César, Guerre Civile)
     \item Style d'auteur contre style de genre (César; Pseudo-César et Salluste)
     \item Style du genre à travers le temps (César, Pseudo-César et Salluste; Quinte-Curce et Tacite)
     \item Style de la prose à l'épreuve des variations génériques (histoire; traités, dialogues)
+    \item Style de la prose contre le vers
 \end{itemize}{}
 
-La reproduction dévie en trois points, en dehors bien sur du changement d'outil: pour l'étude de l'utilité de la prose pour lemmatiser le vers, l'oeuvre de Catulle n'est pas inclue dans le corpus d'entrainement, et est dans son intégralité utilisée pour le test; nous réservons 10\% du corpus source à la création d'un corpus de développement.; comme nous l'avons précédemment indiqué, nous ne cherchons pas à désambiguiser les racines homographes. Nous ajoutons aux tests un corpus entierement constitué de poésie pour évaluer son utilité pour la prose (Juvenal, Ovide, Virgile). Cette étude, comme l'explique les auteurs originaux de l'article, permettra d'évaluer en partie l'extensibilité des résultats, sur des corpus en partie plus important qu'en \ref{lemmatisation:extensibilite:perseus} et possédant une unité de constitution plus évidente.
+Cependant, il nous semble important de dévier sur les corpus utilisés et constitués: les corpus constitués dans le cadre de cette évaluation présente une très grande variation de taille. Or, dans le contexte d'une modélisation, et de l'impact de ces traits (à savoir genre, style, période), il ne semble pas souhaitable de comparer des entraînements effectués sur 52 000 tokens contre des modèles entraînés sur près de 400 000 tokens \cite[par exemple][p.~135, 2.~2.~4]{poudat2009variations}. Nous reprenons donc les grandes lignes et constituons 4 sous-expériences.
+
+\begin{itemize}
+    \item Une première expérience, sur de petits corpus en vers (environ 90 000 tokens), permettra d'identifier l'impact d'un auteur dans un modèle, ou d'une époque: un corpus double Horace \& Lucrèce (91555 tokens, 6 oeuvres différentes), un Virgile (87488 tokens), un Ovide (95 409 tokens)). Une deuxième expérience
+    \item Une seconde expérience, sur des corpus plus large (environ 117000 tokens), permettra d'étudier l'impact du genre avec deux corpus Sénèque (Ad Lucilium, 118 801 tokens; Autres oeuvres philosophies, 117550 tokens), un corpus mixte théâtre Sénèque et Plaute (115 571 tokens, 16 oeuvres), un corpus Cicéron court (116 367 tokens, 2 oeuvres), un corpus Tacite (117 552 tokens, 4 oeuvres).
+    \item Une troisième exprérience cherchera à analyser l'impact du mode de rédaction (vers contre prose) sur l'extensibilité des résultats avec un corpus Prose (257 034 tokens, 7 auteurs, 9 oeuvres) et un corpus Vers (259 717 tokens, 7 auteurs, 17 oeuvres).
+    \item Une quatrième expérience portant sur des corpus de 390 000 tokens profitera de la richesse du corpus de Cicéron, en évaluant l'impact de la diversité d'auteurs (corpus divers, 392 402 tokens, 13 auteurs, 24 textes) contre celle de la diversité d'oeuvres d'un même auteur (corpus Cicéron Discours, 391 390 tokens, 1 auteur, 44 oeuvres)\footnote{On peut retrouver le découpage dans la table en annexe \textbf{A FAIRE}}.
+\end{itemize}{}
+
+Les oeuvres de test sont toujours prises en hors domaine, à savoir qu'elles ne peuvent pas faire partie des mêmes oeuvres que les oeuvres d'entraînement. Dans la mesure du possible, elles sont aussi issues de corpus d'auteurs différents (\textit{cf.} Table \ref{table:lemmatisation:extensibilite:test-corpus}).
+
+\begin{table}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lll|ll|r|l}
+    \toprule
+     Auteur & Oeuvre & Passage & Genre & Tokens & Auteur présent dans corpus \\ \midrule
+     César & Guerre des Gaules & 3 & Histoire & 3 637 & Prose \\
+     Catulle & Poésie & Complet & Poésie & 13 020 & \\
+     Cicéron & De l'Amitié & Complet & Traité & 9 272 & Cicéron Petit \\
+     &&&&& Cicéron Discours \\
+     &&&&& Prose \\
+     Cicéron & Catilinaires & 1 & Traité & 9 272 & \textit{idem} \\
+     Quinte Curce & Histoires & 3 & Histoire & 7 175 & Prose \\
+     &&&&& Divers \\
+     Horace & Épodes & Complet & Poésie & 3 071 & Vers \\
+     &&&&& Horace+Lucrèce \\
+     &&&&& Corpus Divers \\
+     Ovide & Ibis & Complet & Poésie &  4 196 & Vers \\
+     &&&&& Ovide \\
+     &&&&& Corpus Divers \\
+     Salluste & Catilina & Complet & Histoire & 10 598 & \\
+     Sénèque & De la brièveté de la vie & Complet & Dialogues & 6113 & Sénèque (Les 3) \\
+     &&&&& Prose \\
+     &&&&& Divers \\
+     Sénèque & Médée & Complet & Tragédie & 5 685 & \textit{idem} \\
+     Tacite & Germanie & Complet & Histoire & 5 648 & Prose \\
+     &&&&& Tacite \\
+     &&&&& Divers \\ \bottomrule
+\end{tabular}%
+}%
+     \caption{Oeuvres et nombre de tokens pour le test }
+     \label{table:lemmatisation:extensibilite:test-corpus}
+\end{table}
 
 \subsubsection{Données hors-domaine: les Priapées et texte gynécologique (?)}
 
