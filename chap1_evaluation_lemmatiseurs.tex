@@ -4,19 +4,33 @@
 \subsection{Introduction}
 \label{subsec:lemma_intro}
 
-Afin de traiter un texte et d'établir des statistiques sur celui-ci, il est courant de le lemmatiser. La lemmatisation d'un texte, et \textit{a fortiori} d'un mot, correspond à sa transformation en une forme canonique, le \textit{lemme}. Traditionnellement identique à la forme d'entrée d'un dictionnaire, le lemme permet de rassembler sous une même étiquette l'ensemble des flexions et variations graphiques qu'il peut connaître. Pour le latin, il s'agira de rassembler ensemble \textsc{me} et \textsc{mihi} sous une racine commune \textsc{ego}. Cet étiquetage permet de clarifier le signal statistique en éliminant où cela est nécessaire un bruit inhérent aux langues flexionnelles (voire aux langues dont l'orthographe est variable ou localement influencé, commen l'ancien francais ou le latin des inscriptions) %Pas convaincu ici%
+Afin de traiter un texte et d'établir des statistiques sur celui-ci, il est courant de le lemmatiser. La lemmatisation d'un texte, et \textit{a fortiori} d'un mot, correspond à sa transformation en une forme canonique, le \textit{lemme}. Traditionnellement identique à la forme d'entrée d'un dictionnaire, le lemme permet de rassembler sous une même étiquette l'ensemble des flexions et variations graphiques qu'il peut connaître. Pour le latin, il s'agira de rassembler ensemble \textsc{me} et \textsc{mihi} sous une racine commune \textsc{ego}. Cet étiquetage permet de clarifier le signal statistique en éliminant où cela est nécessaire un bruit inhérent aux langues flexionnelles (voire aux langues dont l'orthographe est variable ou localement influencé, commen l'ancien francais ou le latin des inscriptions). Son utilisation principale a longtemps eu pour but la capacité à trouver dans un texte les occurences d'un terme puis a permis la développement plus tardivement de la linguistique de corpus (\cite{mellet2002atouts}).
+
+\subsubsection{Tâches et définitions générales}
 
 La lemmatisation est donc un effort de traduction d'un texte en un ensemble de formes normalisées, de telle facon qu'\textit{un mot} ne doit connaître qu'une seule annotation de lemme. Cette définition exclut \textit{ipso facto} les outils d'analyse du vocabulaire tels que Collatinus. En effet, ce dernier ne propose pas un étiquettage unique mais un ensemble de possibilités pour chacun des éléments trouvés dans le texte. Pour exemple, là où \textsc{est} est identifiable comme \textsc{edo} et \textsc{sum} par collatinus, un lemmatiseur fait un choix unique, lié généralement au contexte et à la probabilité d'un des deux lemmes d'apparaître à cet endroit.
 
-Enfin, dans le cadre de la lemmatisation, on préfèra l'utilisation du terme token. Un token est un élément qui correspond à la fois aux mots, aux nombres, aux enclitiques pour le latin mais aussi aux signes de ponctuations. La \textit{tokenisation}, l'effort de découper un texte en un ensemble d'éléments qui seront ensuite la source d'une analyse ou d'un pré-traitement. Pour le latin, la tokenisation cherchera donc à extraire les enclitiques: \mintinline{python}{"lascivusque"} se découpera ainsi en \mintinline{python}{["lascivus", "-que"]}. Ce travail est d'autant plus important qu'il peut faire une différence notable dans le cadre de l'annotation: ainsi, identifier \mintinline{python}{"P. Naso."} en \mintinline{python}{["P", ".", "Naso", "."]} induira une rupture de syntaxe sur le premier "." là où \mintinline{python}{["P.", "Naso", "."]} indiquera une abbréviation.
+Enfin, dans le cadre de la lemmatisation, on préfèra l'utilisation du terme "token" à celui de "mot". Un token est un élément qui correspond au niveau le plus bas à la fois aux mots, aux nombres, aux enclitiques pour le latin mais aussi aux signes de ponctuations, et au niveau le plus haut aux phrases. La \textit{tokenisation} consiste donc au découpage d'un texte en un ensemble d'éléments qui seront ensuite la source d'une analyse ou d'un pré-traitement. Pour le latin, la tokenisation cherchera donc à extraire les enclitiques: \mintinline{python}{"lascivusque"} se découpera ainsi en \mintinline{python}{["lascivus", "-que"]}. Ce travail est d'autant plus important qu'il peut faire une différence notable dans le cadre de l'annotation: ainsi, identifier \mintinline{python}{"P. Naso."} en \mintinline{python}{["P", ".", "Naso", "."]} induira une rupture de syntaxe sur le premier "." à travers la création d'une nouvelle phrase là où \mintinline{python}{["P.", "Naso", "."]} indiquera une abbréviation.
 
-Les lemmatiseurs ont quoiqu'il arrive une idée de la langue. Dans le cadre de l'annotation du latin, cela se trouve par exemple dans la différenciation ou non des lettres u/v et i/j dans les formes d'entrées. Dans ce cadre, il faut alors adapter la forme d'entrée au lemmatiseur afin d'éviter à tout prix une incapacité à traiter les données, tout simplement parce qu'elles n'ont pas été prévues.
+Au delà de la lemmatisation, deux autres tâches sont souvent adjointes: elles correspondent à des informations syntaxiques et morphosyntaxiques liées aux tokens. D'une part, on adjoint en général à la lemmatisation une Part-Of-Speech (POS). Cette tâche est traitée très rapidement par les annotateurs automatiques tels que TreeTagger (\cite{schmid1994treetagger}). Les catégories de POS, que l'on pourrait traduire par la notion de nature en francais, consistent en un ensemble de catégorisations grammaticales (et non sémantiques) dépendantes des distributions syntaxiques, des fonctions syntaxiques, et enfin des morphologies acceptables (cf. \cite{schachter1985parts}). En traitement automatique du langage, qu'il s'agisse par exemple de stylométrie (\cite{Cafieroeaax5489}), de classification des genres de texte (\cite{feldman2009part}), ou enfin d'analyse de sentiment (\cite{wang2015pos}), les POS ont démontré un réel apport comme composante (\textit{feature}) des données d'entrées de modèles de prédiction.
 
-Au delà de la lemmatisation, deux autres tâches sont souvent adjointes: elles correspondent à des informations syntaxiques et morphosyntaxiques liées aux termes.
+D'autre part, on pourra ajouter à l'annotation une information morphologique ou morphosyntaxique. Elle peut être prise comme un tout (féminin singulier) ou comme un ensemble d'informations indépendantes (féminin; singulier). En latin, on compte 8 catégories (Cas, Nombre, Genre, Degré, Mode, Temps, Voix, Personne), chacunes avec leurs valeurs possibles, et une catégorie supplémentaire en cas d'absence de l'ensemble de celle-ci, pour des termes sans morphologie, comme "ut". L'usage des traits morphologiques comme features n'est pas encore très étudié %
+% je crois 
+mais on la retrouve dans certaines études sur la reconnaissance d'entités nommées par exemple \cite{zirikly2014named}. Leur utilisation dans le cadre de notre étude, au moins pour évaluer leur apport potentiel, nous semble important: en effet, l'intuition voudrait que l'identification des agents (via les cas et la voie des verbes aux alentours), de leur genre et enfin les modes verbaux (l'impératif en particulier) pourraient apporter des contributions importantes à l'analyse automatique des passages.
 
-D'une part, on adjoint en général à la lemmatisation une Part-Of-Speech (POS).
 
-D'autre part, on pourra ajouter à l'annotation une information morphologique ou morphosyntaxique liée pour le latin à la flexion.
+\subsubsection{Une histoire riche, en particulier pour le latin}
+
+La lemmatisation, en latin, possède une histoire particulièrement riche et particulièrement liée à celle des humanités numériques \footnote{Une majorités des pistes de recherche nous est fournie par la présentation de \cite{perreaux_lemmatisation_2019}.}. Il faut noter que les études classiques ont fait usage de la lemmatisation avant le passage à son usage informatique, à travers la création des index et en particulier, dans leur forme la plus pure, des concordanciers. On retrouve
+
+% lire https://fr.wikipedia.org/wiki/Concordance_(livre)
+
+\begin{figure}[]
+    \centering
+    \includegraphics[width=10cm]{results/lemmatisation/concordanciers.png}
+    \caption{Accumulation par dates de concordanciers conservés à la Bibliothèque Nationale de France}
+    \label{lemmatisation:concordanciers}
+\end{figure}
 
 \subsection{Les différents types d'outil}
 
@@ -339,3 +353,8 @@ Projection 2D des embeddings ?
 
 
 \subsection{Étiquetage automatique du corpus}
+
+
+Chaque lemmatiseur ont quoiqu'il arrive une idée de la langue. Dans le cadre de l'annotation du latin, cela se trouve par exemple dans la différenciation ou non des lettres u/v et i/j dans les formes d'entrées. Dans ce cadre, il faut alors adapter la forme d'entrée au lemmatiseur afin d'éviter à tout prix une incapacité à traiter les données, tout simplement parce qu'elles n'ont pas été prévues. % A lire
+
+\
