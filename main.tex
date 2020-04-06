@@ -4,9 +4,7 @@
 \usepackage[utf8]{inputenc}
 
 % Biblio ?
-\usepackage{natbib}
-\bibliographystyle{abbrvnat}
-\setcitestyle{authoryear,open={(},close={)}}
+\usepackage[backend=biber, sorting=nyt, style=enc]{biblatex}
 
 \usepackage[french]{babel}
 \usepackage{csquotes}
@@ -27,6 +25,7 @@
 \usepackage[nottoc]{tocbibind}
 \usepackage{minted}
 
+\addbibresource{bibliography/lemmatisation.bib}
 
 \title{Exemple de thèse \LaTeX{} qui se veut minimal}
 \author{G. Vallverdu}
@@ -72,7 +71,7 @@
 \printglossary
 
 % bibliographie
-\bibliography{biblio}
+\printbibliography
 
 \end{document}
 
