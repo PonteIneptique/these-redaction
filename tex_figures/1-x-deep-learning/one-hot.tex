@@ -1,0 +1,42 @@
+% Exemple d'encodage one hot
+
+\begin{figure}
+    \centering
+    \noindent\begin{minipage}{.32\linewidth}
+        \begin{equation*}
+            \begin{bmatrix}
+            fortissimi \\ 
+            sunt \\ 
+            Belgae \\ 
+            timendi \\ 
+            ... \\ 
+            ... \\ 
+            ... \\ 
+            \end{bmatrix}
+            \rightarrow \begin{bmatrix}
+            1 \\ 
+            2 \\ 
+            3 \\ 
+            4 \\ 
+            ... \\ 
+            ... \\ 
+            n \\ 
+            \end{bmatrix}
+        \end{equation*}
+    \end{minipage}%
+    \begin{minipage}{.32\linewidth}
+        \begin{equation*}
+            \begin{matrix}
+            \textrm{Fortissimi sunt Belgae}\\ 
+            \textrm{Timendi sunt Belgae}
+            \end{matrix}
+            \rightarrow
+            \begin{matrix}
+            \left [ 1\;  2\;  3 \right ]\\ 
+            \left [ 4\;  2\;  3 \right ]
+            \end{matrix}
+        \end{equation*}
+    \end{minipage}
+    \caption{Exemple d'encodage\textit{ one-hot}. On constitue d'abord un dictionnaire de transcodage, puis on traduit à l'aide de celui-ci les phrases}
+    \label{deep-learning:one-hot-encoding}
+\end{figure}
