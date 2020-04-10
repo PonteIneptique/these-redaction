@@ -103,27 +103,46 @@ Bien sûr, les dimensions des embeddings sont ordinairement beaucoup plus grande
 
 \subsection{Linéaires}
 
-Si les \textit{embeddings} permettent de générer une représentation des données, les modèles \textit{linéaires}\footnote{On le retrouve sous plusieurs noms: \textit{perceptron}, \textit{linear network}, \textit{dense layer}, \textit{régression linéaire}, etc.} permettent de les classer. Il s'agit de la forme la plus simple de réseau neuronal (\textit{cf.} figure \ref{deep-learning:simple-linear}). 
+Si les \textit{embeddings} permettent de générer une représentation des données, les modèles \textit{linéaires}\footnote{On le retrouve sous plusieurs noms: \textit{perceptron}, \textit{linear network}, \textit{dense layer}, \textit{régression linéaire}, etc.} permettent de les classer. Il s'agit de la forme la plus simple de réseau neuronal (\textit{cf.} figure \ref{fig:deep-learning:simple-linear}). 
 
-Cette couche linéaire peut être accumulée à d'autres couches linéaires, souvent en réduisant peu à peu la taille du réseau jusqu'à arriver à la taille de sortie: cela s'appelle un \textit{perceptron multi-couches}. Par exemple, pour un classement de texte par auteur, on pourrait créer un réseau utilisant les fréquences de chacun des mots (fréquence de "fortissimi", "belgae", etc. dans chacun des textes) et qui viendrait réduire, sur plusieurs couches, la taile de la matrice jusqu'à obtenir la taille des réponses possibles. Ce réseau est appelé perceptron multi-couche (\textit{multi-layer perceptron}) et constitue le réseau neuronal le plus simple possible (\textit{cf.} figure \ref{deep-learning:mlp}). Dans une telle situation, les couches intermédiaires sont appelées \textit{hidden layers}. Son principe de réduction des dimensions peut-être appliqué aussi à des sorties d'autres modules avant la classification finale.
+Cette couche linéaire peut être accumulée à d'autres couches linéaires, souvent en réduisant peu à peu la taille du réseau jusqu'à arriver à la taille de sortie: cela s'appelle un \textit{perceptron multi-couches}. Par exemple, pour un classement de texte par auteur, on pourrait créer un réseau utilisant les fréquences de chacun des mots (fréquence de "fortissimi", "belgae", etc. dans chacun des textes) et qui viendrait réduire, sur plusieurs couches, la taile de la matrice jusqu'à obtenir la taille des réponses possibles. Ce réseau est appelé perceptron multi-couche (\textit{multi-layer perceptron}) et constitue le réseau neuronal le plus simple possible (\textit{cf.} figure \ref{fig:deep-learning:mlp}). Dans une telle situation, les couches intermédiaires sont appelées \textit{hidden layers}. Son principe de réduction des dimensions peut-être appliqué aussi à des sorties d'autres modules avant la classification finale.
 
-Les couches linéaires prennent une forme très simple. Dans le cadre d'un vecteur de fréquence comme dans la figure \ref{deep-learning:mlp}, le perceptron prend une matrice de taille $M$ par 1 (le vecteur) et ressort une matrice de taille $M...O$ où $O$ est le nombre d'auteurs. Sur ce vecteur, le modèle applique une formule particulièrement simple: il s'agit d'une fonction affine. Chaque valeur $M_{i}$ (ici, $i$ est un index de mot) et pour chaque classe de sortie notée $j$  un poids $w_{i}{j}$ existe en plus d'une variable partagée par chaque noeud appelée biais ($b_{j}$) telle que $f(X, j) = W_{j} \dot X + b_{j}$  où X est la matrice de données fournie\footnote{En algèbre linéraire, une multiplication de matrice A, de taille N par M, par une matrice B, de taille M par P, résulte en une matrice de taille N par P: une multiplication peut donc réduire la taille de la matrice.}.
+Les couches linéaires prennent une forme très simple. Dans le cadre d'un vecteur de fréquence comme dans la figure \ref{fig:deep-learning:mlp}, le perceptron prend une matrice de taille $M$ par 1 (le vecteur) et ressort une matrice de taille $M...O$ où $O$ est le nombre d'auteurs. Sur ce vecteur, le modèle applique une formule particulièrement simple: il s'agit d'une fonction affine. Chaque valeur $M_{i}$ (ici, $i$ est un index de mot) et pour chaque classe de sortie notée $j$  un poids $w_{i}{j}$ existe en plus d'une variable partagée par chaque noeud appelée biais ($b_{j}$) telle que $f(X, j) = W_{j} \dot X + b_{j}$  où X est la matrice de données fournie\footnote{En algèbre linéraire, une multiplication de matrice A, de taille N par M, par une matrice B, de taille M par P, résulte en une matrice de taille N par P: une multiplication peut donc réduire la taille de la matrice.}.
 
 \begin{figure}
     \centering
     \includegraphics[width=5cm]{results/deep-learning/explanations/SimpleLinear.png}
     \caption{Exemple de couche linéaire (simplifiée)}
-    \label{deep-learning:simple-linear}
+    \label{fig:deep-learning:simple-linear}
 \end{figure}
+
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{results/deep-learning/explanations/MLP.png}
     \caption{Exemple de perceptron multi-couches. Le réseau construit ici possède une entrée de taille N, une sortie de 2, et un réseau $Linear(N, L1_N) \rightarrow Linear(L1_N, L2_N) \rightarrow Linear(L2_N, 2)$}
-    \label{deep-learning:mlp}
+    \label{fig:deep-learning:mlp}
 \end{figure}
 
 \subsection{RNN: LSTM et GRU}
 
-Malheureusement, les couches linéaires posent un problème, en particulier pour les TALs et le traitement d'image: il ne traitent pas vraiment les données en séries. Les perceptrons multi-couches ne gèrent en effet l'ensemble des données comme des variables indépendantes, non-séquentielles. On appelle ce type de réseau \textit{feed-forward} (propagation directe). Pour traiter des données en séries, on s'est d'abord tourner vers d'autres types de réseaux, appelés \textit{réseaux neuronaux acycliques (recurrent neural networks, RNN)}. Les réseaux récurrents ont la particularité de traiter les données en séries, et de réutiliser l'analyse de chaque élément pour l'analyse de l'élément suivant, comme le montre le schéma.
+Malheureusement, les couches linéaires posent un problème, en particulier pour les TALs et le traitement d'image: il ne traitent pas vraiment les données en séries. Les perceptrons multi-couches ne gèrent en effet l'ensemble des données que comme desun ensemble de phénomènes indépendants, non-séquentiels. On appelle ce type de réseau \textit{feed-forward} (propagation directe). Pour traiter des données en séries, on s'est d'abord tourner vers d'autres types de réseaux, appelés \textit{réseaux neuronaux acycliques (recurrent neural networks, RNN)}. Les réseaux récurrents ont la particularité de traiter les données en séries, et de réutiliser l'analyse de chaque élément pour l'analyse de l'élément suivant, comme le montre le schéma en \ref{fig:deep-learning:rnn}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{results/deep-learning/explanations/RNN.png}
+    \caption{Exemple de réseau acyclique}
+    \label{fig:deep-learning:rnn}
+\end{figure}
+
+Le problème des réseaux acycliques classiques se trouve dans la rétropropagation: alors que l'algorithme va propager les informations sur les erreurs rencontrées, cette donnée de correction va peu à peu perdre de sa valeur. En somme, les derniers mots d'une phrase sont plus corrigés que les premiers mots de celle-ci. Pour éviter un tel problème, Sepp Hochreiter et Jürgen Schmidhuber ont proposé les réseaux Long Short-Term Memory (LSTM)\footcite{hochreiter_long_1997}. Ils partent du principe que dans une séquence, tout n'est pas nécessaire. Ainsi, dans la phrase "Caesar sum et fortissimi sunt Belgae", si je m'intéresse au narrateur, deux voire trois mots ont de l'importance: \textit{Belgae, sum, Caesar}. Il n'est donc pas nécessaire de s'intéresser à toutes les valeurs... Pour corriger cela, ils introduisent, en plus des valeurs de sorties (\textit{hidden state}, notée $y$ dans la figure \ref{fig:deep-learning:rnn}, très souvent notée $h$) une mémoire appelée \textit{cell state} (notée $C$). À partir de ces deux valeurs calculées et des valeurs d'entrées, le réseau peut alors effectuer des filtres et prendre en compte les valeurs qui précèdent ou les ignorer. Il existe trois filtres:
+\begin{itemize}
+    \item la \textit{forget gate}). Elle a pour but de nettoyer la mémoire engrangée dans la \textit{cell state} en fonction de la valeur d'entrée et de l'\textit{hidden state} précédent. 
+    \item l'(\textit{input gate}). Elle a pour rôle de filter dans les valeurs d'entrées celles qui doivent avoir un impact sur la mémoire.
+    \item l'\textit{output gate}. En fonction de la mémoire et de la valeur nouvellement acquise de l'\textit{hidden state}, elle décide de supprimer ou non des valeurs de celui-ci.
+\end{itemize}
+La combinaison de ces trois systèmes aura alors pour effet de créer un environnement propice à la propagation. Cependant, dans une analyse des réseaux % double couche
+
+GRU.
+
 
 \subsection{CNN}
