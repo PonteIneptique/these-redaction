@@ -25,7 +25,7 @@ La lemmatisation, en latin, possède une histoire particulièrement riche et par
 
 Il faut noter que les études classiques ont fait usage de la lemmatisation avant le passage à son usage informatique, à travers la création des index et en particulier, dans leur forme la plus pure, des concordanciers. M. et R. Rouse date l'apparition des concordanciers\footcite{rouse_concordance_1984} dans leur forme plus ou moins actuelle au XIIIème siècle, à travers les trois concordances verbales de la Bible, à savoir dans l'ordre chronologique celle de Saint Jacques (circa 1235), la concordance anglaise (sans datation connue, sans exemplaire survivant) et la troisième concordance, qui ne saurait être rédigée après 1285. Les auteurs de cette histoire de la concordance attribue par ailleurs l'apparition de cette forme non seulement au besoin d'enseigner et d'étudier les Écritures mais aussi de rassembler une pratique apparaissant au cours du XIIème siècle de la \textit{concordantia}, qui consistait dans les gloses à adjoindre les références d'autres passages de la Bible liés au terme glosé. Quoiqu'il en soit, il apparait dans ces concordances, comme dans les dictionnaires, une vedette (le lemme) avec l'ensemble de ces formes fléchies en contexte. Il faudra attendre le XIVè siècle, puis le XVè siècle pour qu'apparaissent deux autres concordances, l'une sur la Septante grecque, l'autre sur l'ancien testament hébreux.
 
-\begin{figure}[]
+\begin{figure}[h]
     \centering
     \includegraphics[width=10cm]{results/lemmatisation/histoire/concordanciers.png}
     \caption{Accumulation par dates de concordanciers conservés à la Bibliothèque Nationale de France}
@@ -49,7 +49,7 @@ Cependant, si l'on retient pour lemmatiseur une définition stricte d'annotation
 Dans ce contexte, les lemmatiseurs commencent à avoir besoin de données annotées (\textit{cf.} Chapitre Corpus [ToDO]). Parmi ceux-là, TreeTagger a, semble-t-il, reçu les faveurs de la communauté des lettres classiques et des latinistes médiévaux, bien qu'il ne soit \textit{a priori} pas le plus performant\footcite[Voir]{eger_lexicon-assisted_2015}. Plusieurs pistes sont à évoquer pour cette situation, sans qu'aucune preuve puissent être apportée. Il se pourrait que les phénomènes suivants aient fortement influencé sa place actuelle dans le domaine: son incorporation via TXM, sa prise en main relativement tôt dûe à son ainesse de presque 10 ans sur certains autres taggers, sa facilité d'installation, la constitution de modèles relativement tôt. 
 
 
-\begin{figure}[]
+\begin{figure}[h]
     \centering
     \resizebox{\textwidth}{!}{%
     \includegraphics{results/lemmatisation/histoire/floating-point-operations-per-second.png}%
@@ -67,7 +67,7 @@ Ces lemmatiseurs font face ensuite aux modèles complexes de \textit{deep learni
 
 Dès 1965 et la création du LASLA donc, L. Delatte et É. Evrard cherchent à automatiser, en partie, la sélection des informations par lemmatisation automatique. Ce fonctionnement repose sur la constitution de plusieurs bases, qui correspondent majoritairement au fonctionnement des trois autres outils cités plus haut, à savoir Words de W. Whitaker, Morpheus de G. R. Crane, Collatinus de Y. Ouvrard (puis P. Verkerk à partir de 2015) ou encore, parmi les plus récents, LemLat: une base de lemmes, reliées à des bases de formes et de radicaux, permettent d'analyser des formes (\textit{cf.} \ref{lemmatisation:outils:collatinusAlgorythme} et \ref{lemmatisation:outils:collatinusAlgorythme} pour des exemples basés sur Collatinus). Chacun de ces lemmatiseurs est basé sur des dictionnaires différents, faisant état de traditions philologiques différentes en fonction des centres de recherche ou des nationalités. En effet, Word utilise l'Oxford Latin Dictionary, Morpheus utilise le Lewis \& Short, le LASLA utilise le Forcellini, Y. Ouvrard semble utiliser le Gaffiot, LemLat utilise principalement le Georges. Cette différence pose un problème de réconciliation de données que l'ERC LILA tente de régler en partie\footcite{mambrini_harmonizing_2019}. Dans cette catégorie de lemmatiseurs rentrent aussi les lemmatiseurs à dictionnaire de formes comme celui du CLTK\footcite{johnson2014cltk} qui enregistrent pour chaque forme connue les lemmes et les analyses possibles.
 
-\begin{figure}[]
+\begin{figure}[h]
     \centering
     \resizebox{\textwidth}{!}{%
     \includegraphics{results/lemmatisation/outils/CollatinusDB.png}%
@@ -77,7 +77,7 @@ Dès 1965 et la création du LASLA donc, L. Delatte et É. Evrard cherchent à a
 \end{figure}
 
 
-\begin{figure}[]
+\begin{figure}[h]
     \centering
     \includegraphics[width=8cm]{results/lemmatisation/outils/collatinus.png}
     \caption{Algorithme simplifié de Collatinus}
@@ -90,7 +90,7 @@ L'avantage principal de ce genre de lemmatiseur consiste en sa capacité d'ingé
 
 Au milieu des années 90 mais surtout au début des années 2000 apparaissent les lemmatiseurs et analyseurs de POS tels que TreeTagger\footcite{schmid1994treetagger}, mais aussi TnT\footcite{brants_tnt_2000} et StanfordNLP\footcite{toutanova_feature-rich_2003}. Leurs modèles sont principalement basés sur des structures à base de probabilités d'occurences de phénomènes en contexte, en intégrant la POS à l'analyse de lemme: on parle d'ailleurs principalement de POS-Tagger pour ces outils. Pour faire simple, ces taggers font usages de dictionnaires avec des fréquences possibles de POS affiliées, puis, en fonction en général de séquence de 3 à 4 mots, telle que "fortissimi sunt Belgae" pour "Horum omnium fortissimi sunt Belgae", ils cherchent à établir le tag le plus probable, avec des stratégies de décisions et d'éliminations diverses. TreeTagger change la donne en 1994 en apportant plusieurs modifications, qui probablement explique ses performances sur le latin. D'une part, TreeTagger constitue un dictionnaire de suffixes en plus du dictionnaire de forme, par ailleurs, pour faire face aux "\textit{ungrammaticalities}"\footcite[p.~2]{schmid1994treetagger} possible de l'anglais, il attribue une probabilité minimale aux probabilités nulles. Dans le contexte d'une langue latine à l'ordre des mots non fixe et à la morphologie riche, ces deux facteurs pourraient expliquer une augmentation des scores importants comparés aux modèles précédants.
 
-\begin{figure}[]
+\begin{figure}[h]
     \centering
     \includegraphics[width=\linewidth]{results/lemmatisation/outils/treetagger_type.png}
     \caption{Type de fonctionnement des outils de l'époque Treetagger. Une seule représentation des données est prise en compte au moment "d'un seul" calcul. Il s'agit principalement de modèles statistiques basées sur des probabilités d'apparition de phénomènes.}
@@ -118,7 +118,7 @@ Le LASLA a fait le choix de réserver \say{l'indication du genre pour les adject
     \begin{minipage}[t]{.4\linewidth}
         \centering
         \resizebox{\textwidth}{!}{%
-            \begin{tabular}{l|lll}
+            \begin{tabular}{l|rrr}
             \toprule
                      & PRO    & VER    & ADJ    \\ \midrule
             Com      & 30 004 & 14 841 & 26 384 \\
@@ -155,17 +155,17 @@ Le LASLA a fait le choix de réserver \say{l'indication du genre pour les adject
 \end{table}
 
 
-\begin{table}[]
+\begin{table}[h]
 \centering
 \begin{tabular}{l|lll}
 \toprule
          & MascNeut & MascFem & Com    \\ \midrule
 0        & 783      & 653     & 1 478  \\
 1        & 219      & 3 863   & 33     \\
-2        & 65 852   & 25 155  & 2 512  \\
-3        & 1 591    & 172     & 67 206 \\ \bottomrule
+2        & \textbf{65 852}   & \textbf{25 155}  & 2 512  \\
+3        & 1 591    & 172     & \textbf{67 206} \\ \bottomrule
 \end{tabular}
-\caption{Nombre de genres possibles par alignement Forme+Cas+Nombre via PyCollatinus}
+\caption{Nombre de genres possibles par alignement Forme+Cas+Nombre via PyCollatinus. Les informations qui ne sont pas en gras montrent une différence possible entre une annotation morphologique et morphosyntaxique. Il peut aussi s'agir d'erreurs de PyCollatinus.}
 \label{table:lasla:genders-alignement}
 \end{table}
 
@@ -181,7 +181,7 @@ Ainsi, dans la phrase du \textit{De Amicitia} de Cicéron, \say{\textbf{uidetis}
 
 \newpara
 
-\begin{table}[]
+\begin{table}[h]
 \centering
 \begin{tabular}{@{}lll@{}}
 \toprule
@@ -211,7 +211,7 @@ Le choix d'annoter des formes simples (les participes) par le temps de la forme 
 
 % ToDo: L'annotation de l'auxiliaire ?
 
-\begin{table}[]
+\begin{table}[h]
 \centering
 \begin{tabular}{@{}l|r|lll|lll@{}}
 \toprule
@@ -229,7 +229,7 @@ Formes “adjectivales”           & 1173    & 0.9067   & 0.1539       & 0.9227
 
 % Check participe futur passif ?
 
-\begin{table}[]
+\begin{table}[h]
 \centering
 \begin{tabular}{l|rrr|rrr}
 \toprule
@@ -252,7 +252,7 @@ Par-Pres-SemDep & 5 & 5 & 70 & 5 & 5 & 70 \\ \bottomrule
 \label{table:lasla:correction-temps}
 \end{table}
 
-\begin{table}[]
+\begin{table}[h]
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{l|rrrr|rrrr}
@@ -296,7 +296,7 @@ Pour compléter l'analyse précédente \ref{lemmatisation:extensibilite:tailles}
 
 % Analyse des résultats
 
-\begin{table}[]
+\begin{table}[h]
 \centering
 \begin{tabular}{lll}
 \toprule
@@ -318,7 +318,7 @@ Pour compléter l'analyse précédente \ref{lemmatisation:extensibilite:tailles}
 \label{table:perseus-ud:chunks-and-tokens}
 \end{table}
 
-\begin{table}[]
+\begin{table}[h]
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{l|llll|llll}

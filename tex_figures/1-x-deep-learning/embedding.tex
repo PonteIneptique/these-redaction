@@ -1,9 +1,9 @@
-\begin{figure}
+\begin{figure}[h]
     \centering
     \noindent\begin{minipage}{.32\linewidth}
         \begin{equation*}
             \begin{matrix}
-            fortissimi \\ 
+            Fortissimi \\ 
             sunt \\ 
             Belgae \\ 
             timendi \\ 
@@ -48,10 +48,7 @@
             
             \end{matrix}
         \end{equation*}
-    \end{minipage}%
-    \begin{minipage}{.32\linewidth}
-            \centering
-            \includegraphics[width=\linewidth]{results/deep-learning/explanations/visualisation_embedding.png}
-    \end{minipage}%
-    \caption{Remplacement de l'encodage one-hot par une couche  embedding: cette couche permet de faire des rapprochements, que l'on peut représenter ensuite comme en troisième partie par une projection en deux dimensions (PCA). On se rend alors compte que la proximité de fortissimi et timendi a été apprise par la machine.}
+    \end{minipage}
+    \caption{Remplacement de l'encodage one-hot par une couche  embedding. La proximité entre les vecteurs de \textit{Fortissimi} et \textit{Timendi} et la répétition des deux autres mots produisent deux phrases très proches mathématiquement.}
+    \label{figure:deep-learning:embeddings-encoding}
 \end{figure}
