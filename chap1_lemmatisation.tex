@@ -255,6 +255,9 @@ Majuscules uniquement aux noms propres et adjectifs "propres".
 
 \subsubsection{Arbre décisionnel d'entraînement.}
 
+
+
+
 \subsubsection{Impact du choix d'étiquettage des formes passives ou déponentes composées}
 \label{subsec:training:lasla-modification}
 
@@ -334,8 +337,34 @@ Pour la première expérience, nous voulons évaluer l'impact de la taille d'un 
     \item la tâche Gend, qui indique une compréhension de la morphologie.
 \end{itemize}
 
+Durant l'entraînement, le modèle principal ayant obtenu les meilleurs résultats sur le corpus global a montré des faiblesses sur les corpus de petites tailles. Pour chaque corpus, deux configurations ont donc été testées, une avec un module GRU simple couche (RNN=1) et un module GRU double couche (RNN=2) pour la partie de caractère embeddings. Les résultats (\textit{cf.} Table \ref{tab:percent_corpus_comparaison}) montrent que l'augmentation de la taille du corpus avec une même variété de genres et d'auteurs a un impact fort (plus de 1 point de gagné) jusqu'à l'utilisation de 40 \% du corpus, quelque soit, ou presque\footnote{Il existe en effet un valeurs aberrantes pour le genre et la POS pour le passage de 7.5\% du corpus à 10\% du corpus.}. Au contraire, les passage de 40\% à 60\% du corpus et de 60\% à 80\% ne représentent des gains que de 0.23 et 0.46 points respectivement, et donc, un passage de 96.79\% d'accuracy pour le corpus à 40\% à seulement 97.48\% pour le corpus à 80\%, pour un doublement du nombre de tokens annotés utilisés pour l'entraînement, soit une augmentation d'environ 600~000 tokens (passage de 622~238 tokens d'entraînement à 1~226~227).
 
 
+\begin{table}[]
+    \centering
+    \begin{tabular}{lrrrrrrrr}
+    \toprule
+RNN &  \% Corpus &   Lemme &  Gain Lemme &     POS &  Gain POS &    Genre &  Gain Genre \\
+\midrule
+1 &     0.010 &  0.7408 &      0.0000 &  0.7907 &    0.0000 &  0.8508 &     0.0000 \\
+1 &     0.050 &  0.8895 &      0.1487 &  0.8868 &    0.0961 &  0.9025 &     0.0517 \\
+2 &     0.075 &  0.9209 &      0.0314 &  0.9206 &    0.0338 &  0.9302 &     0.0277 \\
+2 &     0.100 &  0.9363 &      0.0154 &  0.9288 &    0.0082 &  0.9332 &     0.0030 \\
+2 &     0.200 &  0.9492 &      0.0129 &  0.9474 &    0.0186 &  0.9484 &     0.0152 \\
+2 &     0.400 &  0.9679 &      0.0187 &  0.9609 &    0.0135 &  0.9609 &     0.0125 \\
+2 &     0.600 &  0.9702 &      0.0023 &  0.9637 &    0.0028 &  0.9645 &     0.0036 \\
+2 &     0.800 &  0.9748 &      0.0046 &  0.9660 &    0.0023 &  0.9697 &     0.0052 \\
+    \bottomrule
+    \end{tabular}
+    \caption{Résultat des tests sur un corpus de test de 140~000 mots représentant 80\% du corpus de test original. RNN correspond au nombre de couches du module d'encodage des caractères. Les mesures de gain correspondent à la différence avec le modèle précédent, il faut donc lire "Le modèle à 80\% du corpus performe 0.46 points de plus que le modèle à 60\% du corpus."}
+    \label{tab:percent_corpus_comparaison}
+\end{table}
+
+D'après ces résultats, on peut penser que le lemmatiseur apprend "assez" de la richesse de vocabulaire et de la syntaxe d'un auteur pour s'enrichir jusqu'à environ 40\% de ses textes. Une stratégie de création de corpus pourrait donc se focaliser sur l'annotation d'extraits d'auteurs, plutôt qu'une approche d'annotation complète. Cependant, on peut aussi voir les gains minimes comme de véritables bonds en valeur absolue: si, pour un corpus de 10 millions de tokens, les résultats passent de 96.09\% d'accuracy à 96.97\%, et que ces résultats se retransmettent de manière régulière, le nombre d'erreurs passe de 391~000 à 303~000, soit une chute de 88~000 erreurs.
+
+
+
+\begin{comment}
 \subsubsection{Taille et diversité: corpus Perseus}
 \label{lemmatisation:extensibilite:perseus}
 
@@ -396,7 +425,7 @@ Pour compléter l'analyse précédente \ref{lemmatisation:extensibilite:tailles}
 \label{table:lemmatisation:perseus-scores}
 \end{table}
 
-
+\end{comment}
 
 \subsubsection{Variation de genre, variation de style}
 \label{lemmatisation:extensibilite:prose-vers}
