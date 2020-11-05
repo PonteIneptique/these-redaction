@@ -326,6 +326,14 @@ Par-Pres-Act  & 0.94      & \textbf{0.98} & 0.96     & 1210    & \textbf{0.95} &
 
 L'entraînement de Pie sur un corpus test donné nous informe de sa valeur sur le corpus en tant que tel. Se pose la question cependant de la capacité de nos modèles à s'appliquer à un corpus étranger, de quantifier l'impact d'une potentielle spécialisation. Pour étudier cet impact, nous proposons quatre expériences qui permettront d'évaluer l'impact de la taille du corpus d'entraînement, de sa variété en style et en genre, et enfin une étude hors-domaine s'appliquant d'abord à un texte important pour notre corpus, les Priapées, puis à des extraits de textes tardifs, le corpus du LASLA s'arrêtant avant la fin du premier siècle de notre ère..
 
+\subsubsection{Évaluation sur des données hors-domaine}
+
+Si les tests du modèles nous présentent un outil performant, au delà des 97\% de reconnaissance des lemmes, ils ne nous montrent qu'une face de son usage. En effet, la constitution du corpus de test est faites d'extraits non connus certes, mais d'extraits des même textes que les corpus d'entraînements. Ils ont donc une très forte probabilité de posséder les mêmes caractéristiques en terme de syntaxe, de vocabulaire, de coupes opérées par l'éditeur. Par ailleurs, ils posent un second problème qui est celui de la période couverte par le corpus d'origine, à savoir que l'auteur le plus tardif dans le corpus est Juvénal, puis Sénèque.
+
+Dans ce contexte, on parle en apprentissage machine de données hors domaine, des données dont aucune partie ou trait de définition ne se trouvent dans le corpus d'entraînement. Pour cette étude, nous proposons deux corpus hors domaines, l'un constitué de l'ensemble des Priapées 1 à 78 d'après la numérotation de Baehrens, l'autre constitué de 10 textes d'auteurs tardifs, majoritairement chrétiens. Les \textit{Priapées} offrent un texte à l'extrême fin de notre corpus en terme de date\footcite{citroni_les_2008} et sont parmi les oeuvres non-étiquettées les plus portées sur le sexe. Par ailleurs, le style court tout particulier de cet ouvrage offrent aussi un grand nombre de sujets différents sur un corpus finalement assez réduit (environ 3~000 mots). Le second corpus\footcite{glaise_2020_corpus_tardif} est constitué d'une dizaine d'oeuvres, dont les passages (hors ponctuation) comptent \textit{a minima} 500 mots et dont les auteurs datent du deuxième siècle au neuvième de notre ère (Eginhard). Si la date de fin de ce corpus est plus tardive que les bornes que nous nous sommes posées, elles permettent d'évaluer tout de même la capacité du modèle à s'étendre dans le temps malgré un entraînement spécifique sur un corpus républicain et du haut empire, où les marques de la chrétienté sont de fait absentes.
+
+
+
 \subsubsection{Étude de l'impact de la taille du corpus sur l'efficacité du modèle}
 \label{lemmatisation:extensibilite:tailles}
 
@@ -482,11 +490,6 @@ Les oeuvres de test sont toujours prises en hors domaine, à savoir qu'elles ne 
      \caption{Oeuvres et nombre de tokens pour le test }
      \label{table:lemmatisation:extensibilite:test-corpus}
 \end{table}
-
-\subsubsection{Données hors-domaine: les Priapées et texte gynécologique (?)}
-
-Out Of Domain avec Priapées et un autre corpus.
-
 
 \subsection{Alignement Vulgate}
 
