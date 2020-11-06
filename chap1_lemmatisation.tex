@@ -1,12 +1,12 @@
-\section{Lemmatisation}
+\chapter{Lemmatisation}
 \label{sec:lemmatiseurs}
 
-\subsection{Introduction}
+\section{Introduction}
 \label{subsec:lemma_intro}
 
 Afin de traiter un texte et d'établir des statistiques sur celui-ci, il est courant de le lemmatiser. La lemmatisation d'un texte, et \textit{a fortiori} d'un mot, correspond à sa transformation en une forme canonique, le \textit{lemme}. Traditionnellement identique à la forme d'entrée d'un dictionnaire, le lemme permet de rassembler sous une même étiquette l'ensemble des flexions et variations graphiques qu'il peut connaître. Pour le latin, il s'agira de rassembler ensemble \textsc{me} et \textsc{mihi} sous une racine commune \textsc{ego}. Cet étiquetage permet de clarifier le signal statistique en éliminant où cela est nécessaire un bruit inhérent aux langues flexionnelles (voire aux langues dont l'orthographe est variable ou localement influencé, commen l'ancien francais ou le latin des inscriptions). Son utilisation principale a longtemps eu pour but la capacité à trouver dans un texte les occurences d'un terme puis a permis la développement plus tardivement de la linguistique de corpus\footcite{mellet2002atouts}.
 
-\subsubsection{Tâches et définitions générales}
+\subsection{Tâches et définitions générales}
 
 La lemmatisation est donc un effort de traduction d'un texte en un ensemble de formes normalisées, de telle facon qu'\textit{un mot} ne doit connaître qu'une seule annotation de lemme. Cette définition exclut \textit{ipso facto} les outils d'analyse du vocabulaire tels que Collatinus. En effet, ce dernier ne propose pas un étiquettage unique mais un ensemble de possibilités pour chacun des éléments trouvés dans le texte. Pour exemple, là où \textsc{est} est identifiable comme \textsc{edo} et \textsc{sum} par collatinus, un lemmatiseur fait un choix unique, lié généralement au contexte et à la probabilité d'un des deux lemmes d'apparaître à cet endroit.
 
@@ -19,7 +19,7 @@ D'autre part, on pourra ajouter à l'annotation une information morphologique ou
 mais on la retrouve dans certaines études sur la reconnaissance d'entités nommées par exemple \footcite[Par exemple]{zirikly2014named}. Leur utilisation dans le cadre de notre étude, au moins pour évaluer leur apport potentiel, nous semble important: en effet, l'intuition voudrait que l'identification des agents (via les cas et la voie des verbes aux alentours), de leur genre et enfin les modes verbaux (l'impératif en particulier) pourraient apporter des contributions importantes à l'analyse automatique des passages.
 
 
-\subsubsection{Une histoire riche, en particulier pour le latin}
+\subsection{Une histoire riche, en particulier pour le latin}
 
 La lemmatisation, en latin, possède une histoire particulièrement riche et particulièrement liée à celle des humanités numériques \footnote{Une majorités des pistes de recherche nous est fournie par la présentation de N. Perreaux, \textit{cf.} \cite{perreaux_lemmatisation_2019}}. Il ne s'agira pas ici de faire une histoire exhaustive de la lemmatisation et de son application au latin, mais plutôt d'évoquer des continuités et des ruptures amenant à l'état que l'on connait aujourd'hui de la matière.
 
@@ -61,9 +61,9 @@ Dans ce contexte, les lemmatiseurs commencent à avoir besoin de données annot�
 
 Ces lemmatiseurs font face ensuite aux modèles complexes de \textit{deep learning} qui apparaissent au milieu et à la fin des années 2010, grâce à la montée en puissance encore des machines en calcul. En effet, dans un contexte de montée en puissance des cartes graphiques et de leurs GPUs (\textit{Graphical Processing Unit}, \textit{cf.} \ref{lemmatisation:histoire:puissance-gpu}), principalement poussée par une consommation du grand public de jeux vidéo\footcite{tanz_how_2017}, les chercheurs ont pu accéder à des machines beaucoup plus puissantes qu'auparavant pour des prix beaucoup plus faibles. En avril 2020, le prix d'une carte graphique professionnelle haut de gamme coûtait encore 7~602€ \footcite{noauthor_pny_2020} contre des prix variant de 1~149 à 1~899€ suivant les marques pour le haut de gamme particulier\footcite{noauthor_recherche_2020}\footnote{C'est sur ce modèle que l'ensemble des entraînements de cette thèse a été produit.}. Cette explosion de puissance, et sa démocratisation, permettent de prototyper ou d'assembler des machines de calcul à de plus nombreux laboratoires, permettant d'obtenir des différences en temps d'entraînement particulièrement importantes (la très grande majorité des calculs se faisant en opération à virgule flottante) permettant à la recherche d'essayer un plus grand nombre de combinaisons possibles de modèles (en 2017, d'après \ref{lemmatisation:histoire:puissance-gpu}, la différence de puissance est de x4). Cela permet à des projets comme Pandora \footcites{kestemont_lemmatization_2017}{de_gussem_integrated_2017}) puis Pie\footcite{manjavacas_improving_2019} de naître dans des laboratoires équipées de "petites" cartes graphiques. Enfin, parallèlement à cela, les géants du web investissent beaucoup dans des librairies de développement telles que PyTorch (Facebook) et Tensorflow (Google) qui permettent elles aussi de prototyper et de finaliser des modèles de prédiction, sans avoir à gérer la réimplémentation de modèles mathématiques complexes. 
 
-\subsection{Les différents types d'outil}
+\section{Les différents types d'outil}
 
-\subsubsection{Les outils à base de règles (dès 1965)}
+\subsection{Les outils à base de règles (dès 1965)}
 
 Dès 1965 et la création du LASLA donc, L. Delatte et É. Evrard cherchent à automatiser, en partie, la sélection des informations par lemmatisation automatique. Ce fonctionnement repose sur la constitution de plusieurs bases, qui correspondent majoritairement au fonctionnement des trois autres outils cités plus haut, à savoir Words de W. Whitaker, Morpheus de G. R. Crane, Collatinus de Y. Ouvrard (puis P. Verkerk à partir de 2015) ou encore, parmi les plus récents, LemLat: une base de lemmes, reliées à des bases de formes et de radicaux, permettent d'analyser des formes (\textit{cf.} \ref{lemmatisation:outils:collatinusAlgorythme} et \ref{lemmatisation:outils:collatinusAlgorythme} pour des exemples basés sur Collatinus). Chacun de ces lemmatiseurs est basé sur des dictionnaires différents, faisant état de traditions philologiques différentes en fonction des centres de recherche ou des nationalités. En effet, Word utilise l'Oxford Latin Dictionary, Morpheus utilise le Lewis \& Short, le LASLA utilise le Forcellini, Y. Ouvrard semble utiliser le Gaffiot, LemLat utilise principalement le Georges. Cette différence pose un problème de réconciliation de données que l'ERC LILA tente de régler en partie\footcite{mambrini_harmonizing_2019}. Dans cette catégorie de lemmatiseurs rentrent aussi les lemmatiseurs à dictionnaire de formes comme celui du CLTK\footcite{johnson2014cltk} qui enregistrent pour chaque forme connue les lemmes et les analyses possibles.
 
@@ -86,7 +86,7 @@ Dès 1965 et la création du LASLA donc, L. Delatte et É. Evrard cherchent à a
 
 L'avantage principal de ce genre de lemmatiseur consiste en sa capacité d'ingérer de nouveaux lemmes très facilement. Par exemple, dans Collatinus, \textit{lascivus} est donné par la ligne "lascīvus=lāscīvus|doctus|||a, um" où "a, um" est donné dans un but lexicographique mais n'a aucune utilité pour la génération des formes: seul "lascivus" et "doctus" (le modèle) suffisent pour cette partie de l'algorithme. Ainsi, pour ajouter un lemme "christianus", au cas où ce lemme tardif n'était pas inscrit dans le Gaffiot, il suffirait d'ajouter, scansion omise, "christianus|doctus|||a, um". À partir de ce simple ajout, la forme christiani sera nécessairement reconnue. Le désavantage de ces lemmatiseurs résident dans leur incapacité à faire le choix dans les analyses possibles, qu'il s'agisse des analyses morphologiques (lasciva est-il un nominatif singulier féminin ou un pluriel neutre ?) ou des choix de lemmes (ita est-il un adverbe ou la 2 éme personne du singulier présent impératif actif de ito, as, are ?).
 
-\subsubsection{Les outils sur base statistique (1994 et après)}
+\subsection{Les outils sur base statistique (1994 et après)}
 
 Au milieu des années 90 mais surtout au début des années 2000 apparaissent les lemmatiseurs et analyseurs de POS tels que TreeTagger\footcite{schmid1994treetagger}, mais aussi TnT\footcite{brants_tnt_2000} et StanfordNLP\footcite{toutanova_feature-rich_2003}. Leurs modèles sont principalement basés sur des structures à base de probabilités d'occurrences de phénomènes en contexte, en intégrant la POS à l'analyse de lemme: on parle d'ailleurs principalement de POS-Tagger pour ces outils. Pour faire simple, ces taggers font usages de dictionnaires avec des fréquences possibles de POS affiliées, puis, en fonction en général de séquence de 3 à 4 mots, telle que "fortissimi sunt Belgae" pour "Horum omnium fortissimi sunt Belgae", ils cherchent à établir le tag le plus probable, avec des stratégies de décisions et d'éliminations diverses. TreeTagger change la donne en 1994 en apportant plusieurs modifications, qui probablement expliquent ses performances sur le latin. D'une part, TreeTagger constitue un dictionnaire de suffixes en plus du dictionnaire de forme, par ailleurs, pour faire face aux "\textit{ungrammaticalities}"\footcite[p.~2]{schmid1994treetagger} possibles de l'anglais, il attribue une probabilité minimale aux probabilités nulles. Dans le contexte d'une langue latine à l'ordre des mots non fixe et à la morphologie riche, ces deux facteurs pourraient expliquer une augmentation des scores importants comparés aux modèles précédents.
 
@@ -99,7 +99,7 @@ Au milieu des années 90 mais surtout au début des années 2000 apparaissent le
 
 Le problème évident de ces lemmatiseurs reste aujourd'hui leur relation à un dictionnaire de forme et de lemmes qui ne leur permet pas (\textit{cf.} Figure \ref{lemmatisation:outils:type-treetagger}), en majorité, de prédire un lemme inconnu ou de gérer plus difficilement une forme inconnue en terme de lemmatisation. Les formes sont traitées telles quel, ce qui pose, même s'ils prennent en compte des suffixes, rapidement des problèmes pour la lemmatisation ou l'annotation POS dans le cadre du latin (avec des formes telles que -a communes à la fois aux noms, aux participes, aux adjectives, etc.).%exemple ? Vraiment difficile de savoir quoi dire ici...
 
-\subsubsection{Les outils sur base de traduction (Milieu et fin des années 2010 et après)}
+\subsection{Les outils sur base de traduction (Milieu et fin des années 2010 et après)}
 
 En 2016\footcite{kestemont_initial_2016}, Mike Kestemont propose une première version de Pandora\footcite{kestemont_lemmatization_2017}, un tagueur permettant à la fois la lemmatisation et l'annotation morpho-syntaxique. Sa particularité est de cibler le latin, à la fois médiéval et classique, en prenant en compte les difficultés inhérentes de la langue: d'une part, une morphologie très lourde, beaucoup plus lourde que celle de l'anglais par exemple; d'autre part, une syntaxe particulièrement libre. Ce travail est basé sur l'état de l'art en traitement automatique de la langue, à savoir des modèles d'apprentissage profond (\textit{deep learning}). Le modèle est constitué d'une couche d'embeddings, d'un encodeur LSTM et de plusieurs décodeurs fonctionnant soit sur une base LSTM (pour le lemme), soit sur une couche linéaire (pour les tâches morpho-syntaxique).
 
@@ -113,10 +113,10 @@ En 2016\footcite{kestemont_initial_2016}, Mike Kestemont propose une première v
 
 Ce lemmatiseur est perfectionné par E. Manjavacas\footcite{manjavacas_improving_2019} qui propose une architecture de code plus souple permettant entre autres de tester plusieurs configurations. Il apporte entre autre une meilleure gestion des caractères via des embeddings en CNN (plus rapide, aussi performant) et les modèles GRU pour les encodeurs et décodeurs. Le principe reste le même que pour la traduction automatique: au lieu de tenter de prédire des mots en anglais à partir des mots en français, \textit{pie} et les lemmatiseurs du même genre essaye de traduire chacune des lettres de la forme en lettres du lemme. De cette manière, il intègre des règles de lemmatisation telles que $\textrm{-ae} \rightarrow \textrm{-a}$. Cela signifie aussi que ce lemmatiseur peut avoir tendance à créer des lemmes inexistants, tout en respectant une certaine forme de logique interne: potentiellement, les lemmes ne sont pas les bons mais correspondent à ce que le lemmatiseur a estimé être une forme logique. % Faire une étude ici ?
 
-\subsection{Corpus et méthodes d'évaluation}
+\section{Corpus et méthodes d'évaluation}
 \label{subsec:lemma_corpus}
 
-\subsubsection{Les corpus disponibles}
+\subsection{Les corpus disponibles}
 
 Pour l'entraînement d'outils de lemmatisation, il existe très peu de corpus. On en compte quatre pour la période classique, utilisant deux dictionnaires de référence mais trois dictionnaire de POS. Ces trois corpus sont issus des projets Perseus, Proiel, Perseids et du LASLA. À l'exception de ce dernier, il sont tous primairement des corpus de treebank et non de lemmatisation: il semble qu'il n'y ait pas eu, historiquement, d'autres projets que ceux du LASLA pour la lemmatisation manuelle du latin classique.
 
@@ -151,7 +151,7 @@ Le corpus du LASLA, qui sera retenu de par sa taille et de par sa diversité, es
     \label{fig:lemmatisation:corpus-entrainement}
 \end{figure}
 
-\subsubsection{Le corpus du LASLA: choix d'étiquettage}
+\subsection{Le corpus du LASLA: choix d'étiquettage}
 
 Le corpus du LASLA utilisé présente 1 630 825 mots dans la version à laquelle nous avons accès. Il est constitué de 25 135 lemmes, 1 008 types d'annotation morphologique (\textit{par exemple}  `Ablatif Pluriel` et `2eme personne Pluriel Indicatif Parfait Actif`) pour 28 grandes catégories syntaxiques (Nom, verbes, etc.) divisées là où il est possible de le faire en déclinaisons (nom1, nom2, etc.). On trouve dans le corpus de rares erreurs d'annotations, principalement des annotations incomplètes. Ces erreurs semblent marginales au regard du nombre de tokens. Le LASLA a fait le choix d'un étiquettage pour majeure partie morpho-syntaxique avec ici et là le choix de laisser des ambiguités. Nous revenons donc sur deux choix portant des conséquences sur les résultats de lemmatisation: d'une part, l'annotation du genre, d'autre part l'annotation des verbes à formes composées.
 
@@ -251,14 +251,14 @@ Lemmes en diachronie, lemmes en synchronie: nocte, ablatif de nox ou adverbe ?
 
 Majuscules uniquement aux noms propres et adjectifs "propres".
 
-\subsection{Configurations évaluées et processus décisionnel}
+\section{Configurations évaluées et processus décisionnel}
 
-\subsubsection{Arbre décisionnel d'entraînement.}
-
-
+\subsection{Arbre décisionnel d'entraînement.}
 
 
-\subsubsection{Impact du choix d'étiquettage des formes passives ou déponentes composées}
+
+
+\subsection{Impact du choix d'étiquettage des formes passives ou déponentes composées}
 \label{subsec:training:lasla-modification}
 
 Le choix d'annoter des formes simples (les participes) par le temps de la forme composée provoque une difficulté d'apprentissage importante. En retirant du lot les formes adjectivales, le \gls{micro-average} des formes simples est de 0.9767 là où la même mesure pour les formes composées stagne à 0.7330. Par ailleurs, le \gls{macro-average} et l'\gls{ecart-type} montre ces disparités (\textit{cf.} Table \ref{table:lasla:formes-simples-formes-composees}). La déviation standard des temps simples peut-être majoritairement expliquée par des formes extrêmement rares comme l'impératif présent passif (1 occurence sur le corpus de test, 0 de précision) ce qui appuie l'importance des deux mesures de micro et de macro-average. Pour gérer ce problème, on propose de traduire les annotations automatiquement pour ces parfaits: les temps composés utilisant le parfait passif passent de \textsc{Mode-Temps-Voix} à \textsc{Par-Pft-Voix} (où voix correspondra donc à passif, déponent ou semi-déponent). Les modes composés de l'infinitif sont annotés avec le cas, il sera donc conservé. Les autres modes passent automatiquement au nominatif et perdent l'annotation de personne. Cette conversion double le nombre de participes futurs, augmente de moitié le nombre de participes parfaits passifs et n'a bien sûr aucune incidence sur les participes présents (\textit{cf.} Table \ref{table:lasla:correction-temps}.) Les résultats (Table \ref{table:lasla:formes-simples-formes-composees}) sont sans appel: l'intégralité des annotations de formes composées (qui correspondent désormais aux participes) connaissent un bond de 40 points en macro-average et 18 points en micro-average. L'écart-type reste fort dans la mesure où certaines classes sont trop rares ou fautives (par exemple, les éléments annotés syntaxiquement comme des participes futur passifs sont dans leur intégralité des participes parfaits passifs.). Les classes fautives restantes posent un problème mais leur poids dans l'entraînement est assez négligeable pour ne pas influer la reconnaissance des participes parfaits passifs, participes futurs actifs et participes présents actifs (Table \ref{table:lasla:main-particips}).
@@ -322,19 +322,72 @@ Par-Pres-Act  & 0.94      & \textbf{0.98} & 0.96     & 1210    & \textbf{0.95} &
 \label{table:lasla:main-particips}
 \end{table}
 
-\subsection{Pie: extensibilité des résultats}
+\section{Pie: extensibilité des résultats}
 
 L'entraînement de Pie sur un corpus test donné nous informe de sa valeur sur le corpus en tant que tel. Se pose la question cependant de la capacité de nos modèles à s'appliquer à un corpus étranger, de quantifier l'impact d'une potentielle spécialisation. Pour étudier cet impact, nous proposons quatre expériences qui permettront d'évaluer l'impact de la taille du corpus d'entraînement, de sa variété en style et en genre, et enfin une étude hors-domaine s'appliquant d'abord à un texte important pour notre corpus, les Priapées, puis à des extraits de textes tardifs, le corpus du LASLA s'arrêtant avant la fin du premier siècle de notre ère..
 
-\subsubsection{Évaluation sur des données hors-domaine}
+\subsection{Évaluation sur des données hors-domaine}
 
 Si les tests du modèles nous présentent un outil performant, au delà des 97\% de reconnaissance des lemmes, ils ne nous montrent qu'une face de son usage. En effet, la constitution du corpus de test est faites d'extraits non connus certes, mais d'extraits des même textes que les corpus d'entraînements. Ils ont donc une très forte probabilité de posséder les mêmes caractéristiques en terme de syntaxe, de vocabulaire, de coupes opérées par l'éditeur. Par ailleurs, ils posent un second problème qui est celui de la période couverte par le corpus d'origine, à savoir que l'auteur le plus tardif dans le corpus est Juvénal, puis Sénèque.
 
-Dans ce contexte, on parle en apprentissage machine de données hors domaine, des données dont aucune partie ou trait de définition ne se trouvent dans le corpus d'entraînement. Pour cette étude, nous proposons deux corpus hors domaines, l'un constitué de l'ensemble des Priapées 1 à 78 d'après la numérotation de Baehrens, l'autre constitué de 10 textes d'auteurs tardifs, majoritairement chrétiens. Les \textit{Priapées} offrent un texte à l'extrême fin de notre corpus en terme de date\footcite{citroni_les_2008} et sont parmi les oeuvres non-étiquettées les plus portées sur le sexe. Par ailleurs, le style court tout particulier de cet ouvrage offrent aussi un grand nombre de sujets différents sur un corpus finalement assez réduit (environ 3~000 mots). Le second corpus\footcite{glaise_2020_corpus_tardif} est constitué d'une dizaine d'oeuvres, dont les passages (hors ponctuation) comptent \textit{a minima} 500 mots et dont les auteurs datent du deuxième siècle au neuvième de notre ère (Eginhard). Si la date de fin de ce corpus est plus tardive que les bornes que nous nous sommes posées, elles permettent d'évaluer tout de même la capacité du modèle à s'étendre dans le temps malgré un entraînement spécifique sur un corpus républicain et du haut empire, où les marques de la chrétienté sont de fait absentes.
+Dans ce contexte, on parle en apprentissage machine de données hors domaine, des données dont aucune partie ou trait de définition ne se trouvent dans le corpus d'entraînement. Pour cette étude, nous proposons deux corpus hors domaines, l'un constitué de l'ensemble des Priapées 1 à 78 d'après la numérotation de Baehrens, l'autre constitué de 10 textes d'auteurs tardifs, majoritairement chrétiens. Les \textit{Priapées} offrent un texte à l'extrême fin de notre corpus en terme de date\footcite{citroni_les_2008} et sont parmi les oeuvres non-étiquettées les plus portées sur le sexe. Par ailleurs, le style court tout particulier de cet ouvrage offrent aussi un grand nombre de sujets différents sur un corpus finalement assez réduit (environ 3~000 mots). Le second corpus\footcite{glaise_2020_corpus_tardif} est constitué de dix-neuf d'oeuvres de dix-sept auteurs, dont les passages (hors ponctuation) comptent \textit{a minima} 500 mots et dont les auteurs datent du deuxième siècle au neuvième de notre ère (Eginhard) avec une concentration plus forte autour du quatrième\footnote{Le corpus comprend précisément 1 auteur du 2e, 3 du 3e, 5 du 4e, 4 du 5e, 2 du 6e, 1 du 7e, 1 du 9e.}. Si la date de fin de ce corpus est plus tardive que les bornes que nous nous sommes posées, elles permettent d'évaluer tout de même la capacité du modèle à s'étendre dans le temps malgré un entraînement spécifique sur un corpus républicain et du haut empire, où les marques de la chrétienté sont de fait absentes.
 
 
+\subsubsection{Résultats généraux}
 
-\subsubsection{Étude de l'impact de la taille du corpus sur l'efficacité du modèle}
+Le modèle propose des résultats convaincants sur une très grande majorité des \textit{Priapées}. La particularité des Priapées tiennent, d'un point de vue statistiques, de leur très petite taille: une médiane à 30 mots sur les soixante-seize premiers poèmes et une moyenne à 40 à cause d'individu abérrants tels que le poème 51 (150 mots) et 68 (237)\footnote{Au niveau des quartiles, 25\% des \textit{priapées} font moins de 24 mots, 75\% en font moins de 68. Toutes les tailles ne concernent que les mots, hors ponctuation donc mais incluant les clitiques.}. L'\textit{accuracy} peut donc grandement varier d'un texte à l'autre, une erreur pouvant représenter au pire une chute de 9\% d'un score\footnote{C'est le cas potentiellement des \textit{priapées} 13, 59 et 62 dans notre édition.} ou au mieux 0.4\% pour la plus grande priapée. Les résultats restent plus qu'honorable, avec une chute d'uniquement trois points par rapport au corpus de test principal et une accuracy globale de 94.2\% sur la tâche de lemmatisation (\textit{cf.} table \ref{tab:out_of_domain_global_accuracy} et figure \ref{fig:priapea_varations_boxplot}). Certaines priapées ont des scores particulièrement bas qui ne semblent pas avoir de lien avec leur taille: on notera ainsi les priapées 75 (82 mots, 84\%) et 46 (45 mots, 84\%) qui se trouvent dans la moyenne haute des tailles de poème.
+
+Comme le corpus des \textit{Priapées}, le corpus de latin tardif propose des résultats avec une faible perte, de l'ordre de trois points aussi. L'ensemble des autres annotations performent globalement mieux que sur les \textit{Priapées} (annotation `cas` à 92.9\% contre 89.4\%) ce qui peut potentiellement s'expliquer par la forme poétique et courte des épigrammes qui ne laisse pas une grande place à l'erreur. Dans ce corpus, deux textes font office de résultats aberrants, à savoir Jérôme, \textit{Commentaire sur Jérémie} et Grégroire de Tours, \textit{Historia Francum} qui chutent respectivement à 87 et 88\%. Les textes ont majoritairement la même taille, aux alentours de 500 à 600 mots, avec Commodien, \textit{Instructiones} comme texte le plus court (412 mots) et Augustin, \textit{De Civitate Dei} ainsi que Hilaire de Poitiers, \textit{Tractatus super psalmos} comme texte extrêmement longs\footnote{L'export des textes à corriger ayant allongé les textes involontairement, et l'annotation ayant été corrigée, l'ensemble de ces textes a tout de même été conservé, produisant de fait un écart avec la moyenne de 500 mots.}.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{l|rr|rr}
+    \toprule
+         Catégorie &  \multicolumn{2}{c}{\textit{Accuracy}} & \multicolumn{2}{c}{\textit{Accuracy quand applicable}} \\
+    \midrule    
+                {} &  Priapées &    Tardif                  & Priapées &    Tardif                                   \\
+    \midrule
+             lemma &     0.942 &    0.945                   &   N/A    &    N/A                                      \\
+               Deg &     0.968 &    0.975                   &   0.903  &    0.915                                    \\
+              Numb &     0.947 &    0.965                   &   0.941  &    0.964                                    \\
+            Person &     0.990 &    0.997                   &   0.960  &    0.991                                    \\
+Mood\_Tense\_Voice &     0.961 &    0.977                   &   0.870  &    0.923                                    \\
+              Case &     0.894 &    0.929                   &   0.841  &    0.880                                    \\
+              Gend &     0.917 &    0.928                   &   0.778  &    0.792                                    \\
+               pos &     0.950 &    0.676                   &   N/A    &    N/A                                      \\
+    \bottomrule
+    \end{tabular}
+    \caption{Résultat du modèle sélectionné sur le corpus des priapées et de latin tardif. L'accuracy quand applicable désigne la précision de l'algorithme sur les termes qui nécessitent une annotation, en d'autres termes, pour la personne par exemple, seuls les annotations sur les verbes sont concernées.}
+    \label{tab:out_of_domain_global_accuracy}
+\end{table}
+
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.7\linewidth]{results/lemmatisation/extensibilite/PriapeaBoxPlot.png}
+    \caption{Variation des taux d'erreurs sur l'ensemble du corpus des \textit{Priapées}}
+    \label{fig:priapea_varations_boxplot}
+\end{figure}
+
+\subsubsection{Étude des erreurs}
+
+Si ces chiffres annoncent potentiellement une très bonne nouvelle pour la période tardive et les sujets qui nous intéressent, ne s'attarder que sur une échelle quantitative macro serait une erreur de taille. Si la loi de Zipf s'applique logiquement, on sait que les termes les plus fréquents représentent une très grosse partie du corpus final: sur le corpus latin tardif, sur 15~188 formes, 4~908 formes dépendent de 34 lemmes qui apparaissent au minimum plus de 100 fois\footnote{Il s'agit du quantile 0.99 du corpus.}. Parmi ces lemmes, seuls 3 sont des verbes (\textit{sum}, \textit{dico}, \textit{facio}) et 3 des noms communs (\textit{deus}, \textit{dominus}, \textit{filius}); seuls les noms présentent une particularité thématique, les trois verbes étant particulièrement important dans la langue latine en général.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{results/lemmatisation/extensibilite/LatinTardifPosError.png}
+    \caption{Responsabilité des POS dans les erreurs du lemmatiseur. Chaque point représente un texte.}
+    \label{fig:latin_tardif_error_pos}
+\end{figure}
+
+On trouve bien des erreurs typiques du lemmatiseur, en regardant celles-ci de plus près: erreur du type lemme \textit{debeo} à la place du nom \textit{debitum}, erreur de déclinaison et de formation de la racine telle que \textit{terrenus} à la place de \textit{terrena}, majuscule oubliée dans les noms propres avec \textit{uenus}/\textit{Uenus}, orthographe du lemme réactionnaire (\textit{Aggaeus} pour \textit{Aggeus}). À la lecture des erreurs, on se rend compte d'une potentielle surreprésentation des noms propres dans les lemmes mal annotés et dont la racine supposée est fausse, capitalisation comprise: on notera par exemple \textit{Ierusalem/Hierusalis}, \textit{Hieremias/Hieremia}, \textit{Babylonius/Babylonii} chez Jérôme. La grande majorité des mots alors mal annotés partagent les traits suivant:
+
+\begin{itemize}
+    \item le lemme est issu de la langue grecque ou hébreuse: \textit{Christus}, \textit{Israel}, \textit{Pascha}, \textit{Dauid}.
+    \item le lemme possède une variation graphique latine forte, chose inconnue dans le corpus classique, telles que \textit{Bethleem}/\textit{Bethlehem}, \textit{Hierusalem}/\textit{Ierusalem}
+\end{itemize}
+
+\subsection{Étude de l'impact de la taille du corpus sur l'efficacité du modèle}
 \label{lemmatisation:extensibilite:tailles}
 
 Pour la première expérience, nous voulons évaluer l'impact de la taille d'un corpus sur les différents éléments de mesure à notre disposition. Nous proposons donc des coupes de corpus du corpus LASLA à 1\%, 5\%, 7.5\%, 10\%, 20\%, 40\%, et enfin 80\% du corpus. Dans chacun des corpus d'entraînement, le corpus de développement représentera lui aussi, 10\% de la portion de corpus utilisée pour l'entraînement. La découpe se fait au niveau de chacun des fichiers d'entraînement du LASLA, à savoir un découpage au niveau de l'oeuvre (\textit{Poésie} de Catulle) ou à un sous-niveau de l'oeuvre (César, \textit{Guerre des Gaules}, 1). Chaque découpe du corpus connait alors la même variété d'auteur, la même variété de genre et de thème. Les découpes sont prises aléatoirement dans les séquences constituées par le LASLA. Nous mesurons trois tâches, à savoir:
@@ -373,7 +426,7 @@ D'après ces résultats, on peut penser que le lemmatiseur apprend "assez" de la
 
 
 \begin{comment}
-\subsubsection{Taille et diversité: corpus Perseus}
+\subsection{Taille et diversité: corpus Perseus}
 \label{lemmatisation:extensibilite:perseus}
 
 Nous avons vu en \ref{subsec:treebank_corpora} que le corpus de Perseus pour le treebank, mis en forme pour le projet Universal Dependencies (\Gls{UD}), présente un corpus comprenant peu de textes et peu de mots comparé au corpus du LASLA (26 000 mots contre 1.7 millions) mais cependant une variété de style et d'époque assez forte parmi les corpus de ce genre.
@@ -435,7 +488,7 @@ Pour compléter l'analyse précédente \ref{lemmatisation:extensibilite:tailles}
 
 \end{comment}
 
-\subsubsection{Variation de genre, variation de style}
+\subsection{Variation de genre, variation de style}
 \label{lemmatisation:extensibilite:prose-vers}
 
 Afin d'aller encore plus loin dans l'analyse de l'effet du corpus, nous proposons de reproduire les principes de l'étude de C. Poudat et D. Longrée\footcite{poudat2009variations}. Dans cette étude, les auteurs analysent l'impact de l'unicité de genre, de style, chronologique sur l'entrainement de tagger automatiques, en particulier TreeTagger cité plus haut. L'expérience repose sur les comparaisons suivantes:
@@ -491,7 +544,7 @@ Les oeuvres de test sont toujours prises en hors domaine, à savoir qu'elles ne 
      \label{table:lemmatisation:extensibilite:test-corpus}
 \end{table}
 
-\subsection{Alignement Vulgate}
+\section{Alignement Vulgate}
 
 Problème des hapaxes ET des noms hébreux et grecs.
 
@@ -512,12 +565,12 @@ qui fuit Cainan, qui fuit Arphaxad, qui fuit Sem, qui fuit Noë, qui fuit Lamech
 qui fuit Methusale, qui fuit Henoch, qui fuit Jared, qui fuit Malaleel, qui fuit Cainan, \\
 qui fuit Henos, qui fuit Seth, qui fuit Adam, qui fuit Dei.}
 
-\subsubsection{Analyse exploratoire et tentative d'interprétation}
+\subsection{Analyse exploratoire et tentative d'interprétation}
 
 Projection 2D des embeddings ?
 
 
-\subsection{Analyse des résultats}
+\section{Analyse des résultats}
 \label{subsec:lemma_resultats}
 
 \begin{table}[]
@@ -543,7 +596,7 @@ Abram     & aber       & Abram      & 3      \\ \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Étiquetage automatique du corpus}
+\section{Étiquetage automatique du corpus}
 
 
 Chaque lemmatiseur ont quoiqu'il arrive une idée de la langue. Dans le cadre de l'annotation du latin, cela se trouve par exemple dans la différenciation ou non des lettres u/v et i/j dans les formes d'entrées. Dans ce cadre, il faut alors adapter la forme d'entrée au lemmatiseur afin d'éviter à tout prix une incapacité à traiter les données, tout simplement parce qu'elles n'ont pas été prévues. % A lire
