@@ -398,6 +398,8 @@ Une fois la catégorie des noms propres analysée, on trouve en plus des ces cas
     \item Un problème de lemme à l'orthographe "réactionnaire": dans le corpus des Priapées, on rencontre plusieurs fois l'erreur \textit{pedico} contre l'orthographe "juste" \textit{paedico} du LASLA.
 \end{itemize}
 
+Ces catégories semblent couvrir une très grande partie des erreurs hors-pronom et permettent d'éclairer les résultats obtenus, mais aussi de cibler les domaines où le corpus peut être amélioré ou là où un correcteur automatique pourrait intervenir, en ciblant par exemple les lemmes d'origine grecque ou hébreuse. Ils ne donnent cependant qu'un éclairage particulier sur le résultat du modèle, mais pas sur sa capacité d'apprentissage et de l'influence du corpus d'entraînement.
+
 \subsection{Étude de l'impact de la taille du corpus sur l'efficacité du modèle}
 \label{lemmatisation:extensibilite:tailles}
 
@@ -414,25 +416,26 @@ Durant l'entraînement, le modèle principal ayant obtenu les meilleurs résulta
 
 \begin{table}[]
     \centering
-    \begin{tabular}{lrrrrrrrr}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{ll|rrrrrrrr}
     \toprule
-RNN &  \% Corpus &   Lemme &  Gain Lemme &     POS &  Gain POS &    Genre &  Gain Genre \\
-\midrule
-1 &     0.010 &  0.7408 &      0.0000 &  0.7907 &    0.0000 &  0.8508 &     0.0000 \\
-1 &     0.050 &  0.8895 &      0.1487 &  0.8868 &    0.0961 &  0.9025 &     0.0517 \\
-2 &     0.075 &  0.9209 &      0.0314 &  0.9206 &    0.0338 &  0.9302 &     0.0277 \\
-2 &     0.100 &  0.9363 &      0.0154 &  0.9288 &    0.0082 &  0.9332 &     0.0030 \\
-2 &     0.200 &  0.9492 &      0.0129 &  0.9474 &    0.0186 &  0.9484 &     0.0152 \\
-2 &     0.400 &  0.9679 &      0.0187 &  0.9609 &    0.0135 &  0.9609 &     0.0125 \\
-2 &     0.600 &  0.9702 &      0.0023 &  0.9637 &    0.0028 &  0.9645 &     0.0036 \\
-2 &     0.800 &  0.9748 &      0.0046 &  0.9660 &    0.0023 &  0.9697 &     0.0052 \\
+     RNN &  \% Corpus &  Lemme &  $\Delta$(Lemme) &  $\theta$ Lemme &  $\Delta$($\theta$ Lemme) &   POS &  $\Delta$(POS) &  Genre &  $\Delta$(Genre) \\
+    \midrule
+       1 &     0.010 &  0.741 &     0.000 &    0.725 &       0.000 & 0.791 &   0.000 & 0.851 &    0.000 \\
+       1 &     0.050 &  0.889 &     0.149 &    0.858 &       0.133 & 0.887 &   0.096 & 0.902 &    0.052 \\
+       2 &     0.075 &  0.921 &     0.031 &    0.855 &      -0.002 & 0.921 &   0.034 & 0.930 &    0.028 \\
+       2 &     0.100 &  0.936 &     0.015 &    0.894 &       0.039 & 0.929 &   0.008 & 0.933 &    0.003 \\
+       2 &     0.200 &  0.949 &     0.013 &    0.882 &      -0.012 & 0.947 &   0.019 & 0.948 &    0.015 \\
+       2 &     0.400 &  0.968 &     0.019 &    0.922 &       0.041 & 0.961 &   0.013 & 0.961 &    0.012 \\
+       2 &     0.600 &  0.970 &     0.002 &    0.924 &       0.002 & 0.964 &   0.003 & 0.965 &    0.004 \\
+       2 &     0.800 &  0.975 &     0.005 &    0.910 &      -0.014 & 0.966 &   0.002 & 0.970 &    0.005 \\
     \bottomrule
-    \end{tabular}
-    \caption{Résultat des tests sur un corpus de test de 140~000 mots représentant 80\% du corpus de test original. RNN correspond au nombre de couches du module d'encodage des caractères. Les mesures de gain correspondent à la différence avec le modèle précédent, il faut donc lire "Le modèle à 80\% du corpus performe 0.46 points de plus que le modèle à 60\% du corpus."}
+    \end{tabular}}
+    \caption{Résultat des tests sur un corpus de test de 140~000 mots représentant 80\% du corpus de test original. RNN correspond au nombre de couches du module d'encodage des caractères. Les mesures de gain entre deux étapes, notées $\Delta$ correspondent à la différence avec le modèle précédent, il faut donc lire "Le modèle à 80\% du corpus performe 0.46 points de plus que le modèle à 60\% du corpus.". On ajoute une mesure sur un corpus hors domaine, celui de latin tardif, que l'on désigne dans les colonnes par un $\theta$}
     \label{tab:percent_corpus_comparaison}
 \end{table}
 
-D'après ces résultats, on peut penser que le lemmatiseur apprend "assez" de la richesse de vocabulaire et de la syntaxe d'un auteur pour s'enrichir jusqu'à environ 40\% de ses textes. Une stratégie de création de corpus pourrait donc se focaliser sur l'annotation d'extraits d'auteurs, plutôt qu'une approche d'annotation complète. Cependant, on peut aussi voir les gains minimes comme de véritables bonds en valeur absolue: si, pour un corpus de 10 millions de tokens, les résultats passent de 96.09\% d'accuracy à 96.97\%, et que ces résultats se retransmettent de manière régulière, le nombre d'erreurs passe de 391~000 à 303~000, soit une chute de 88~000 erreurs.
+D'après ces résultats, on peut penser que le lemmatiseur apprend "assez" de la richesse de vocabulaire et de la syntaxe d'un auteur pour s'enrichir jusqu'à environ 40\% de ses textes. Une stratégie de création de corpus pourrait donc se focaliser sur l'annotation d'extraits d'auteurs, plutôt qu'une approche d'annotation complète. Cependant, on peut aussi voir les gains minimes comme de véritables bonds en valeur absolue: si, pour un corpus de 10 millions de tokens, les résultats passent de 96.09\% d'accuracy à 96.97\%, et que ces résultats se retransmettent de manière régulière, le nombre d'erreurs passe de 391~000 à 303~000, soit une chute de 88~000 erreurs. Les progressions en POS et en Genre sont toutes les deux limitées au même titre que celle de lemme. Par ailleurs, lors d'une évaluation sur le corpus de latin tardif, on se rend compte que l'extensibilité connait de grosses variations et y compris des reculs (-0.2 points, -1.2 points, -1.4 points sur les passages 5\%, 20\% et 80\%). Nous ne pouvons ici que faire des hypothèse, et deux semblent plus probables que d'autres. La première consiste à estimer qu'il y a un phénomène aléatoire sur la performance en hors domaine, et que, sur une dizaine d'entraînements, on trouverait majoritairement des modèles améliorant le score précédent. Si cette hypothèse est alléchante, elle n'en reste pas moins assez faible, surtout pour des baisses de 1.4 points en hors domaine mais une augmentation même faible en test classique: elle serait plus crédible sur un écart de moins de 0.5 points, comme nous avons déjà pu le voir sur d'autres entraînements. La deuxième hypothèse consiste à un surapprentissage sur le corpus d'entraînement: le modèle se surspécialiserait sur le corpus classique, se rendant incapable de reconnaître le corpus tardif. Là encore cette hypothèse pose problème car elle n'expliquerait pas pourquoi, sur un corpus à 100\%, nos scores rebondissent à plus de 94.5\% (+3 points). Il n'est cependant pas à exclure une savante combinaison des deux phénomènes qui créerait ainsi une chute des plus remarquables.
 
 
 
