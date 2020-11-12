@@ -253,11 +253,6 @@ Majuscules uniquement aux noms propres et adjectifs "propres".
 
 \section{Configurations évaluées et processus décisionnel}
 
-\subsection{Arbre décisionnel d'entraînement.}
-
-
-
-
 \subsection{Impact du choix d'étiquettage des formes passives ou déponentes composées}
 \label{subsec:training:lasla-modification}
 
@@ -320,6 +315,71 @@ Par-Pres-Act  & 0.94      & \textbf{0.98} & 0.96     & 1210    & \textbf{0.95} &
 }
 \caption{Résultats sur les trois formes principales du participe. En dehors d'un avantage de 2 points sur le rappel des participes présents actifs, tous les autres scores connaissent une augmentation notable, malgré une augmentation nette du nombre de données à tester.}
 \label{table:lasla:main-particips}
+\end{table}
+
+\subsection{Méthode(s) d'entraînement et résultats préliminaires}
+
+L'entraînement du lemmatiseur Pie nécessite deux choses: un corpus d'entraînement, d'évaluation et de test ainsi qu'une série d'hyperparamètres concernant l'architecture du modèle et sa méthode d'apprentissage. Dans un premier temps, nous reviendrons sur les difficultés que peuvent représenter la génération d'un corpus d'entraînement et les différentes étapes à respecter. Ensuite, nous parlerons des différentes stratégies appliquées et proposerons un retour sur ces méthodes.
+
+\subsubsection{Particularités du corpus et pré-traitement}
+
+Le corpus du LASLA présente de nombreuses particularités, propre à son statut de corpus annoté manuellement en vue de l'étude de la langue. C'est un corpus que l'on pourrait qualifier d'éditorialisé: des choix de présentation forts sont faits. Parmi ces choix, 
+\begin{itemize}
+    \item Le corpus ne présente aucune ponctuation utilisée pour la syntaxe. Les phrases sont manuellement produites au moment de l'annotation.  
+    \item Il utilise des parenthèses et des chevrons pour traiter les formes composées du type \textit{scripti <sunt>} et son inverse \textit{<scripti> sunt}.
+    \item Il contient des apostrophes marquant des élisions  telles que \textit{venu'}, et des points pour les abbréviations telles que \textit{Tib.}. Plus rarement et uniquement pour les fragments, les points indiquent des manques.
+    \item Il n'utilise normalement pas de v minuscule ou de j. Leur présence extrêmement rare étant réservée à des oublis de correction. Au contraire, on ne trouve pas de U majuscule.
+    \item Les majuscules ne sont présentent que pour les noms propres et les adjectifs identifiant des peuples. Aucune majuscule n'est présente pour identifier des débuts de phrases.
+    \item Le grec est translittéré en betacode, entouré d'un \$ de chaque côté.
+    \item Certains termes n'apparaissent que sous des formes composées: \textit{usu capio}, \textit{usu verio}, \textit{res publica}, \textit{bene dico}, \textit{bene facio}, etc.
+    \item Les lemmes sont désambiguisés via des indicatifs numériques (de 1 à 5) ou des lettrés (A, N).
+    \item Les lemmes sont en toute majuscule.
+    \item Les nombres romains sont lemmatisés en toute lettre et ne sont pas normalisés: on trouve ainsi \textit{XIIII} lemmatisé en QUATVORDECIM.
+\end{itemize}
+Ces particularités demandent un pré-traitement important qui a pu varier en fonction des résultats. Pour traiter cela, nous avons développé le programme Protogénie qui permet de pré-traiter un corpus et surtout de garder en mémoire les éléments formant les corpus \textit{train}, \textit{dev} et \textit{test}. Nous proposons donc une chaîne de prétraitement permettant de normaliser les points d'entrée, y compris pour "simplifier" la tâche d'apprentissage du lemmatiseur. Ainsi, on présente les lemmes en minuscules, sauf pour les noms propres qui conservent une majuscule à l'initiale,. Les nombres romains sont traduits en nombres arabes et les lemmes simplifiés en leur équivalent: XIIII et son lemme QUATVORDECIM deviennent tous les deux 14. On essaie une configuration qui remplace les nombres supérieurs à 3 par 3, conservant ainsi les nombres 1, 2 et 3. Ce même outil sert à séparer la morphologie en autant de colonnes nécessaire. Une fois les corpus produits, on applique 3 fonctionnalités supplémentaires: la correction des temps composés (cf. \textit{supra} \ref{subsec:training:lasla-modification}), le recollage des clitiques aux termes qui les précèdent et leur identification dans le lemme, et enfin, l'ajout aléatoire de majuscules en début de phrases et à certaines mots du corpus.
+
+\subsubsection{Besoin d'optimisation}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{results/lemmatisation/entrainement/TrainingDuration96BoxPlot.png}
+    \caption{Durée d'entraînement des modèles. Les populations sont les suivantes: (Étape 1, Complète) 50, (Étape 1, Interrompue) 44, (Étape 2, Complète) 11, (Étape 2, Interrompue) 19, (Étape 3, Complète) 11, (Étape 3, Interrompue) 10.}
+    \label{fig:lemmatisationTrainingTime}
+\end{figure}
+
+Une fois le corpus généré, on peut lancer l'entraînement. Cependant, pie comporte 97 paramètres dont 13 sont des paramètres d'architecture et 18 des paramètres d'optimisation. Enrique Manjavacas nous avait dans un premier temps fourni des paramètres qui lui semblaient corrects mais nous avons souhaité vérifier leur optimisation. Dans ce cadre, nous avons utilisé deux méthodes. La première est manuelle et consiste à vérifier quelques paramètres en particulier identifiés comme clef, à savoir les dimensions de réseaux et le nombre de couches d'encodage des caractères. Cette méthode a eu l'avantage de nous permettre de confirmer l'identification de ces paramètres clefs. La deuxième fut réalisée avec un outil d'optimisation des hyperparamètres, optuna\footcite{optuna_2019}, en trois phases. D'abord, l'identification des paramètres ayant le plus d'impact sur l'apprentissage: cela aura permis d'identifier sur 94 entraînements qu'avant tout autre paramètre, les \textit{learning rates} et éléments de \textit{patience} (délais avant de réduire le \textit{learning rate} ou d'estimer qu'il n'y a plus d'amélioration possible) et de prévention du surapprentissage (\textit{dropout}) ont un impact majeur sur les résultats\footnote{On peut retrouver dans les annexes numériques les trois configurations: étape 1 config-optim-base-optuna.json, étape 2 config-optim-random-optuna.json et enfin config-optim-hidden-optuna.json.}. L'étape 2 a construit sur les meilleurs paramètres de \textit{learning rate} pour évaluer les paramètres d'entraînement. Enfin, une dernière étude fut faite sur la taille optimale de la couche contexte. Ce travail est assez particulier pour le domaine des lettres car il implique une attente laboratoire qui n'est pas familier à la recherche des sciences humaines: en fonction de la complexité de l'architecture, il faut compter jusqu'à 10h d'entraînement (cf. Figure \ref{fig:lemmatisationTrainingTime} et donc plusieurs jours voire semaines pour l'évaluation simple des meilleurs paramètres\footnote{Les trois étapes cumulées représentent 17 jours et 8 heures de calcul sans interruption.}.
+
+
+\subsubsection{Résultats et Variance}
+
+Une fois les paramètres supposément optimaux trouvés, on peut lancer une batterie d'entraînement, \textit{a minima} 5, sur cette configuration et évaluer les résultats. En effet, un entraînement de machine learning est particulièrement influençable par des phénomènes aléatoires, liés à l'initialisation des paramètres et poids, à l'ordre d'apparition des mots, etc. Sur l'expérience d'optimisation manuelle, on obtient une médiane des écarts-types à 0.10\% et une moyenne à 0.13\%: sur 18 configuration, on peut donc estimer qu'en moyenne, les résultats de tests seront dispersés en moyenne à 0.13\% du score moyen. Dans le cadre d'un modèle performant en moyenne à 97.5\%, cela signifie donc que le modèle peut avoir des résultats en moyenne autour de 97.35\% et 97.65\%.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.7\textwidth]{results/lemmatisation/entrainement/Variance.png}
+    \caption{Distribution des écarts-types d'\textit{accuracy} sur la tâche lemme pour 18 configurations de modèles d'entraînement sur 5 entraînements chacun. On estime alors que les modèles peuvent se retrouver, en cas de distribution parfaite, dans une intervalle de résultats d'environ 0.3\%. Pour plus de détails, \textit{cf.} figure \ref{fig:training_variation_per_model} en annexe.}
+    \label{fig:training_variation}
+\end{figure}
+
+Avec la dernière configuration, le modèle obtient un score de 97.41\% en lemme sur le corpus de test et de 88.45\% sur les formes inconnues (cf. Table \ref{tab:modelFinalLemmatisation}. Les tâches performent toutes particulièrement haut sauf le cas qui plafonne à 92.34\%. En aggrégant les résultats, on obtient les scores de 85.86\% et de 76.68\% sur les formes connues et inconnues. Ces scores sont plus faibles mais cela ne changent pas grand chose aux remarques précédentes: d'abord, car l'ensemble des tâches ne nous intéressent probablement pas (par exemple le degré ne devrait pas apporter grand chose à notre travail), ensuite, car le modèle reste très performant, 85.86\% étant particulièrement élevé, surtout sur 169~000 tokens de tests. Par ailleurs, avec ses 85.86\%, le modèle n'est pas si loin des scores les plus bas, à savoir le cas (-7 points au total, -2 points sur les formes concernées par un cas).
+
+\begin{table}[ht]
+    \begin{tabular}{l|rrr}
+    \toprule
+                    & \multicolumn{3}{l}{Accuracy}                           \\
+                    & Formes connues & Formes Inconnues &  Formes Concernées \\ \midrule
+    Lemme           & 97.41          & 92.92            &                    \\
+    POS             & 96.49          & 92.45            &                    \\
+    Genre           & 96.28          & 91.49            &   89.98            \\
+    Nombre          & 97.02          & 93.85            &   96.44            \\
+    Cas             & 92.34          & 87.37            &   87.84            \\
+    Degré           & 98.07          & 93.96            &   93.37            \\
+    Mode Temps Voix & 98.35          & 90.80            &   94.44            \\
+    Personne        & 99.71          & 98.15            &   98.49            \\ \midrule
+    Tâches agrégées & 85.86          & 76.68            &                    \\ \bottomrule 
+    \end{tabular}
+    \caption{Résultats du modèle final.}
+    \label{tab:modelFinalLemmatisation}
 \end{table}
 
 \section{Pie: extensibilité des résultats}
