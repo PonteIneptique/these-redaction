@@ -565,6 +565,8 @@ Pour compléter l'analyse précédente \ref{lemmatisation:extensibilite:tailles}
 \subsection{Variation de genre, variation de style}
 \label{lemmatisation:extensibilite:prose-vers}
 
+\subsubsection{Mise en place}
+
 Afin d'aller encore plus loin dans l'analyse de l'effet du corpus, nous proposons de reproduire les principes de l'étude de C. Poudat et D. Longrée\footcite{poudat2009variations}. Dans cette étude, les auteurs analysent l'impact de l'unicité de genre, de style, chronologique sur l'entrainement de tagger automatiques, en particulier TreeTagger cité plus haut. L'expérience repose sur les comparaisons suivantes:
 \begin{itemize}
     \item Style d'ouvrage contre style d'auteur (César, Guerre des Gaules; César, Guerre Civile)
@@ -583,7 +585,36 @@ Cependant, il nous semble important de dévier sur les corpus utilisés et const
     \item Une quatrième expérience portant sur des corpus de 390~000 tokens profitera de la richesse du corpus de Cicéron, en évaluant l'impact de la diversité d'auteurs (corpus divers, 392~402 tokens, 13 auteurs, 24 textes) contre celle de la diversité d'oeuvres d'un même auteur (corpus Cicéron Discours, 391~390 tokens, 1 auteur, 44 oeuvres)\footnote{On peut retrouver le découpage dans la table en annexe \textbf{A FAIRE}}.
 \end{itemize}{}
 
-Les oeuvres de test sont toujours prises en hors domaine, à savoir qu'elles ne peuvent pas faire partie des mêmes oeuvres que les oeuvres d'entraînement. Dans la mesure du possible, elles sont aussi issues de corpus d'auteurs différents (\textit{cf.} Table \ref{table:lemmatisation:extensibilite:test-corpus}).
+Les oeuvres de test sont toujours prises en hors domaine, à savoir qu'elles ne peuvent pas faire partie des mêmes oeuvres que les oeuvres d'entraînement. Dans la mesure du possible, elles sont aussi issues de corpus d'auteurs différents (\textit{cf.} Table \ref{table:lemmatisation:extensibilite:test-corpus}) et uniquement des données du LASLA, afin de ne pas introduire de variations d'annotation ou d'édition.
+
+\subsubsection{Outils de mesure}
+
+Avant d'analyser les résultats, nous devons nous assurer que les variables sont indépendantes, à savoir qu'un résultat sur un corpus deux corpus de tests ne sont pas liés entre eux: le résultat sur un Cicéron n'est pas nécessairement lié au résultat sur Properce. Pour cela, on calcule un $\chi^{2}$ qui, ramené au degré de liberté de notre table, nous donne une valeur $p$ indiquant la probabilité que nos variables ne soient pas indépendantes. Pour cela, on calcule entre une fréquence attendue, ici le nombre de bonnes réponses attendues toutes choses égales par ailleurs, notée $e$, et $e{ij}$ où $i$ correspond au modèle d'entraînement parmi $m$  et $j$ le corpus de test parmi $n$:
+
+\begin{equation}
+    e_{ij} = \left ( \sum_{i=1}^{m}O_{i} \times \sum_{j=1}^{n}O_{j}  \right ) / \sum_{i=1}^{m}\sum_{j=1}^{n}O_{ij}
+\end{equation}
+
+Cette probabilité nous permet ensuite de calculer un degré de magnitude entre la valeur observée et la valeur attendue appelé résidu de Pearson noté $r$ et calculé via la formule
+
+\begin{equation}
+    r_{ij} = \frac{O_{ij} - e_{ij}}{\sqrt{e_{ij}}}
+\end{equation}
+
+Par exemple, en figure \ref{figlemmatisation:longree:poetes}, le nombre de bonnes réponses $O_{Virgile/Eclogues}$ est de 5224 mais sa probabilité attendue, prenant en compte les résultats du modèle Virgile sur les autres textes et des autres modèles sur le corpus Eclogue, est de 4884. Son résidu de Pearson est donc de 4.86, ce qui indique un très fort écart à ce qui était attendu.
+
+\subsubsection{Résultats}
+
+\begin{figure}
+    \begin{minipage}[c]{0.40\linewidth}
+        \includegraphics[width=0.95\linewidth]{results/lemmatisation/longreeVariante/LongreeVariante-AccuracyStyleDePoesie-Lemme.png}
+    \end{minipage} \hfill
+    \begin{minipage}[c]{0.58\linewidth}
+        \includegraphics[width=0.95\linewidth]{results/lemmatisation/longreeVariante/LongreeVariante-AssocPlotStyleDePoesie-Lemme.png}
+    \end{minipage}
+    \caption{Résidus de Pearson pour les poètes}
+    \label{fig:lemmatisation:longree:poetes}
+\end{figure}
 
 \begin{table}
 \resizebox{\textwidth}{!}{%
@@ -618,7 +649,9 @@ Les oeuvres de test sont toujours prises en hors domaine, à savoir qu'elles ne 
      \label{table:lemmatisation:extensibilite:test-corpus}
 \end{table}
 
-\section{Alignement Vulgate}
+\section{Modèle LASLA+ et étiquettage du corpus}
+
+\subsection{Modèle avec ajout des corpora et alignement de la vulgate}
 
 Problème des hapaxes ET des noms hébreux et grecs.
 
@@ -639,39 +672,7 @@ qui fuit Cainan, qui fuit Arphaxad, qui fuit Sem, qui fuit Noë, qui fuit Lamech
 qui fuit Methusale, qui fuit Henoch, qui fuit Jared, qui fuit Malaleel, qui fuit Cainan, \\
 qui fuit Henos, qui fuit Seth, qui fuit Adam, qui fuit Dei.}
 
-\subsection{Analyse exploratoire et tentative d'interprétation}
-
-Projection 2D des embeddings ?
-
-
-\section{Analyse des résultats}
-\label{subsec:lemma_resultats}
-
-\begin{table}[]
-\begin{tabular}{@{}llll@{}}
-\toprule
-lemma     & prediction & token      & number \\ \midrule
-Christus  & Christi    & Christi    & 10     \\
-unum      & unus       & unum       & 10     \\
-qui       & quod       & quod       & 9      \\
-Ierusalem & Hierusalis & Hierusalem & 8      \\
-quod      & qui        & quod       & 7      \\
-Dauid     & Dauidis    & Dauid      & 6      \\
-Christus  & Christis   & Christi    & 5      \\
-caelus    & caelum     & caelos     & 4      \\
-Christus  & Christius  & Christi    & 4      \\
-christus  & Christus   & Christum   & 4      \\
-debitum   & debeo      & debitum    & 4      \\
-Iesus     & iesum      & Iesum      & 4      \\
-is        & eo         & eo         & 4      \\
-Israel    & Israceles  & Israhel    & 4      \\
-minoro    & minor      & minorati   & 4      \\
-Abram     & aber       & Abram      & 3      \\ \bottomrule
-\end{tabular}
-\end{table}
-
-\section{Étiquetage automatique du corpus}
-
+\subsection{Importance du pre-processing}
 
 Chaque lemmatiseur ont quoiqu'il arrive une idée de la langue. Dans le cadre de l'annotation du latin, cela se trouve par exemple dans la différenciation ou non des lettres u/v et i/j dans les formes d'entrées. Dans ce cadre, il faut alors adapter la forme d'entrée au lemmatiseur afin d'éviter à tout prix une incapacité à traiter les données, tout simplement parce qu'elles n'ont pas été prévues. % A lire
 
@@ -693,3 +694,5 @@ Gend               & -0.28          & -0.13          & -0.23          & -0.11 \\
 pos                & \textbf{-0.57} & -0.33          & \textbf{-0.66} & -0.18 \\ \hline
 \end{tabular}
 \end{table}
+
+\subsection{Étiquettage du corpus: exploration et différences entre le modèle LASLA et le modèle LASLA+}
