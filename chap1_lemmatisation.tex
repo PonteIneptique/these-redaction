@@ -587,37 +587,8 @@ Cependant, il nous semble important de dévier sur les corpus utilisés et const
 
 Les oeuvres de test sont toujours prises en hors domaine, à savoir qu'elles ne peuvent pas faire partie des mêmes oeuvres que les oeuvres d'entraînement. Dans la mesure du possible, elles sont aussi issues de corpus d'auteurs différents (\textit{cf.} Table \ref{table:lemmatisation:extensibilite:test-corpus}) et uniquement des données du LASLA, afin de ne pas introduire de variations d'annotation ou d'édition.
 
-\subsubsection{Outils de mesure}
-
-Avant d'analyser les résultats, nous devons nous assurer que les variables sont indépendantes, à savoir qu'un résultat sur un corpus deux corpus de tests ne sont pas liés entre eux: le résultat sur un Cicéron n'est pas nécessairement lié au résultat sur Properce. Pour cela, on calcule un $\chi^{2}$ qui, ramené au degré de liberté de notre table, nous donne une valeur $p$ indiquant la probabilité que nos variables ne soient pas indépendantes. Pour cela, on calcule entre une fréquence attendue, ici le nombre de bonnes réponses attendues toutes choses égales par ailleurs, notée $e$, et $e{ij}$ où $i$ correspond au modèle d'entraînement parmi $m$  et $j$ le corpus de test parmi $n$:
-
-\begin{equation}
-    e_{ij} = \left ( \sum_{i=1}^{m}O_{i} \times \sum_{j=1}^{n}O_{j}  \right ) / \sum_{i=1}^{m}\sum_{j=1}^{n}O_{ij}
-\end{equation}
-
-Cette probabilité nous permet ensuite de calculer un degré de magnitude entre la valeur observée et la valeur attendue appelé résidu de Pearson noté $r$ et calculé via la formule
-
-\begin{equation}
-    r_{ij} = \frac{O_{ij} - e_{ij}}{\sqrt{e_{ij}}}
-\end{equation}
-
-Par exemple, en figure \ref{figlemmatisation:longree:poetes}, le nombre de bonnes réponses $O_{Virgile/Eclogues}$ est de 5224 mais sa probabilité attendue, prenant en compte les résultats du modèle Virgile sur les autres textes et des autres modèles sur le corpus Eclogue, est de 4884. Son résidu de Pearson est donc de 4.86, ce qui indique un très fort écart à ce qui était attendu.
-
-\subsubsection{Résultats}
-
-\begin{figure}
-    \begin{minipage}[c]{0.40\linewidth}
-        \includegraphics[width=0.95\linewidth]{results/lemmatisation/longreeVariante/LongreeVariante-AccuracyStyleDePoesie-Lemme.png}
-    \end{minipage} \hfill
-    \begin{minipage}[c]{0.58\linewidth}
-        \includegraphics[width=0.95\linewidth]{results/lemmatisation/longreeVariante/LongreeVariante-AssocPlotStyleDePoesie-Lemme.png}
-    \end{minipage}
-    \caption{Résidus de Pearson pour les poètes}
-    \label{fig:lemmatisation:longree:poetes}
-\end{figure}
-
 \begin{table}
-\resizebox{\textwidth}{!}{%
+\resizebox{\linewidth}{!}{%
 \begin{tabular}{lll|ll|r|l}
     \toprule
      Auteur & Oeuvre & Passage & Genre & Tokens & Auteur présent dans corpus \\ \midrule
@@ -648,6 +619,87 @@ Par exemple, en figure \ref{figlemmatisation:longree:poetes}, le nombre de bonne
      \caption{Oeuvres et nombre de tokens pour le test }
      \label{table:lemmatisation:extensibilite:test-corpus}
 \end{table}
+
+\subsubsection{Outils de mesure}
+
+Avant d'analyser les résultats, nous devons nous assurer que les variables sont indépendantes, à savoir qu'un résultat sur un corpus deux corpus de tests ne sont pas liés entre eux: le résultat sur un Cicéron n'est pas nécessairement lié au résultat sur Properce. Pour cela, on calcule un $\chi^{2}$ qui, ramené au degré de liberté de notre table, nous donne une valeur $p$ indiquant la probabilité que nos variables ne soient pas indépendantes. Pour cela, on calcule entre une fréquence attendue, ici le nombre de bonnes réponses attendues toutes choses égales par ailleurs, notée $e$, et $e{ij}$ où $i$ correspond au modèle d'entraînement parmi $m$  et $j$ le corpus de test parmi $n$:
+
+\begin{equation}
+    e_{ij} = \left ( \sum_{i=1}^{m}O_{i} \times \sum_{j=1}^{n}O_{j}  \right ) / \sum_{i=1}^{m}\sum_{j=1}^{n}O_{ij}
+\end{equation}
+
+Cette probabilité nous permet ensuite de calculer un degré de magnitude entre la valeur observée et la valeur attendue appelé résidu de Pearson noté $r$ et calculé via la formule
+
+\begin{equation}
+    r_{ij} = \frac{O_{ij} - e_{ij}}{\sqrt{e_{ij}}}
+\end{equation}
+
+Par exemple, en figure \ref{fig:lemmatisation:longree:poetes}, le nombre de bonnes réponses $O_{Virgile/Eclogues}$ est de 5224 mais sa probabilité attendue, prenant en compte les résultats du modèle Virgile sur les autres textes et des autres modèles sur le corpus Eclogue, est de 4884. Son résidu de Pearson est donc de 4.86, ce qui indique un très fort écart à ce qui était attendu.
+
+\subsubsection{Poètes contre poètes}
+
+\begin{figure}[ht]
+    \hspace*{-0.05\linewidth}
+    \begin{minipage}[c]{0.55\linewidth}
+        \includegraphics[width=1\linewidth]{results/lemmatisation/longreeVariante/LongreeVariante-AccuracyStyleDePoesie-Lemme.png}
+    \end{minipage} \hfill
+    \begin{minipage}[c]{0.55\linewidth}
+        \includegraphics[width=1\linewidth]{results/lemmatisation/longreeVariante/LongreeVariante-AssocPlotStyleDePoesie-Lemme.png}
+    \end{minipage}
+    \caption{Accuracy en lemme de modèles entraînés sur des poètes avec leurs résidus de Pearson}
+    \label{fig:lemmatisation:longree:poetes}
+\end{figure}
+
+Les corpus d'entraînement des auteurs Virgile et Ovide ont un effet net (R=49 et R=1.6) sur les corpus de tests des auteurs respectifs. Si l'\textit{accuracy} de Virgile s'en ressent, celle d'Ovide reste globalement basse. Il faut rappeler ici la taille des corpus d'entraînement, seulement 90~000 tokens environ. Au contraire, le corpus mixte Horace et Lucrèce ne semble pas décoller, y compris sur les corpus d'Horace ou de Catulle. Les trois corpus n'ont pas une bonne reconnaissance du corpus prosaïque (César) ou semi-prosaïque (Pétrone). Bien que la Médée de Sénèque soit mieux reconnue dans l'ensemble, le résidue de Pearson ne permet pas d'établir une forte correlation avec aucun des modèles en particulier.
+
+\subsubsection{Style d'auteur, style de genre}
+
+\begin{figure}[ht]
+    \hspace*{-0.05\linewidth}
+    \begin{minipage}[c]{0.55\linewidth}
+        \includegraphics[width=1\linewidth]{results/lemmatisation/longreeVariante/LongreeVariante-AccuracyStyleDAuteurStyleDeGenre-Lemme.png}
+    \end{minipage} \hfill
+    \begin{minipage}[c]{0.55\linewidth}
+        \includegraphics[width=1\linewidth]{results/lemmatisation/longreeVariante/LongreeVariante-AssocPlotStyleDAuteurStyleDeGenre-Lemme.png}
+    \end{minipage}
+    \caption{Accuracy en lemme de modèles avec leurs résidus de Pearson: les corpus d'entraînements ont été élaborés pour permettent d'identifier l'importance de l'auteur et du genre en terme de lemmatisation.}
+    \label{fig:lemmatisation:longree:auteurVSforme}
+\end{figure}
+
+Dans cette étude, deux prosateurs font face à la prose de Sénèque sous deux formes (ses dialogues et traités d'une part, ses lettres d'autre part) et aux vers de Sénèque et de Plaute. On note tout de suite une nette relation entre accuracy et forme, puisque à la fois Catulle et Sénèque ont des R et des \textit{accuracies} particulièrement hauts sur Catulle et le théâtre de Sénèque. Au contraire, l'oeuvre versifié de Sénèque ne semble pas mieux comprendre Sńèque que d'autres prosateurs (résultats similaires entre Ciçeron, \textit{De Amicitia}, \textit{In Catilinam} et le \textit{De Brevitate Vitae} de Sénèque). L'inverse est aussi remaerquée puisqu'aucun des modèles de prose de Sénèque ne réagit nettement mieux que celui de Tacite, en accuracy ou en résidu de Pearson. Les auteurs de proses fonctionnent bien sur eux-mêmes et Cicéron ainsi que Tacite fonctionnent particulièrement bien sur Salluste: on peut supposer que les \textit{Verrines} et les \textit{Philippiques} de Cicéron, formant le corpus d'entraînement ici, partagent avec Tacite et les \textit{Catilinaires} de Salluste des questions de pouvoir politique, de corruption et - par extension - un vocabulaire et un style assez proche. Au contraire, les oeuvres philosophiques de Sénèque ne sont pas assez marquées, et en tout cas top éloignées du \textit{De Amicitia} dans leur style pour influer de quelque manière. Pour finir, après deux tests, on se rend compte du caractère presque neutre du Satyricon de Pétrone qui ne semble profiter ni de la prose ni du vers ni encore de la période, mais qui profite tout de même du passage de 90~000 à 115~000 tokens du corpus d'entraînement
+
+\subsubsection{Versificateur contre prosateur}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.7\linewidth]{results/lemmatisation/longreeVariante/LongreeVariante-AccuracyModeDExpression-Lemme.png}
+    \includegraphics[width=0.7\linewidth]{results/lemmatisation/longreeVariante/LongreeVariante-AssocPlotModeDExpression-Lemme.png}
+    \caption{Accuracy en lemme de modèles avec leurs résidus de Pearson: chaque corpus est formé uniquement de prose ou de vers.}
+    \label{fig:lemmatisation:longree:proseVSvers}
+\end{figure}
+
+Avec la troisième expérience, le corpus double mais présente désormais une unité de forme: celle d'un modèle en prose contre celle d'un modèle en vers. Les résultats sont criants, avec une très forte efficacité du modèle prose sur la prose, en $r$ ou en \textit{accuracy}, avec un écart allant jusqu'à 12~points pour le \textit{Bellum Africanum}. Ici, trois auteurs sont totalement absents  des corpus d'entraînements et doivent retenir notre attention, car, logiquement, le style d'auteur ne joue pas dans les scores: il s'agit de Pétrone, de Salluste et de Catulle (nous excluons le Pseudo-César du \textit{Bellum Africanum} par la proximité stylistique recherchée par l'auteur avec un des auteurs du corpus.). Nous notons que si la prose fonctionne bien mieux, les vers ne semblent pas nécessairement surperformer en \textit{accuracy} avec des écarts plus réduits, mais tout de même présents. Encore une fois, le \textit{Satyricon} fait office de frontière, avec l'écart le plus réduit de tout le corpus.
+
+\subsubsection{Diversité des auteurs contre celle d'un auteur}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.7\linewidth]{results/lemmatisation/longreeVariante/LongreeVariante-AccuracyDiversiteDAuteursContreDiversiteDAuteur-Lemme.png}
+    \includegraphics[width=0.7\linewidth]{results/lemmatisation/longreeVariante/LongreeVariante-AssocPlotDiversiteDAuteursContreDiversiteDAuteur-Lemme.png}
+    \caption{Analyse de l'efficacité d'un grand corpus d'auteur contre une diversité de styles (Accuracy en lemme et résidu de Pearson)}
+    \label{fig:lemmatisation:longree:divAuteursVSTailleAuteur}
+\end{figure}
+
+Sur cette dernière expérience, nous posons la question suivante: dans le cadre d'un modèle entraîné sur un corpus déjà conséquent 390~000 tokens, la diversité des auteurs et des genres prime-t-elle sur celle d'un auteur ? Autrement dit, dans le cadre d'une création de corpora d'entraînement, vaut-il mieux annoter beaucoup d'auteurs, quitte à ne pas chercher à annoter les oeuvres complètes, ou bien un seul ? Les résultats, en \textit{accuracy}, sont sans appel: la diversité des auteurs permet de surclasser un corpus uni-auteur sur tous les auteurs hors-domaine (Salluste, Catulle, Pétrone), sur les auteurs partagés à l'exception de l'auteur utilisé dans le corpus unifié. Et nous noterons sur ce dernier corpus test que la différence est extrêmement limitée, de 0.01 à 0.02 points malgré une spécification du modèle sur le corpus Cicéronien. Enfin, il semble que le Satyricon fonctionne enfin mieux en \textit{accuracy} avec un mélange prose et vers, cependant, le $r$ ne nous permet pas de conclure en faveur de cette hypothèse.
+
+\subsubsection{Conclusion}
+
+Sur la base de ces résultats, on distingue les effets suivants:
+\begin{itemize}
+    \item Le style d'un auteur semble plus déterminant que l'époque (figure \ref{fig:lemmatisation:longree:poetes}) ou la variété (figure \ref{fig:lemmatisation:longree:divAuteursVSTailleAuteur}), y compris quand ce style est copié par des imitateurs. Cet effet tend à se limiter sur des corpus très importants (figure \ref{fig:lemmatisation:longree:divAuteursVSTailleAuteur})
+    \item La forme, en particulier poétique, prend la priorité sur le style d'un auteur (figures \ref{fig:lemmatisation:longree:auteurVSforme} et \ref{fig:lemmatisation:longree:proseVSvers}).
+    \item Le genre, comme la philosophie ou l'histoire en figure \ref{fig:lemmatisation:longree:auteurVSforme}, ont un relativement faible impact. Il se pose la question de savoir s'il s'agit avant toute chose d'un partage de vocabulaire liés à des événements rapportés et communs ou bien un véritable apprentissage de genre.
+\end{itemize}
 
 \section{Modèle LASLA+ et étiquettage du corpus}
 
