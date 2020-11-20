@@ -155,7 +155,7 @@ Le corpus du LASLA, qui sera retenu de par sa taille et de par sa diversité, es
 
 Le corpus du LASLA utilisé présente 1 630 825 mots dans la version à laquelle nous avons accès. Il est constitué de 25 135 lemmes, 1 008 types d'annotation morphologique (\textit{par exemple}  `Ablatif Pluriel` et `2eme personne Pluriel Indicatif Parfait Actif`) pour 28 grandes catégories syntaxiques (Nom, verbes, etc.) divisées là où il est possible de le faire en déclinaisons (nom1, nom2, etc.). On trouve dans le corpus de rares erreurs d'annotations, principalement des annotations incomplètes. Ces erreurs semblent marginales au regard du nombre de tokens. Le LASLA a fait le choix d'un étiquettage pour majeure partie morpho-syntaxique avec ici et là le choix de laisser des ambiguités. Nous revenons donc sur deux choix portant des conséquences sur les résultats de lemmatisation: d'une part, l'annotation du genre, d'autre part l'annotation des verbes à formes composées.
 
-\newpara
+\subsubsection{Le cas du genre}
 
 Le LASLA a fait le choix de réserver \say{l'indication du genre pour les adjectifs, numéraux, les adjectifs-pronoms, les formes déclinées du verbe, hormis le gérondif}\footcite[p.~27]{BodsonCodification1966} dont la répartition est décrite en table \ref{table:lasla:genders-par-pos}. Ce choix a pour conséquence de laisser en partie le genre des noms inconnus: on ne pourra distinguer, dans le contexte de notre recherche, les noms par leur genre masculin ou féminin. On pourrait imaginer un travail de réannotation de tous les lemmes dont la POS est NOM avec leur genre quand il est fixe. Ce travail serait potentiellement riche d'influence sur les statistiques finales. Par ailleurs, le genre, à l'inverse du cas et du nombre, n'a pas été analysé en contexte (et donc syntaxiquement) mais en hors contexte (et donc morphologiquement), ce qui laisse des ambiguités comme \textit{bonum} qui est à la fois masculin et neutre à l'accusatif singulier. Dans ce contexte, le LASLA crée trois genres morphologiques supplémentaires des genres classiques: les genres Commun, Masculin-Féminin, Masculin-Neutre (dont la répartition dans le corpus d'entraînement est visible en \ref{table:lasla:genders-par-corpus}). L'explication derrière ce choix, disponible dans l'article de Bodson\footcite{BodsonCodification1966}, réside dans un problème technique de 1966, qui risquait de poser un problème d'export. Malheureusement, ce choix, aujourd'hui pourtant possible à résoudre, crée une forme de dette technique pour plus de 300 000 mots. On remarque cependant, à la marge, par alignement avec les formes possibles sur collatinus \footnote{\textit{Cf.} annexes numériques} qu'une analyse en contexte a été faite à la marge (\textit{cf.} table \ref{table:lasla:genders-alignement}).
 
@@ -214,7 +214,7 @@ Le LASLA a fait le choix de réserver \say{l'indication du genre pour les adject
 \label{table:lasla:genders-alignement}
 \end{table}
 
-\newpara
+\subsubsection{Les formes verbales composées et leur annotation}
 
 Un autre choix du LASLA a été d'annoter les participes avec le temps de la forme composée: pour amatus sum, amatus portera l'information du temps (parfait), du mode (indicatif), de la personne (1) et du genre (Masc) sans porter l'information du cas pourtant présent morphologiquement. Au contraire, \textit{sum} portera la simple annotation de verbe auxiliaire. Cela pose un problème de confusion pour une même forme amatus qui peut être annoté comme simple participe parfait passif avec une annotation Mode Voix Temps ajoutée à une annotation Genre Nombre Cas, et une forme amatus (elipse ou présence de) sum qui elle sera annotée aussi avec Mode Voix Temps mais le triplet Genre Nombre Personne. Dans cette optique, \textit{amatus} peut représenter 6 formes conjuguées hors participes, 7 pour le neutre \textit{amatum} (\textit{cf.} Table \ref{table:amatus_forms}). %
 %
@@ -245,11 +245,11 @@ amatum (iri) & Infinitif & Futur \\ \bottomrule
 
 Cette multiplicité d'annotation peut rendre le travail de l'annotation automatique, car elle sous-entend une capacité pour le lemmatiseur de reconnaître les formes au nominatif utilisées de manière adjectivales des formes utilisées comme verbe principal ou verbe subordonné. Nous proposons en \ref{subsec:training:lasla-modification} une analyse de modifications pour une simplification du travail du modèle, en vue de la création d'un modèle morphologique et non morpho-syntaxique plus performant.
 
-\newpara
+\subsubsection{Création de lemmes, lexicographie, lexicalisation}
 
-Lemmes en diachronie, lemmes en synchronie: nocte, ablatif de nox ou adverbe ?
+La question de la lexicalisation dans le cadre de la lemmatisation est particulièrement importante, en ce qu'elle peut définir ce qui fait lemme. Doit-on confondre lexicalisation, création de lemme et création lexicographique pour autant? Au sens original du terme \textit{lemme}, la création lexicographique et celles d'un lemme sont confondues, mais le glissement du dictionnaire vers la base de référentiel permet aussi de distinguer les deux et de faire des choix. Par exemple, dans les données du LASLA, on trouvera les lemmes \textit{Romani}, les Romains, et \textit{romanus, a, um}, romain, quoique le \textit{Forcellini}, dictionnaire source utilisé par le LASLA, ne donne que Romanus, et uniquement dans son \textit{Onomasticon}. Cette distinction se retrouve par ailleurs pour l'ensemble des noms de peuples ou d'habitants. Ce résultat est celui du choix de la primauté de la POS comme séparateur des lemmes: à partir du moment où les formes dans le LASLA sont annotés en fonction d'un couple Lemme-POS intangible, la substantivation d'un adjectif donne lieu à la création d'un lemme et donc d'une nouvelle entrée. L'alternative rejetée est celle d'une annotation de la POS en contexte, quelque soit la POS traditionnelle du lemme: on pourrait ainsi avoir un participe passé substantivé en POS NOMcom mais avec les traits morphologiques du verbe. Ce choix du LASLA n'est pas évident et peut impliquer dès lors qu'il y a lexicalisation d'adjectifs substantivés, même dans un cas unique ou du moins réduit, il y a création de lemme. De fait, doit-on prendre la lexicalisation, c'est-à-dire d'une certaine manière la prise d'autonomie d'une forme pour un nouvel usage, comme phénomène initiateur de création de lemme ? Cette question est difficile, et le débat peut être complexe. Le défi de la diachronie se pose avec l'annotation, à partir du même référentiel, de faire des choix certains et solides. Cela reste un choix et il est clair que chacune des méthodes a ses avantages, et qu'il reste important de quantifier ses impacts en termes de créations d'entrée\footnote{Dans le dictionnaire du LASLA, 12.77\% des lemmes adjectifs peuvent correspondre à des participes et des adjectifs, 12.67\% des adverbes correspondent à des ablatifs de NOMcom, 42,96\% des adverbes correspondent à des instrumentaux en -e ou des formes en -iter d'adjectifs et enfin 23.87\% des lemmes de noms communs peuvent correspondre à des adjectifs substantivés.}.
 
-Majuscules uniquement aux noms propres et adjectifs "propres".
+Cependant, face à ce choix, la question de l'annotation en contexte peut aller plus loin. Parmi les autres choix d'annotation, on peut imaginer, dans le cadre où les adverbes dérivés d'adjectifs ou de noms sont des survivances d'un cas instrumental en -e long, d'un ablatif singulier pour les substantifs, de ne pas créer de lemme mais d'annoter, en quasi-uchronie, la forme ? Serait-il intéressant dans cette situation de répertorier les termes ici sous un cas perdu, étymologique, quand cela est nécessaire, et d'annoter la POS en contexte ? Si ce choix ne semble par exemple pas si facile dans le cas des adjectifs, les substantifs à l'ablatif grammaticalisés du type \textit{nocte} laissent une part d'interprétation assez forte, la grammaticalisation n'étant pas toujours facilement identifiable\footcite{fruyt_adverbes_2008}, en dehors des cas particuliers de comparatifs qui ne sauraient bien sûr être appliqués à un nom (comme un \textit{noctissime}\footnote{Si l'on revient d'ailleurs à \cite{meillet_levolution_1922}, s'agit-il d'une grammaticalisation qui donne lieu à une nouvelle déclinaison au niveau du degré ou une création par analogie dans ce cas précis ?} ou bien \textit{magis merito} relevé par Claude Brunet\footcite{brunet_merito_2008}). Il existe bien sûr une alternative, à savoir de créer une base de connaissances claire connectant ensemble ces prises d'autonomie. C'est entre autre le projet de l'ERC LiLa qui court jusqu'en 2023\footcite{passarotti_interlinking_2020} et pour lequel - par exemple - existe une entrée \textit{merito}. Cependant, au moment de la rédaction, le seul type de relation identifié est celle de \textit{merito} avec une base de lemme (au sens de dérivation) \textit{mereo}, bien qu'une relation - peut-être trop faible - \textit{isHypoLemma} existe et relie par exemple \textit{meritus} et \textit{mereo/mereor}.
 
 \section{Configurations évaluées et processus décisionnel}
 
@@ -301,7 +301,7 @@ Par-Pres-SemDep & 5 & 5 & 70 & 5 & 5 & 70 \\ \bottomrule
 \label{table:lasla:correction-temps}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{l|rrrr|rrrr}
@@ -315,7 +315,7 @@ Par-Pres-Act  & 0.94      & \textbf{0.98} & 0.96     & 1210    & \textbf{0.95} &
 }
 \caption{Résultats sur les trois formes principales du participe. En dehors d'un avantage de 2 points sur le rappel des participes présents actifs, tous les autres scores connaissent une augmentation notable, malgré une augmentation nette du nombre de données à tester.}
 \label{table:lasla:main-particips}
-\end{table}
+\end{table} 
 
 \subsection{Méthode(s) d'entraînement et résultats préliminaires}
 
@@ -382,11 +382,28 @@ Avec la dernière configuration, le modèle obtient un score de 97.41\% en lemme
     \label{tab:modelFinalLemmatisation}
 \end{table}
 
+\subsubsection{Vers une typologie des erreurs}
+
+1.4.7 - Synchronie, Diachronie et Lemmatisation - Erreurs
+
+part-parf-as-verb: 6.70 % of errors
+verb-as-part-parf: 4.14 % of errors
+part-pres-as-verb: 1.24 % of errors
+verb-as-part-pres: 1.05 % of errors
+nom-as-something-else: 2.04 % of errors
+something-else-as-nom: 3.23 % of errors
+passif-as-actif: 0.55 % of errors
+actif-as-passif: 0.67 % of errors
+same-nominatif: 1.81 % of errors
+---
+total: 21.42 % of errors
+
 \section{Pie: extensibilité des résultats}
 
 L'entraînement de Pie sur un corpus test donné nous informe de sa valeur sur le corpus en tant que tel. Se pose la question cependant de la capacité de nos modèles à s'appliquer à un corpus étranger, de quantifier l'impact d'une potentielle spécialisation. Pour étudier cet impact, nous proposons quatre expériences qui permettront d'évaluer l'impact de la taille du corpus d'entraînement, de sa variété en style et en genre, et enfin une étude hors-domaine s'appliquant d'abord à un texte important pour notre corpus, les Priapées, puis à des extraits de textes tardifs, le corpus du LASLA s'arrêtant avant la fin du premier siècle de notre ère..
 
 \subsection{Évaluation sur des données hors-domaine}
+\ref{subsec:lemmatisation:hors-domaine}
 
 Si les tests du modèles nous présentent un outil performant, au delà des 97\% de reconnaissance des lemmes, ils ne nous montrent qu'une face de son usage. En effet, la constitution du corpus de test est faites d'extraits non connus certes, mais d'extraits des même textes que les corpus d'entraînements. Ils ont donc une très forte probabilité de posséder les mêmes caractéristiques en terme de syntaxe, de vocabulaire, de coupes opérées par l'éditeur. Par ailleurs, ils posent un second problème qui est celui de la période couverte par le corpus d'origine, à savoir que l'auteur le plus tardif dans le corpus est Juvénal, puis Sénèque.
 
@@ -703,48 +720,87 @@ Sur la base de ces résultats, on distingue les effets suivants:
 
 \section{Modèle LASLA+ et étiquettage du corpus}
 
-\subsection{Modèle avec ajout des corpora et alignement de la vulgate}
+Après évaluation des limites du modèle, on entraîne un second modèle, LASLA+, testé sur le même corpus de tests mais que l'on augmentera des corpora hors-domaine ainsi que de la Vulgate tagguée par Proiel alignée semi-automatiquement. Nous revenons alors sur les problèmes d'alignement de corpus, les probables erreurs qui se sont glissées et les difficultés que ce nouveau modèle rencontre. Nous aborderons ensuite la question du pré-traitement ou \textit{preprocessing} et de son impact sur la lemmatisation pour finir sur une évaluation rapide du corpus annoté automatiquement, via la recherche de termes posant des problèmes dans le corpus qui nous intéresse.
 
-Problème des hapaxes ET des noms hébreux et grecs.
+\subsection{Modèle LASLA+ avec ajout des corpora et alignement de la \textit{Vulgate}}
 
-\quote{Et ipse Jesus erat incipiens quasi annorum triginta, ut putabatur, filius Joseph, qui  \\fuit Heli, qui fuit Mathat, \\
+Notre corpus LASLA ne présente aucun auteur tardif, et donc aucun auteur chrétien. Pour remédier à ce manque, un corpus latin non médiéval existe et est libre de droit: celui de PROIEL\footcite{haug_creating_2008}. Proiel propose trois textes qui ne font pas partie du corpus LASLA, à savoir la \textit{Vulgate} de Jérôme, le \textit{Peregrinatio Aetheriae} et enfin l'\textit{Opus agriculturae} de Palladius. Pour des raisons de temps et d'optimisation de ce dernier, seule la Vulgate a été alignée avec le corpus du LASLA.
+
+On pourrait penser qu'un alignement d'un modèle à l'autre est une tâche simple, d'autant qu'\textit{a priori} le LASLA découpent peu voire jamais les lemmes en fonction de leur sens mais uniquement en fonction de leur POS et leur genre. Cependant, un alignement lemma/POS/morphologie requiert de s'assurer que les deux corpora ont le même usage de la morphologie et dans une moindre mesure des POS. Pour les lemmes, l'alignement se fait dans l'ordre suivant:
+\begin{enumerate}
+    \item Le lemme est présent tel quel dans le dictionnaire du LASLA. L'annotation lemme est donc conservée.
+    \item Le lemme existe avec un seul indice de disambiguisation: il est aligné
+    \item Le lemme existe avec plusieurs indices de disambiguisation, on compare alors les POS, par exemple pour \textit{ad} entre ADV et PRE.
+    \item Dans le cas où le lemme ne rentre pas dans ces catégories, on vérifie qu'il n'existe pas sous une autre orthographe, par exemple \textit{adulescens} chez Proiel existe sous \textit{adolescens1} ou \textit{adolescens2} suivant la POS, \textit{excaedo} en \textit{excido1}.
+\end{enumerate}
+
+La morphologie nécessite par ailleurs un alignement via la suppression du genre pour les formes qui ne sont ni des adjectifs, ni des pronoms, ni des participes. Ensuite, les genres sont alignés via la déclinaison dont relève les adjectifs ou les formes. La morphologie est aussi complétée: les indéclinables ne sont pas analysés ainsi par Proiel (mais plutôt comme des absences de morphologie), ce qui nécessite un réalignement. On finit par normaliser l'orthographe des formes et lemmes pour les couples U/V et J/I puis une première conversion est faite. Si cette étape est itérative, l'objectif reste de réduire au maximum les lemmes à corriger manuellement. Enfin, sur les derniers lemmes, plusieurs centaines, on aligne à la main avec le référentiel du LASLA et on crée des entrées quand le lemme est absent, ce qui est souvent le cas pour les noms propres. Cette dernière catégorie est très importante et démontra une nouvelle difficulté pour l'apprentissage, avec des cas d'hapaxes comme cette généalogie de \textit{Luc}, 3.23:
+
+\blockquote{Et ipse Jesus erat incipiens quasi annorum triginta, ut putabatur, filius Joseph, qui  \\fuit Heli, qui fuit Mathat, \\
 qui fuit Levi, qui fuit Melchi, qui fuit Janne, qui fuit Joseph, \\
 qui fuit Mathathiæ, qui fuit Amos, qui fuit Nahum, qui fuit Hesli, qui fuit Nagge, \\
 qui fuit Mahath, qui fuit Mathathiæ, qui fuit Semei, qui fuit Joseph, qui fuit Juda, \\
 qui fuit Joanna, qui fuit Resa, qui fuit Zorobabel, qui fuit Salatheil, qui fuit Neri, \\
-qui fuit Melchi, qui fuit Addi, qui fuit Cosan, qui fuit Elmadan, qui fuit Her, \\
-qui fuit Jesu, qui fuit Eliezer, qui fuit Jorim, qui fuit Mathat, qui fuit Levi, \\
-qui fuit Simeon, qui fuit Juda, qui fuit Joseph, qui fuit Jona, qui fuit Eliakim, \\
-qui fuit Melea, qui fuit Menna, qui fuit Mathatha, qui fuit Natham, qui fuit David, \\
-qui fuit Jesse, qui fuit Obed, qui fuit Booz, qui fuit Salmon, qui fuit Naasson, \\
-qui fuit Aminadab, qui fuit Aram, qui fuit Esron, qui fuit Phares, qui fuit Judæ, \\
-qui fuit Jacob, qui fuit Isaac, qui fuit Abrahæ, qui fuit Thare, qui fuit Nachor, \\
+\textit{...} \\
 qui fuit Sarug, qui fuit Ragau, qui fuit Phaleg, qui fuit Heber, qui fuit Sale, \\
 qui fuit Cainan, qui fuit Arphaxad, qui fuit Sem, qui fuit Noë, qui fuit Lamech, \\
 qui fuit Methusale, qui fuit Henoch, qui fuit Jared, qui fuit Malaleel, qui fuit Cainan, \\
 qui fuit Henos, qui fuit Seth, qui fuit Adam, qui fuit Dei.}
 
+Cette présence d'hapax pose un double problème dans la mesure où l'orthographe hébreuse ne se fixe pas par usage, telles \textit{Sarug/Seruch}, ou des formes qui n'existent dans le \textit{Forcellini} ou son appendice \textit{Onomasticon} que dans le corps du texte, tel \textit{Azor}, présent dans l'entrée \textit{Sadoc}.
+
+Après cet alignement, on ajoute les données des Priapées et du corpus chrétiens, nous permettant d'obtenir une plus grande diversité de textes et une plus grande couverture thématique et temporelle et donc lexicale. L'entraînement de ce nouveau modèle obtient un score très légèrement moins bon que le corpus d'origine (\textit{cf.} table \textbf{A AJOUTER}). Il est probable que l'ajout de données dont l'édition n'a pas été traitée de la même manière que les autres données du corpus du LASLA ajoute du bruit: c'est finalement une bonne chose car cette variété permet aussi de s'éloigner d'un corpus "parfait" et de se rapprocher \textit{de facto} du corpus que l'on traitera ensuite sur lequel l'intervention humaine, au niveau de la segmentation syntaxique, est minimal et automatique.
+
 \subsection{Importance du pre-processing}
 
-Chaque lemmatiseur ont quoiqu'il arrive une idée de la langue. Dans le cadre de l'annotation du latin, cela se trouve par exemple dans la différenciation ou non des lettres u/v et i/j dans les formes d'entrées. Dans ce cadre, il faut alors adapter la forme d'entrée au lemmatiseur afin d'éviter à tout prix une incapacité à traiter les données, tout simplement parce qu'elles n'ont pas été prévues. % A lire
+Nous avons parlé jusque là principalement des méthodes d'entraînement et de l'algorithme responsable de la lemmatisation. Il peut exister un certain nombre de problèmes lorsque l'on place d'une application sur données éditées - tokenisées à la main au niveau phrase et mot, harmonisées en orthographe, etc. - à des données \textit{in situ}. Cette problématique a déjà été étudiée sur d'autres types de tâches comme la classification de textes\footcite{camacho-collados_role_2018} et montre en général des conséquences en termes de résultats, au pire mineures. Or, les données que l'on récupère du corpus LASLA possèdent une très forte éditorialisation, allant des normalisations de couple u/v et j/i à l'absence de ponctuation, qui, dans le cas d'une lemmatisation \textit{in situ}, influencerait probablement la lemmatisation. En effet, dans la phase de transcodage de \textit{pie}, toute lettre inconnue - comme v par exemple - est codée \textit{de facto} en tant que lettre inconnue et non en tant que v, puisqu'elle n'a pas pu avoir de représentation apprise dans l'espace de projection des caractères. Il faut donc s'assurer que ces lettres, lorsqu'une alternative est possible, sont traduites remplacées. Du côté de la ponctuation, le choix est tout autre: il faut pouvoir s'appuyer sur la ponctuation pour les tâches telles que la reconnaissance des phrases ou celles des abbréviations mais s'assurer qu'elles disparaissent pour la phase de lemmatisation pure puis réapparaissent pour les futures étapes de notre recherche. D'autres cas, comme la présence de formes grecques ou de nombres, sont indiqués et simplifiées afin d'éviter au lemmatiseur d'apprendre à lemmatiser le grec ainsi que les chiffres romains en chiffres arabes, chose faisable par un programme simple car extrêmement régulé mais plus difficile pour un réseau neuronnal avec très peu d'exemples.
 
-
-\begin{table}[]
-\begin{tabular}{l|rrrr}
-\hline
-                                          & A                 & B                 & C              & D              \\ \hline
-Normalisation des lettres                 & Non               & Oui               & Non            & Oui            \\
-Suppression des formes inconnues (points) & Non               & Non               & Non            & Oui            \\
-Tokenization Phrase                       & Ponctuation Forte & Ponctuation Forte & 35 Mots        & 35 Mots        \\ \hline
-lemma              & \textbf{-1.51} & -0.22          & \textbf{-1.62} & -0.23 \\
-Deg                & -0.30          & -0.16          & -0.26          & -0.06 \\
-Numb               & -0.41          & -0.31          & -0.56          & -0.12 \\
-Person             & -0.05          & 0.00           & -0.06          & -0.03 \\
-Mood\_Tense\_Voice & -0.11          & -0.02          & -0.12          & -0.04 \\
-Case               & \textbf{-0.76} & \textbf{-0.66} & \textbf{-1.41} & -0.32 \\
-Gend               & -0.28          & -0.13          & -0.23          & -0.11 \\
-pos                & \textbf{-0.57} & -0.33          & \textbf{-0.66} & -0.18 \\ \hline
-\end{tabular}
+\begin{table}[ht]
+    \centering
+    \resizebox{\linewidth}{!}{%
+    \begin{tabular}{l|rrrr}
+    \hline
+                                              & A                 & B                 & C              & D              \\ \hline
+    Normalisation des lettres                 & Non               & Oui               & Non            & Oui            \\
+    Suppression des formes inconnues (points) & Non               & Non               & Non            & Oui            \\
+    Tokenization Phrase                       & Ponctuation Forte & Ponctuation Forte & 35 Mots        & 35 Mots        \\ \hline
+    lemma              & \textbf{-1.51} & -0.22          & \textbf{-1.62} & -0.23 \\
+    Deg                & -0.30          & -0.16          & -0.26          & -0.06 \\
+    Numb               & -0.41          & -0.31          & \textbf{-0.56}          & -0.12 \\
+    Person             & -0.05          & 0.00           & -0.06          & -0.03 \\
+    Mood\_Tense\_Voice & -0.11          & -0.02          & -0.12          & -0.04 \\
+    Case               & \textbf{-0.76} & \textbf{-0.66} & \textbf{-1.41} & \textbf{-0.32} \\
+    Gend               & -0.28          & -0.13          & -0.23          & -0.11 \\
+    pos                & \textbf{-0.57} & -0.33          & \textbf{-0.66} & -0.18 \\ \hline
+    \end{tabular}}
+    \caption{Impact de la normalisation sur l'accuracy, en \%.}
+    \label{tab:lemmatisation:normalisation}
 \end{table}
 
+Dans ce cadre, on propose une expérience assez simple: à partir des données de latin tardif, qui contiennent une orthographe \textit{in situ} et une ponctuation, on fait varier le contenu à lemmatiser en fonction de trois variantes combinables:
+\begin{itemize}
+    \item Une normalisation des lettres et formes, principalement u/v et j/i,
+    \item Une suppression pour l'étape de lemmatisation de la ponctuation et des formes inconnues comme le grec,
+    \item Une tokenization du texte sur la base de la ponctuation forte (points, guillemets, parenthèses, etc.) ou sur une fenêtre de 35 mots. Cette fenêtre est la fenêtre proposée par défaut par \textit{pie}. Plusieures fenêtres raisonnables (multiples de 5 jusqu'à 35) ont été testées ici mais elles présentaient des résultats dans des marges minimales.
+\end{itemize}
+Les résultats, visibles en table \ref{tab:lemmatisation:normalisation}, montrent un fort impact de la conservation des signes de ponctuation et des lettres inconnues avec des scores baissant de 1.51 à 1.62 \% quand les deux sont ignorés. Il faut noter que la conservation des lettres inconnues a - semble-t-il un impact assez limité (-0.22\%). Au niveau des tâches auxiliaires, toutes les tâches sont touchées sauf la reconnaissance de personne, le cas et la POS étant particulièrement influencées avec des baisses allant jusqu'à -0.76\%. Dans le cadre où la tokenisation des phrases est faite tous les 35 mots, la lemmatisation, le cas et la POS sont légèrement influencées aux alentours de -0.20\%. On note ici que l'accumulation de bruit n'est pas de l'ordre de l'addition: plus le nombre régularisations manquantes croit, plus les tâches sont influencées. Si les signes de ponctuations ont été supprimé des calculs d'\textit{accuracy} dans l'expérience précédente, nous pouvons retrouver aussi les bizarreries que crée la lemmatisation de signes totalement inconnus tels que dans l'\textit{incipit} de la \textit{Guerre des Gaules} (cf. \textit{infra}). Dans une telle situation, il est clair que le prétraitement est inséparable d'une bonne lemmatisation via des réseaux neuronnaux.
+
+\begin{quote}
+    \textbf{Source}\\
+    \blockquote{Gallia omnis divisa in partes tres , quarum unam incolunt Belgae , aliam Aquitani tertiam , qui ipsorum lingua Celtae nostra Galli appellantur.}\\
+    \textbf{Lemmatisation brute}\\
+    \blockquote{gallia omnis \textbf{dico} in pars tres \textbf{qvi} qvi vnvs incolo belgae \textbf{vnde} alivs aqvitani tertivs \textbf{vi} qvi ipse lingva celtae noster galli appello \textbf{nonvs}}\\
+    \textbf{Lemmatisation avec normalisation}\\
+    \blockquote{gallia omnis divido in pars tres , qvi vnvs incolo belgae , alivs aqvitani tertivs , qvi ipse lingva celtae noster galli appello .}\\
+    
+    Exemple de bruit causé dans la lemmatisation lorsque aucun prétraitement n'est effectué. En gras les erreurs introduite par la lemmatisation: on remarque qu'en dehors de la lemmatisation des points qui est totalement erronée, \textit{divisa} est aussi mal analysé, certainement à cause du bruit de ponctuation et de la lettre v.
+    \label{quote:lemmatisation:gallia-errors}
+\end{quote}
+
+
 \subsection{Étiquettage du corpus: exploration et différences entre le modèle LASLA et le modèle LASLA+}
+ 
+Dans cette section, nous ne proposons pas une étude aussi poussée que celles en \ref{subsec:lemmatisation:hors-domaine} mais une analyse rapide des différences de résultats sur quelques termes qui ont montré des limites pour nos modèles.
+
+\section{Conclusion}
+
