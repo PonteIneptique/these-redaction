@@ -384,19 +384,19 @@ Avec la dernière configuration, le modèle obtient un score de 97.41\% en lemme
 
 \subsubsection{Vers une typologie des erreurs}
 
-1.4.7 - Synchronie, Diachronie et Lemmatisation - Erreurs
+Suite au test, une table des confusions est mise à disposition. Cette table permet de mieux comprendre les différentes erreurs que le modèle est capable de faire. Pour un résultat de 97.41\% sur le corpus de test, il reste 4~395 erreurs. Sur ces erreurs, nous avons des problèmes de lemmes homographes tels que \textit{liber} et \textit{Liber}, mais aussi de pluriel lexicalisés tels que \textit{liberi}. Sur 64 apparitions dans le corpus de test de \textit{liber}, on obtient une précision de 0.92 et un rappel de 0.89; pour \textit{liberi} et ses 67 apparitions on retrouve respectivement 0.91 et 0.96. \textit{liber} l'adjectif est confondu 6 fois avec \textit{liberi} la substantivation et 1 fois avec \textit{Liber} la divinité, à l'inverse, \textit{liberi} est confondu 2 fois avec \textit{liber} et 1 fois avec \textit{Liber}. Si l'erreur \textit{liberi}/\textit{liber} est excusable - on peut même se demander s'il s'agit d'une erreur - on retrouve par ailleurs de vraies erreurs, avec des créations lexicales telles que \textit{pancoristus} à la place de l'attendu \textit{panchrestus} pour la forme \textit{panchresto}. Si ce type d'erreur existe pour le couple \textit{liberi}/\textit{liberi}, on peut par ailleurs, par un croisement avec les données de collatinus, remarquer que:
 
-part-parf-as-verb: 6.70 % of errors
-verb-as-part-parf: 4.14 % of errors
-part-pres-as-verb: 1.24 % of errors
-verb-as-part-pres: 1.05 % of errors
-nom-as-something-else: 2.04 % of errors
-something-else-as-nom: 3.23 % of errors
-passif-as-actif: 0.55 % of errors
-actif-as-passif: 0.67 % of errors
-same-nominatif: 1.81 % of errors
----
-total: 21.42 % of errors
+\begin{enumerate}
+    \item 5.54\% des erreurs sont des lemmes verbes remplacés par leur participe parfait passif et donc une forme adjectivale lexicalisée (type \textit{beo}/\textit{beatus})
+    \item 5.57\% sont des verbes remplaçant la forme adjectivale, l'inverse de la situation 1.
+    \item 1.16\% sont des verbes dont le participe présent rentre en collision avec le lemme attendu
+    \item 0.96\% sont des erreurs inversées de 3.
+    \item 3.59\% sont des noms partageant leur nominatif avec une forme adjectivale
+    \item 6.76\% sont des erreurs inversées de 5.
+    \item et enfin, 0.50\% des erreurs sont des verbe passifs lemmatisés en actifs, et 0.66\% correspondent à l'inverse.
+\end{enumerate}
+
+Dans un cadre plus large, sur 4~398 erreurs, 2~942 portent sur des tokens ambigüs, connaissant donc plusieurs solutions de lemmatisation, soit 8,08\% de ceux-ci. 451 erreurs portent sur des lemmes inconnus en phase d'entraînement, soit 40\% de ceux-ci.
 
 \section{Pie: extensibilité des résultats}
 
