@@ -1,4 +1,4 @@
-\documentclass{book}
+\documentclass[12pt]{book}
 
 \usepackage[a4paper]{geometry}
 \usepackage[utf8]{inputenc}
@@ -13,6 +13,8 @@
 \usepackage{multirow}
 \usepackage{glossaries}
 \usepackage{dirtytalk}
+\usepackage{adjustbox}
+\usepackage{listings}
 \usepackage[onehalfspacing]{setspace}
 \usepackage{microtype}
 \usepackage{newtxtext}
@@ -33,6 +35,7 @@
 \addbibresource{bibliography/TAL.bib}
 \addbibresource{bibliography/sources.bib}
 \addbibresource{bibliography/Corpora.bib}
+\addbibresource{bibliography/4-classification.bib}
 
 \title{Dire la sexualité en latin classique et tardif : "une étude lexicographique par apprentissage profond"}
 \author{T. Clérice}
@@ -43,7 +46,23 @@
 \newcommand{\newpara} {
     \vskip 0.5cm
 }
-    
+
+\onehalfspacing
+
+
+
+\let\oldquote\quote
+\let\endoldquote\endquote
+\renewenvironment{quote}[2][]
+  {\if\relax\detokenize{#1}\relax
+     \def\quoteauthor{#2}%
+   \else
+     \def\quoteauthor{#2~---~#1}%
+   \fi
+   \oldquote}
+  {\par\nobreak\smallskip\hfill(\quoteauthor)%
+   \endoldquote\addvspace{\bigskipamount}}
+
 \begin{document}
 
 % le titre
@@ -63,9 +82,9 @@
 % inclusion des chapitres
 \include{chap0_intro_digitalclassics}
 \include{chap1_corpus}
-%\include{chap1_treebank}
-\include{chap2_deep-learning}
-\include{chap3_lemmatisation}
+% Temporairement:
+%\include{chap2_deep-learning}
+%\include{chap3_lemmatisation}
 \include{chap4_modele}
 \include{chap5_adjectifs_moraux}
 
