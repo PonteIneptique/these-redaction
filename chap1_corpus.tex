@@ -1,52 +1,125 @@
-\chapter{Corpus}
-\label{cap:corpus}
+\chapter{Constitution du corpus}
 
-\section{Constitution, sources du corpus}
-\label{sec:corpus_constitution}
+\section{Une histoire des corpora latins numériques}
 
-\section{Répartition chronologique du corpus}
-\label{sec:corpus_chrono}
+Le travail sur la langue latine nécessite \textit{de facto} des corpus, et \textit{a priori} en nécessite des numériques s'il s'agit d'une approche computationnelle. Si la tradition papier des corpus académiques des Teubner ou des Belles Lettres s'inscriront bientôt dans leur troisième centenaire\footnote{Si l'éditeur Teubner semble s'attaquer dès les années 1810 à l'impression d'ouvrages philologiques, la \textit{Bibliotheca Scriptorum Graecorum et Latinorum Teubneriana} ne voit le jour \enquote{qu'en} 1849. Elle prédate les deux autres collections généralistes majeurs, la collection \textit{Oxford Classical Texts} et les \textit{Belles Lettres}. \cite{andre_cent-cinquante_1974}}, l'histoire des corpus numériques n'a fêté que très récemment son cinquantenaire.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=10cm]{results/analysis/corpus_analysis/texts_per_year.png}
-    \caption{Répartition des textes en fonction de l'année de naissance et de mort de l'auteur}
-    \label{texts_per_year}
-\end{figure}
+Aussi, nous proposons de revenir sur les cinquante dernières années de numérisation et de mise à disposition des textes latins, principalement les textes littéraires. Nous proposons un découpage en trois période de cette révolution numérique des corpus: la première concerne l'apparition des disquettes et CD de corpus qui émaille les décennies 1960 à 1990; la seconde (1995-2005) concerne l'apparition en ligne de ces premiers corpus mais aussi une autre forme de révolution, celle des corpus non-académiques; la troisième (2005-aujourd'hui) concerne enfin l'expasion du numérique comme version fondamentale des corpus et l'apparition de méga-corpus.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=10cm]{results/analysis/corpus_analysis/tokens_per_year.png}
-    \caption{Répartition des mots en fonction de l'année de naissance et de mort de l'auteur}
-    \label{tokens_per_year}
-\end{figure}
+Il faudra cependant commencer cette introduction au chapitre par un avertissement: la documentation disponible sur la publication des corpus numériques est presque inexistante, souvent de seconde main, à travers de rares témoignages ou d'encore plus rares citations et ne permettent souvent pas de retrouver avec toute l'exactitude souhaitée la première date de publication de tel ou tel ouvrage. Jusqu'à aujourd'hui, la citation des corpus numériques n'est pas entrée dans les usages, tout comme la citation des oeuvres quand on en fait le commentaire: rares sont les chercheurs qui spécifient en bibliographie l'édition précise qu'ils ont utilisée quand ils mentionnent Virgile ou Martial. Aussi, nous nous excusons d'avance  si des informations présentées ici sont inexactes, si des corpus oubliés le sont, et nous invitons grandement notre champs à capturer rapidement cette histoire, l'archiver avant qu'il ne soit trop tard: si les décades 70 et 80 ne sont pas très loins, elles semblent bien floues sur le plan de l'histoire des corpus\footnote{Il nous semble propice, pour qui voudra, de s'intéresser à une histoire orale des projets fondateurs, à une recherche en archives pour chacun de ces projets, avant qu'il ne soit trop tard.}.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=10cm]{results/analysis/corpus_analysis/accumulated_tokens.png}
-    \caption{Nombre de mots accumulés au fil des années}
-    \label{accumulated_tokens_per_year}
-\end{figure}
+\subsection{L’arrivée des corpus numériques (CD-ROM, disquettes, etc.)}
 
 
-\paragraph{Méthodes de datation}
+Nous nous intéressons ici à la naissance des corpus numériques littéraires, ayant pour vocation d'être lu ou utilisé pour des recherches dès leur conception numérique. À cette fin, nous excluons les travaux de R. Busa ou du LASLA - dont nous parlerons plus tard\footnote{\textit{Cf.} \ref{lemmatisation:concordanciers}} - car ils avaient des ambitions plus larges, en particulier sur le plan de l'annotation linguistique. Or, il est difficile comme nous le disions plus haut de savoir à quand remonte les premières productions de corpus.
 
-\section{Découpage du corpus}
-\label{subsec:corpus_decoupage}
+% La documentation d’époque et de première main est très pauvre sur ces outils (date, recherche en cours), on les retrouve principalement dans des reviews
 
-\begin{figure}
-    \centering
-    \includegraphics[width=10cm]{results/analysis/corpus_analysis/passage_size_distribution.png}
-    \caption{Répartition des tailles (en mots) d'extraits}
-    \label{passage_size_distribution}
-\end{figure}
+\subsubsection{Années 70, années 80: PHI et TLG}
 
-\section{Statistiques lexicales du corpus}
-\label{subsec:corpus_lexical_stats}
+Le corpus littéraire le plus ancien dont il est fait mention est celui financé par le \textit{National Endowment for the Humanities} et cité par Theodore F. Brunner dans son article rétrospectif de 1993 centré sur la recherche états-unienne \textit{Classics and the Computer}. En 1968, Nathan Greenberg et John. J. Bateman obtienne un financement de la NEH de 19.800\$ \footnote{Source: \url{https://web.archive.org/web/20180109175650/https://securegrants.neh.gov/publicquery/main.aspx?f=1&gn=EO-10258-69}} complété par 40.000\$ de financeurs secondaires dont IBM\footnote{D'après \cite{brunner}: le \textit{Digital Computer Laboratory} de l'université d'Illinois, the \textit{Kiewit Computation Center} du Dartmouth College, la \textit{National Science Foundation}, la fondation Ford et l'entreprise IBM donc.} organise une école d'été titrée \textit{Summer Institute in Computer Applications to Classical Studies}\footnote{L'équivalent de 59~800\$ au 31 Janvier 1968 est de 479~745\$ en août 2021 d'après le calculateur d'inflation du \textit{Bureau of Labor Statistics} (\url{https://www.bls.gov/data/inflation_calculator.htm})}. Cet événement donne naissance à un corpus d'une vingtaine d'oeuvres grecques et latines plus ou moins complètes: on y trouve à côté des classiques homériques des morceaux d'oeuvres, parfois inattends ou dont la découpe est incongrue, telles le poème 64 de Catulle seul, trois oeuvres de l'\textit{Appendix Vergiliana}, les livres I, IV, IX et XII de l'\textit{Énéide}. En dehors d'un rapport, ce corpus ne semble pas avoir eu une vie particulièrement riche, ni de nom d'ailleurs: il est pris en charge par l'\textit{American Philological Association}, est dupliqué à la demande par des institutions mais très vite se voit couper de tous fonds supplémentaires, là où, comme le note 20 ans plus tard Brunner, le fond des monographies n'est pas touché\footcite{brunner}.
 
-\section{Risques de répétition : analyse des doublons}
-\label{subsec:corpus_repetition}
+Du début des années 70, nous ne trouvons un enregistrement de la naissance que d'un seul autre corpus, celui du \textit{Thesaurus Linguae Grecae} (TLG) dont les prémices remontent à 1971\footcite{brunner} et dont l'apparition est actée en 1973\footnote{Parmi les articles cités par F. T. Brunner lui-même sur la fondation du TLG, au moins un est indisponible en France: \cite{hugues}}. Nom dérivé d'un projet humaniste du 16\textsuperscript{e} siècle et en écho à celui du \textit{Thesaurus Linguae Latinae} (TLL), il n'en reste pas moins qu'une évocation: à contrario des deux derniers, ce projet se veut dès les premières conférences un corpus de texte et non un thésaurus, un dictionnaire fortement enrichi. Les premières versions du corpus voientt rapidement le jour pour atteindre 61 millions de mots en 1988\footcite{brunner_overcoming_1988}. Ce corpus pose une difficulté de taille, à savoir son alphabet: les caractères grecs  n'existent pas en informatique en 1972, il n'existe que les caractères ASCII, et il faudra l'invention par David W. Packard du système Ibycus et du BetaCode pour pouvoir les transcrire. 
 
-Basé sur l'étude de l'impact des duplications de texte en topic modeling \footcite{schofield2017quantifying}, nous proposons ici une expérience
-quant à la nécessité pour le corpus d'être soigné.
+Il faut ensuite attendre les années 80 et l'avènement des micro-ordinateurs pour voir décoller d'autres projets numériques. 
+% Apple II et micro-ordinateur : https://www-jstor-org.proxy.chartes.psl.eu/stable/24147050?seq=4#metadata_info_tab_contents
+% 
 
+Présent à la réunion de fondation du projet TLG, David W. Packard n'est pas seulement important pour ce dernier: il fonde le Packard Humanities Institute (PHI) en 1987\footcite{helgerson_cd-rom_1988}, institut ayant pour visée de produire des corpus, dont un équivalent latin du TLG\footnote{Le corpus latin n'est qu'un des multiples corpus du PHI, même si l'on utilise souvent PHI uniquement pour se référer au corpus latin.}. Docteur en langues anciennes depuis 1967 et spécialiste des tablettes en linéaire A, il est nommé en octobre 1968 comme membre du \textit{Special Committee for Computer Problems} aux côtés de N. A. Greenberg, Stephen Waite, William H. Willis et Robert Dyer qui en est le président. La première version CD-ROM apparait en 1991 (PHI\#5), les versions précédentes n'ont pas laissé beaucoup de traces: un article de S. Hockey parle d'environ 8 millions de mots en 1994\footcite{hockey_electronic_1994}, un article de 1991 de J. Raben mentionne qu'il est \enquote{en cours de direction par David W. Packard}\footcite{raben_humanities_1991}. Il semble qu'un premier CD de textes latins, en particulier la \textit{Bible}, soit publié rapidement, dès 1987\footcite{groves_tovs_1990, cornell_greek_1989}.
+
+En général, il est intéressant de voir que l'histoire des projets américains est intimement lié aux grandes entreprises du domaine de l'informatique. Qu'il s'agisse de PHI ou de TLG, on y retrouve des enfants de fondateurs de grosses entreprises, tels que David W. Packard (UCLA), fils du co-fondateur de Hewlet-Packard et philologue, ou Marianne McDonald, fille d'un membre de la \textit{Zenith Corporation}, entreprise méconnue en France mais importante pour les États-Unis: elle y commercialise télévisions et bouquets de chaînes. Le financement de ces entreprises (1 million de dollars offerts par McDonald, étudiante en philologie, en 1972, soit environ 6,656 millions de dollars d'août 2021) est constant et nécessaire pour ces projets jusque dans les années 80.
+
+\subsubsection{198X - Perseus et la mise à disposition de corpus avec traduction}
+\subsubsection{1991 - CETEDOC Library of Christian Latin Texts (CLCLT2), futur LLT-A et LLT-B}
+
+\subsection{Mise en ligne de corpus}
+\subsubsection{Le passage en ligne des CDs}
+
+% De Perseus à la Perseus Digital Library
+
+\subsubsection{Corpora hors université et francophones}
+
+% Remacle.org
+% Gérard Greco
+% Bill Thayer
+
+\subsection{L’adoption du numérique par les projets}
+
+\subsubsection{Les projets d’éditions}
+
+% Hyperdonat
+% Digital Latin Library
+
+\subsubsection{ Projets de corpus }
+
+%DigilibLT
+%Projets épigraphiques
+% Méta-corpus
+%% Corpus Corporum
+
+\subsubsection{Le renouveau OpenGreekAndLatin et l’apport de l’OCR de masse}
+
+\subsubsection{Les corpora en jachères}
+
+%Archive.org et institutions patrimoniales qui OCRisent
+
+\section{Constituer un corpus de recherche}
+
+\subsection{Constitution d’un corpus général de sources littéraires latines}
+
+\subsubsection{Le choix d’un corpus open-source:Traçabilité des textes, textes et reproductibilité}
+
+% Choix Open-Source uniquement
+% Citabilité, manipulabilité, compatibilité: XML-TEI et Capitains
+
+\subsubsection{Méthode d’annotation et de “regroupement”}
+
+% La question de la datation
+% Métadonnées de “lecture”: modèles de citation, niveau de citation recommandé (Introduction du concept de SATU ?)
+
+\subsubsection{Les corpora employés et les corpora Lasciva Roma}
+
+% Statistiques sur les corpus Perseus et autres
+% La conversion de DigilibLT
+% Présentation des corpora Lasciva Roma
+%% Priapées
+%% Additional-Texts
+
+\subsection{Du corpus au document: qu’est-ce qu’un document pour l’ordinateur ?}
+
+% L’importance du choix de CapiTainS, rerédaction de l’article précédemment écrit
+
+\subsection{Constitution d’un corpus sur l’expression de la sexualité}
+
+\subsubsection{Le choix d’une source: Adams et histoire des tentatives de vocabulaires de la sexualité latine ?}
+
+% TLL et problème du TLL chez Adams
+
+\subsubsection{Conséquence du choix de Adams}
+
+% Les données épigraphiques: pourquoi non.
+%% Difficulté de lemmatisation
+%% Présence relativement faible
+
+% Les bornes “chronologiques” du corpus
+% Notes sur quelques données absentes
+
+\subsubsection{Corpus résultat: format, métadonnées, limites}
+
+% Format et tags: interprétation
+
+
+\section{Composition et analyse des corpora employés}
+
+\subsection{Analyse de la diversité du corpus par période, auteur et genre}
+
+% Représentativité
+% Les périodes creuses ?
+
+\subsection{Analyse du corpus sexuel final (stats et autres)}
+% Représentation et sur-représentation des auteurs
+%% L’angle mort de l’étude d’Adams: la période Chrétienne sous-représentée ?
+% Une analyse lexicométrique du corpus: termes les plus fréquents “hors” stopword ?
+% Création d’un corpus négatif:
+%% Spécificité des termes du corpus: nombre de termes commun (lemme comme formes, stop-words inclus)
+%% Nombre de textes très communs (% de lemmes communs importants) via une analyse à la Tesserae ou autre ?
