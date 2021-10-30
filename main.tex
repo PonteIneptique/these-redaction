@@ -30,6 +30,29 @@
 \usepackage{minted}
 \usepackage{csquotes}
 
+\usepackage{color}
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  showstringspaces=false,
+  commentstyle=\color{gray}\upshape
+}
+
+\lstdefinelanguage{XML}
+{
+  morestring=[b]",
+  morestring=[s]{>}{<},
+  morecomment=[s]{<?}{?>},
+  stringstyle=\color{black},
+  identifierstyle=\color{darkblue},
+  keywordstyle=\color{cyan},
+  morekeywords={xmlns,version,type}% list your attributes here
+}
+
 \addbibresource{bibliography/1-digital-classics.bib}
 \addbibresource{bibliography/1-introduction-dl.bib}
 \addbibresource{bibliography/1-lemmatisation.bib}
@@ -81,12 +104,12 @@
 %\include{remerciements}
 
 % inclusion des chapitres
-%\include{chap0_intro_digitalclassics}
+\include{chap0_intro_digitalclassics}
 \include{chap1_corpus}
 % Temporairement:
-%\include{chap2_deep-learning}
-%\include{chap3_lemmatisation}
-%\include{chap4_modele}
+\include{chap2_deep-learning}
+\include{chap3_lemmatisation}
+\include{chap4_modele}
 %\include{chap5_adjectifs_moraux}
 
 \include{conclu}
