@@ -497,7 +497,9 @@ La première variation des réseaux siamois utilise deux échantillons, un que l
 \end{figure}
 
 Pour ces deux variations, les stratégies d'entraînement ou de prédiction peuvent varier. La méthode la plus simple, à la fois algorithmiquement et méthodologiquement, est la sélection manuelle d'un ou plusieurs représentant(s) par classes: à chaque fois que le modèle entraîne un échantillon, il tire au hasard un représentant positif ou négatif avec lequel les distances seront calculées. Ces représentants sont ensuite sauvegardés avec le modèle afin de pouvoir continuer à effectuer des prédictions. Une autre méthode d'échantillonnage consiste à prendre tous les binômes ou triplets possibles d'un même ensemble d'échantillons et de les utiliser comme données à évaluer. Il existe cependant des méthodes d'échantillonages qui cherchent à mathématiquement maximiser les erreurs afin de rendre l'apprentissage le plus difficile possible, nous en testons deux: le \textit{BatchEasyHard} de Xuan et al.\footcite{xuan_improved_2020}, qui cherche à trouver des triplets dont le comparant positif est simple mais le comparant négatif est complexe, et le \textit{BatchHard} de Hermans et al.\footcite{hermans_defense_2017} qui cherche par défaut les triplets les plus complexes à classer pour chaque échantillon\footnote{Nous utilisons les implémentations de ces échantillonneurs issu es de la librairie \texttt{pytorch-metric-learning}, \cite{musgrave2020pytorch}}. 
+
 \subsubsection{Le cas particulier de l'inclusion des métadonnées}
+\label{chap4:part2:metadata}
 
 Nous parlions en \ref{chap4:encodage:metadonnees} de la possibilité et de la potentielle importance d'incorporer les métadonnées en tant qu'elles apportent des identificateurs extra-linguistiques pour les idiolectes et sociolectes. Nous approchons le problème de deux manières différentes: d'une part, à travers l'intégration de tokens de métadonnées dans la séquence, d'autre part via l'utilisation de modules modifiés en suivant les travaux de \footcite{kim_categorical_2019}. Quatre domaines de métadonnées peuvent être injectés, à savoir: la période d'écriture (le siècle), l'auteur, la structure logique de citation (par exemple: chapitre,section) et la forme d'écriture (prose ou vers).
 
@@ -507,20 +509,114 @@ Dans le second cas, les métadonnées sont projetées dans des espaces propres d
 
 \section{Les modèles obtenus}
 
-L'entraînement de modèles et la construction d'architectures est un processus itératif: il s'agit de tester des hypothèses de modèles, des hypothèses de paramétrages de modèles, puis d'aller dans l'une ou l'autre direction qui semble apporter les meilleurs réponses. Rendre compte de ce processus, et de ses résultats, n'est pas une mince affaire: la chronologie a un rôle dominant dans la sélection de modèles qui iront jusqu'au bout.
+L'entraînement de modèles et la construction d'architectures est un processus itératif et exploratoire: il s'agit de tester des hypothèses de modèles, des hypothèses de paramétrages de modèles, puis d'aller dans l'une ou l'autre direction qui semble apporter les meilleurs réponses. Rendre compte de ce processus, et de ses résultats, n'est pas une mince affaire: la chronologie a un rôle dominant dans la sélection de modèles qui survivront aux différents tests.
 
-\subsection{Résultats principaux}
+\subsection{Méthodes et résultats principaux}
 
+\subsubsection{Méthode de sélection globale}
+
+Pour définir les meilleurs modèles, nous avons procédé par test d'architecture: les réflexions qui suivront, leurs analyses, ont enrichi cette méthode continuellement pendant nos expériences. Le résultat produit une grande variété d'architectures: vingt-huit architectures avec couches linéaires et vingt-huit en réseau siamois, que l'on multiplie par deux - en faisant varier la taille de la couche d'encodage entre 128 et 256 - pour atteindre les cent~douze configurations testées au total. À partir de ce premier set d'entraînement, nous récupérons les cinq meilleures configurations toute couche décisionnelle confondue. Cette sélection d'architecture fait l'objet d'une seconde salve d'entraînements où chacune d'entre elles fait l'objet de dix entraînements: cette multiplication des entraînements permet prendre en compte les possibles variations de ces entraînements (\textit{cf.} figure~\ref{fig:chap4:50configurations}). Chaque architecture est testée avec les mêmes hyperparamètres pour l'entraînement: un \textit{learning rate} de $1e^{-5}$, une taille de \textit{batch} de 4 et 20 \textit{epochs} au maximum. 
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\linewidth]{figures/chap4/50config.png}
+    \caption{Résumé de la méthode de sélection des configurations}
+    \label{fig:chap4:50configurations}
+\end{figure}
+
+% En cas de résultats plus bas que ce que promet la littérature scientifique, d'autres tests d'architectures ou d'outillages peuvent s'ajouter à ces méthodes. Si de nouvelles configurations ont dû être comparées, elles sont entraînées elles aussi dix fois.
 % Commencer par les métadonnées en fait
 % Ensuite, séparer Bert et Non Bert
 
 % Expliquer itération: un run par archi. d'abord, pour évacuer les mauvaises archis.
 
-\subsubsection{Le problème des métadonnées \textit{auteur} et \textit{structure éditoriale}}
+\subsubsection{Modèles enrichis par métadonnées}
 
+La publication de J. Kim et al.\footcite{kim_categorical_2019} proposait une méthode simple d'intégration de métadonnées dans l'entraînement de modèles de classification de texte permettant de prendre en compte les identités des locuteurs. Cette méthode, reposant donc sur une identification même partielles de traits idiolectaux ou sociolectaux, a été testée sur notre corpus avec quatre métadonnées dont l'identité de l'auteur, le siècle de naissance de l'auteur, la structure logique de citation de l'oeuvre et la forme de cette dernière\footnote{\textit{Cf.} section \ref{chap4:part2:metadata}}. 
+
+\begin{table}[ht]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lllllllll@{}}
+\toprule
+Rang & Score F1 (Positif) & Rappel (Positif) & Précision (Positif) & Couche enrichie & Réseau d’encodage & Métadonnées utilisées              & Dimension de l’encodage & Couche Décisionnelle \\ \midrule
+1    & 86.05\%            & 87.25\%          & 84.88\%             & Linéaire        & HAN               & Toutes                             & 128                     & Linéaire             \\
+2    & 84.45\%            & 80.08\%          & 89.33\%             & Linéaire        & HAN               & Toutes                             & 128                     & Linéaire             \\
+3    & 84.15\%            & 88.84\%          & 79.93\%             & Linéaire        & HAN               & Toutes                             & 256                     & Linéaire             \\
+4    & 84.12\%            & 81.27\%          & 87.18\%             & Linéaire        & HAN               & Forme,Siècle,Structure de Citation & 128                     & Linéaire             \\
+5    & 83.79\%            & 79.28\%          & 88.84\%             & Linéaire        & HAN               & Forme,Siècle,Structure de Citation & 256                     & Linéaire             \\
+6    & 83.30\%            & 78.49\%          & 88.74\%             & LSTM            & LSTM              & Toutes                             & 128                     & Linéaire             \\
+7    & 83.17\%            & 83.67\%          & 82.68\%             & Linéaire        & HAN               & Forme,Siècle,Structure de Citation & 128                     & Linéaire             \\
+8    & 82.08\%            & 78.49\%          & 86.03\%             & Linéaire        & HAN               & Forme,Siècle,Structure de Citation & 256                     & Linéaire             \\
+9    & 81.82\%            & 78.88\%          & 84.98\%             & Linéaire        & HAN               & Toutes                             & 256                     & Linéaire             \\
+10   & 81.65\%            & 78.88\%          & 84.62\%             & LSTM            & LSTM              & Forme,Siècle,Structure de Citation & 256                     & Linéaire             \\
+11   & 81.24\%            & 78.49\%          & 84.19\%             & LSTM            & LSTM              & Forme,Siècle,Structure de Citation & 128                     & Linéaire             \\
+12   & 81.08\%            & 77.69\%          & 84.78\%             & LSTM            & LSTM              & Forme,Siècle                       & 256                     & Linéaire             \\
+     & …                  &                  &                     &                 &                   &                                    &                         &                      \\
+23   & 78.54\%            & 72.91\%          & 85.12\%             & Aucune          &                   & Aucune                             & 128                     & Linéaire             \\ \bottomrule
+\end{tabular}%
+}
+\caption{Résultats ordonnés par le score F1 de la catégorie positive des meilleurs modèles sur la recherche de meilleure architecture. Les onze premiers modèles utilisent toutes les métadonnées ou toutes sauf la métadonnée auteur. Les auteurs paramètres n'ont pas d'effet aussi marquant sur le classement.}
+\label{tab:chap4:resultats-metadata}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{l|r|r}
+                                   & \multicolumn{2}{r}{Entraînements} \\ \hline
+                                   & Tous & Top 25 (Score F1 Positive) \\ \hline
+Toutes                             & 32   & 9                          \\
+Forme,Siècle,Structure de Citation & 16   & 8                          \\
+Forme,Siècle                       & 20   & 7                          \\
+Token de Métadonnées               & 4    & 0                          \\
+Aucune                             & 40   & 2                          \\ \hline
+\end{tabular}
+\caption{Répartitions des configurations par usage des métadonnées. $p=3.54^{-14}$, on peut rejeter l'hypothèse nulle: la variation de distribution est significative, l'usage des toutes les métadonnées ou de trois d'entre elles ont un impact sur les résultats finaux.}
+\label{tab:chap4:metadata-p-value}
+\end{table}
+
+L'hypothèse de l'efficacité qu'amènerait cette information est confirmée: sur les cinquante entraînements, en utilisant le score F1 sur la catégorie positive comme mesure de classement, les onze meilleurs utilisent un réseau enrichis de métadonnées, soit au niveau de la couche linéaire soit au niveau du réseau d'encodage LSTM. Avec 86,05\% en score F1, 87,25\% en rappel et 84,88\% en précision sur la catégorie positive, le meilleur des modèles se situe à 4.87 points du score F1 du premier modèle n'utilisant pas les métadonnées identifiant les auteurs et structures logiques\footnote{Et à 9,56 points en rappel et à 0,01 en précision, ce qui est négligeable pour ce dernier} (\textit{cf.} table \ref{tab:chap4:resultats-metadata}) . Si on le compare au premier modèle qui n'utilise aucune métadonnée, l'écart se creuse à 8 points de score F1 et 17,13 de rappel! Sur les 25 premiers modèles, 9 utilisent toutes les métadonnées (36\%), 8 utilisent toutes les métadonnées sauf celle identifiant l'auteur (32\%), 7 utilisent les métadonnées \texttt{Forme} et \texttt{Siècle} (28\%), 2 n'en utilisent aucune (8\%, \textit{cf.} table \ref{tab:chap4:metadata-p-value}). Les modèles à métadonnées sur-performent donc face aux modèles sans, et l'inclusion de la métadonnée Auteur ou Structure de Citation est plus importante que celles du siècle ou de la forme.
 % Dans une première salve d'entraînement, ceux-ci performent le mieux. Quelques scores
 
-% MAIS c'est du sur-apprentissage: si on applique le modèle en mode prédiction, on se rend compte que TOUT Martial est tagué en positif, mais quand il dit bonjour.
+\begin{table}[ht]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{llrr}
+    \toprule
+                   Texte & Métadonnées utilisées        & En tant que Cicéron & En tant que Martial \\
+    \midrule
+    \textit{De Finibus}, Cicéron & Toutes                       &               4.25\% &              72.60\% \\
+    \textit{Epigrammata}, Martial &                              &               7.89\% &              82.05\% \\ \midrule
+    \textit{De Finibus}, Cicéron & Toutes sauf Auteur           &               4.69\% &              47.54\% \\
+    \textit{Epigrammata}, Martial &                              &               7.33\% &              59.76\% \\ \midrule
+    \textit{De Finibus}, Cicéron & Forme et Siècle              &               0.91\% &              36.03\% \\
+    \textit{Epigrammata}, Martial &                              &               6.41\% &              48.10\% \\ \midrule
+    \textit{De Finibus}, Cicéron & Aucune                       &               2.91\% &               2.91\% \\
+    \textit{Epigrammata}, Martial &                              &              15.29\% &              15.29\% \\
+    \bottomrule
+    \end{tabular}%
+    }
+    \caption{Nombre de phrases annotées automatiquement comme positive en fonction des modèles avec les meilleurs scores pour chaque type d'usage des métadonnées. L'absence d'usage de métadonnées n'a évidemment aucun impact sur les scores, tandis que l'impact des métadonnées sur le taux de positif est corrélé aux nombres de catégories de métadonnées utilisées.}
+    \label{tab:chap4:martial-ciceron}
+\end{table}
+
+
+
+
+Cependant, l'application du modèle sur des données hors domaine, sur des données de terrain, réserve une surprise: si les modèles de métadonnées avec l'information Auteur et Structure logique de citation ont d'aussi bons scores, c'est parce qu'ils ont été victime d'un sur-apprentissage dûs aux biais inhérents de notre corpus. Pour prouver ce problème de sur-apprentissage, on propose l'expérience suivante:
+\begin{enumerate}
+    \item Le modèle est appliqué sur deux oeuvres: les Épigrammes de Martial, connus pour la sexualité qui y est présente mais pas omniprésente (de nombreux épigrammes si ce n'est la majorité parlent de sujets tout autres); le \textit{De Finibus} de Cicéron, texte philosophique qui ne devrait pas contenir beaucoup de passages présentant l'isotopie sexuelle.
+    \item On modifie intentionnellement les métadonnées fournies au modèle: pour chaque texte, on passe les métadonnées de l'autre texte une fois. Ainsi, \textit{Epigrammata} est analysé une fois en tant que Martial, et une autre fois en tant que \textit{De Finibus}.
+    \item Chaque texte est annoté avec le meilleur modèle avec l'ensemble des métadonnées, l'ensemble sauf l'information auteur, les métadonnées Forme et Siècle, et enfin sans aucune métadonnée (\textit{cf.} table \ref{tab:chap4:resultats-metadata} pour les scores de ces modèles). Les modèles n'utilisant pas de métadonnées ne sont pas utilisés qu'une fois.
+    \item On récupère le pourcentage de phrases dont la catégorie prédite est \texttt{Positive}.
+\end{enumerate}
+Le résultat de cette expérience montre un sur-apprentissage évident sur les métadonnées, décroissant avec le nombre de catégories de ces dernières. Au plus bas, annoter le \textit{De Finibus} avec les informations \texttt{Versifié} et \texttt{1er siècle} multiplie par quatre-vingt-dix le nombre de phrases annotées comme positives.
+
+Faut-il en conclure que les métadonnées ne doivent pas être inclues ? Rien n'est moins sûr. Si l'on prend les données bien annotées, et bah, les résultats avec juste forme et siècle sont logiques. Un peu haut, mais logique. Cela laisse dubitatif sur la multiplication liée à 1er siècle / -1er mais bon.
+
+% Mais les catégorie Auteur et Structure logique de citation provoquent en fait un sur-apprentissage.
+
+% MAIS c'est du sur-apprentissage: si on applique le modèle en mode prédiction, on se rend compte que TOUT Martial est tagué en positif, même quand il dit bonjour.
 
 \subsubsection{Bert: formes d'usage}
 
