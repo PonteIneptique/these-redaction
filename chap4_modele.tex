@@ -1,4 +1,4 @@
-\chapter{Un modèle de détection du discours sexuel et sur la sexualité}
+\chapter{Un modèle pour détecter les isotopies sexuelles}
 % A intégrer ici :
 % quittant pour de bon les problématiques grammaticales du chapitre précédent
 
@@ -137,12 +137,12 @@ Sur les réseaux sociaux comme dans le monde du jeu vidéo, la question de la mo
 
 Ces problématiques se lient rapidement à la question de l'apprentissage machine pour deux raisons: d'une part, il permet une gestion en flux des \enquote{délits} de contenus; d'autre part, il réduit les coûts humains de la modération\footnote{À laquelle ils sont tenus légalement dans de nombreux pays.} manuelle des contenus, potentiellement extrêmement importants pour des plates-formes aussi grosses que Twitter par exemple. Pour \textit{League of Legends}, un jeu paru fin des années 2000, des chercheurs établissent en 2014\footcite{blackburn_stfu_2014} une méthode de capture de mots à partir d'un dictionnaire de valeurs, l'\textit{Affective Norms for English Words}\footcite{bradley_affective_1999}, et d'informations liées à la partie indiquée comme problématique. Parmi les informations utilisées par l'algorithme, un simple \textit{Random Tree Forest}, celles des messages et de la polarité (\textit{valence} en anglais) des termes employés, représentent trois des cinq informations contribuant le plus à la décision finale de punir ou d'innocenter une personne indiquée comme toxique par ses partenaires temporaires de jeu. Cependant, les dictionnaires de polarité posent le problème du contexte: "Toi au moins, tu n'es pas [TermeInsultant]" ne serait pas un abus de langue, tandis que "Toi au moins, tu n'es pas [TermeInsultant] contrairement à [NomDePersonne]". Sept ans plus tard, la recherche a intégré d'autres modèles d'information tentant de réduire cette limite: dans leur article \textit{Automatically Detecting Cyberbullying Comments on Online Game Forum}\footcite{vo_automatically_2021}, les auteurs comparent les performances de modèles à propriétés (\textit{features} soumises à SVM et aux régressions linéaires), à encodage après projection (projections via [Glove, fastText] puis encodage avec [CNN,GRU]) et à projection par \textit{transformer} (Toxic-BERT). Les résultats sont mesurés par F-Score à cause du déséquilibre des sets de données (beaucoup moins de données positives que négatives) et donnent lieu à de véritables bonds entre les différentes technologies: de 50\% de F-Score pour les premiers modèles, les seconds atteignent 75 à 80,7\% tandis que le modèle à base de \textit{transformer} atteint 82,7\%. On note un très faible écart entre les modèles Text-CNN+Glove et le modèle à base de Toxic-Bert, tout juste 2\% sur les données issues du jeu League of Legends, tandis que seuls 0,76\% les séparent sur celles du jeu World of Warcraft.
 
-Dans la catégorie de classification de textes, la question de la détection de l'isotopie sexuelle peut se manifester sous d'autres traits. De la détection automatique de prédateurs sexuels à la classification de chansons pour leur commercialisation, le contenu explicitement ou implicitement sexuel pose plusieurs problèmes en fonction du contexte de recherche. Pour la prédation sexuelle, la problématique glisse vers l'implicite et la détection de progression discursive. Dans ce contexte, il semble que la compétition du PAN\footnote{\textit{Plagiarism Analysis, Authorship Identification, and Near-Duplicate Detection} - http://pan.webis.de/} de 2012 \textit{Sexual Predator Identification}\footcite{inches_overview_2012} constitue encore le plus gros dataset existant. Comme pour notre dataset, les données sont -- heureusement -- déséquilibrées en faveur de contenus non problématiques, avec seulement 4\% de conversations marquées comme contenant une prédation. On distingue pour ce domaine les mêmes évolutions que pour celui de la toxicité, à savoir un passage d'un modèle \textit{Bag-Of-Words} avec des dictionnaires de valeurs vers des modèles d'apprentissage profond, avec une évaluation via le F1-Score. Parmi les modèles les plus récents, celui de Muñoz et al.\footcite{munoz_smartsec4cop_2020} utilise une projection via \textit{Word2Vec} puis un encodage via des réseaux convolutionnels de filtres de taille 2 à 5, mais ses résultats en F1 sont particulièrement bas (environ 40\%). Au contraire, Vogt et al.\footcite{vogt_early_2021} atteint entre 89 et 80\% en utilisant une projection via Bert et en prenant optionnellement en compte la dimension temporelle d'une discussion, et donc, sa progression discursive. 
+Dans la catégorie de classification de textes, la question de la détection de l'isotopie sexuelle peut se manifester sous d'autres traits. De la détection automatique de prédateurs sexuels à la classification de chansons pour leur commercialisation, le contenu explicitement ou implicitement sexuel pose plusieurs problèmes en fonction du contexte de recherche. Pour la prédation sexuelle, la problématique glisse vers l'implicite et la détection de progression discursive. Dans ce contexte, il semble que la compétition du PAN\footnote{\textit{Plagiarism Analysis, Authorship Identification, and Near-Duplicate Detection} - http://pan.webis.de/} de 2012 \textit{Sexual Predator Identification}\footcite{inches_overview_2012} constitue encore le plus gros dataset existant. Comme pour notre dataset, les données sont -- heureusement -- déséquilibrées en faveur de contenus non problématiques, avec seulement 4\% de conversations marquées comme contenant une prédation. On distingue pour ce domaine les mêmes évolutions que pour celui de la toxicité, à savoir un passage d'un modèle \textit{Bag-Of-Words} avec des dictionnaires de valeurs vers des modèles d'apprentissage profond, avec une évaluation via le F1-Score. Parmi les modèles les plus récents, celui de Muñoz et al.\footcite{munoz_smartsec4cop_2020} utilise une projection via \textit{Word2Vec} puis un encodage via des réseaux convolutionnels de filtres de taille 2 à 5, mais ses résultats en F1 sont particulièrement bas (environ 40\%). Au contraire, Vogt et al.\footcite{vogt_early_2021} atteint entre 89 et 80\% en utilisant une projection via BERT et en prenant optionnellement en compte la dimension temporelle d'une discussion, et donc, sa progression discursive. 
 
 Dans une dimension plus légère, la classification des contenus explicites des paroles de chanson pose un problème pour leur commercialisation et leur mise en écoute libre sur des plates-formes comme Amazon, Youtube ou Spotify chez les mineurs, particulièrement aux États-Unis avec la mise en place du \textit{Parental Advisory Label} qui requiert l'annotation de ces messages. Les membres du projet WASABI proposent un récapitulatif des méthodes, mises au banc d'essais sur un dataset fraichement formalisé, via les mêmes techniques que les applications précédentes, à savoir une attaque par dictionnaire, une attaque par \textit{Bag-Of-Word}, un réseau utilisant des CNN et une projection via des \textit{embeddings}, un modèle inédit pour la littérature étudiée ici à savoir un réseau récurrent avec attention (HAN) et enfin un modèle BERT. De cet article, plusieurs conclusions des auteurs sont intéressantes:
 \begin{itemize}
     \item Le modèle convolutionnel brille face à l'ensemble des autres modèles pour la catégorie explicite avec un score de 63\%.
-    \item Le modèle Bert surpasse les autres sur la catégorie non explicite, majoritaire dans le corpus (90\% des exemples).
+    \item Le modèle BERT surpasse les autres sur la catégorie non explicite, majoritaire dans le corpus (90\% des exemples).
     \item Les différences de score restent particulièrement minimes (quelques points d'écart) suivant les catégories, quelle que soit l'architecture.
     \item Plus important encore, le modèle semble se spécialiser dans la détection du contenu explicite en Hip-Hop, et les auteurs posent justement la question du biais du set de données ou de la possibilité de surapprentissage du modèle sur ces traits facilement reconnaissables.
 \end{itemize}
@@ -154,7 +154,7 @@ Parallèlement, on retrouve ces problématiques dans le catalogage de masse de b
 
 \subsection{Résumé des architectures rencontrées}
 
-Après cette revue des différentes tâches qui s'apparentent à la classification de texte, il est intéressant de remarquer une véritable constante: presque tous les modèles reposent sur une structure Projection-Encodage-Décision où la couche de décision peut-être au choix une régression linéaire ou bien une mesure de similarité. Évidemment, chaque tâche intègre ça et là des variations, par exemple la prise en compte de la progression de discussion, mais la structure générale des éléments d'encodage reste la même. Il est par ailleurs intéressant de voir largement utilisée la mesure du F1-Score pour l'ensemble des tâches à labels déséquilibrés. On remarque aussi un véritable changement du domaine sur la décennie 2010-2020, avec  d'abord l'avènement des projections de mots aux alentours de 2013 grâce à \textit{Word2Vec} et \textit{GloVe}, à l'apparition de nouveaux systèmes de classification dans le domaine du traitement textuel (réseaux siamois) vers 2017/2018, la diversification des couches d'encodage, du LSTM au CNN, y compris modifiés, et enfin à la fin de la décennie, le changement profond qu'apporte Bert et les transformers pour les langues modernes. Cependant, il reste intéressant de voir la résistance de certains modèles dans quelques cas de figure (stylométrie par exemple ou classification de chanson) qui résistent plus que correctement aux changements technologiques et aux différences de coût qu'ils impliquent.
+Après cette revue des différentes tâches qui s'apparentent à la classification de texte, il est intéressant de remarquer une véritable constante: presque tous les modèles reposent sur une structure Projection-Encodage-Décision où la couche de décision peut-être au choix une régression linéaire ou bien une mesure de similarité. Évidemment, chaque tâche intègre ça et là des variations, par exemple la prise en compte de la progression de discussion, mais la structure générale des éléments d'encodage reste la même. Il est par ailleurs intéressant de voir largement utilisée la mesure du F1-Score pour l'ensemble des tâches à labels déséquilibrés. On remarque aussi un véritable changement du domaine sur la décennie 2010-2020, avec  d'abord l'avènement des projections de mots aux alentours de 2013 grâce à \textit{Word2Vec} et \textit{GloVe}, à l'apparition de nouveaux systèmes de classification dans le domaine du traitement textuel (réseaux siamois) vers 2017/2018, la diversification des couches d'encodage, du LSTM au CNN, y compris modifiés, et enfin à la fin de la décennie, le changement profond qu'apporte BERT et les transformers pour les langues modernes. Cependant, il reste intéressant de voir la résistance de certains modèles dans quelques cas de figure (stylométrie par exemple ou classification de chanson) qui résistent plus que correctement aux changements technologiques et aux différences de coût qu'ils impliquent.
 
 % Rajouter un cas d'étude ici en Siamese ?
 
@@ -448,7 +448,7 @@ En fin de modèle, suivant qu'il s'agisse d'un entraînement ou d'un moment de p
 
 La première forme de transformation s'effectue au niveau des tokens produits par \textit{Pie-Extended}: la séquence de tokens est fournie au modèle, qui utilise ou non l'ensemble des informations disponibles, à savoir les informations morphosyntaxiques, de formes ou de lemmes. Les formes et lemmes sont projetés par des embeddings pré-entraînés via Gensim\footcite{gensim} et non-entraînables basés sur \textit{FastText} ou \textit{Word2Vec} et de taille 200. Les catégories individuelles de morphosyntaxe (\texttt{Cas=X}, \texttt{Genre=X}, etc.) sont projetées sur une dimension assez faible de 3, tandis que la concaténation de ces tags (\texttt{Cas=X|Genre=Y}) est projetée sur une dimension de 20. En cas de projection au niveau caractère, disponible pour les lemmes et les formes, afin de prendre en compte la morphologie flexionnelle pour les caractères et les morphèmes non-flexionnels pour les deux, on utilise un encodage au niveau caractère utilisant un réseau LSTM avec une \textit{hidden size} de 150, deux couches et un \textit{dropout} de 30\%. L'ensemble des projections est concaténée en un seul vecteur pour chaque token (\textit{cf.} figure \ref{fig:chap4:projection:morphosyntax}).
 
-On peut ajouter à cette transformation des formes, lemmes et informations morphosyntaxique un encodage via le module Bert latin, développé par D. Bamman et P. J. Burns. Deux problèmes se sont posés avec cette utilisation, dont un n'a pu être résolu. D'une part, le module pose un problème d'ingénierie: l'outillage entourant le modèle Bert est peu documenté, lent et repose sur des versions plutôt anciennes de certains outils qui ont parfois été un véritable puzzle de dépendances\footnote{CLTK posant notamment de gros problèmes sur ce point.}. Ensuite, il y a un véritable problème dans le pré-traitement de l'information: les deux auteurs du projet ont utilisé la tokenisation de CLTK en pré-traitement, que nous avons voulu à tout prix éviter, car, basée sur des règles, elle a une forte propension à interpréter chaque morphème final \textit{-ne} comme un clitique, de même que les \textit{-ve} ou les \textit{-que} (par exemple, \textit{observatio-ne} et \textit{observatio-ve} sont systèmatiquement tokenizés en deux morceaux, bien que le premier est souvent un simple ablatif). L'usage de ce \textit{pre-tokenizer} est par ailleurs une bizarrerie algorithmique du point de vue de Bert: l'objectif même de ce dernier, avec ses systèmes de tokenization reposant sur des \textit{sous-tokens}, est de pouvoir gérer ce type de phénomènes. Par exemple, dans le cadre du modèle Bert allemand de Chan et al.\footcite{chan_german_2019}, on retrouve ainsi logiquement traités par le \textit{tokenizer} les sous-tokens grammaticaux \texttt{\#\#ge}, les préfixes \texttt{\#\#be} et \texttt{\#\#ver}, sans pré-traitement manuel par les chercheurs: \textit{vergenommen} est ainsi transcrit en \texttt{\#\#ver + \#\#genommen}\footnote{\textit{nehmen} ayant de nombreux dérivés et étant relativement fréquent dans la langue allemande, il n'est pas étonnant que le composant \texttt{\#\#genommen} existe permettant ainsi une construction économique en bi-gram pour \textit{abnehmen, vernehmen, etc.}}. Nous nous sommes ainsi refusé à utiliser la prétokenization faussée de CLTK, espérant que le composant de tokenization de Bert soit suffisant pour pallier à cette situation\footnote{Mais la différence de tokenization pousse tout de même au final à l'incapacité d'aligner -- simplement -- les tokens.}. Enfin, en cas d'usage de projections via Bert et de projection classiques par \textit{embeddings} non contextuels, on utilise soit une concaténation des vecteurs Bert avec les vecteurs issus des plongements non contextuels, soit une réduction via une réduction en réseau linéaire.
+On peut ajouter à cette transformation des formes, lemmes et informations morphosyntaxique un encodage via le module BERT latin, développé par D. Bamman et P. J. Burns. Deux problèmes se sont posés avec cette utilisation, dont un n'a pu être résolu. D'une part, le module pose un problème d'ingénierie: l'outillage entourant le modèle BERT est peu documenté, lent et repose sur des versions plutôt anciennes de certains outils qui ont parfois été un véritable puzzle de dépendances\footnote{CLTK posant notamment de gros problèmes sur ce point.}. Ensuite, il y a un véritable problème dans le pré-traitement de l'information: les deux auteurs du projet ont utilisé la tokenisation de CLTK en pré-traitement, que nous avons voulu à tout prix éviter, car, basée sur des règles, elle a une forte propension à interpréter chaque morphème final \textit{-ne} comme un clitique, de même que les \textit{-ve} ou les \textit{-que} (par exemple, \textit{observatio-ne} et \textit{observatio-ve} sont systèmatiquement tokenizés en deux morceaux, bien que le premier est souvent un simple ablatif). L'usage de ce \textit{pre-tokenizer} est par ailleurs une bizarrerie algorithmique du point de vue de Bert: l'objectif même de ce dernier, avec ses systèmes de tokenization reposant sur des \textit{sous-tokens}, est de pouvoir gérer ce type de phénomènes. Par exemple, dans le cadre du modèle BERT allemand de Chan et al.\footcite{chan_german_2019}, on retrouve ainsi logiquement traités par le \textit{tokenizer} les sous-tokens grammaticaux \texttt{\#\#ge}, les préfixes \texttt{\#\#be} et \texttt{\#\#ver}, sans pré-traitement manuel par les chercheurs: \textit{vergenommen} est ainsi transcrit en \texttt{\#\#ver + \#\#genommen}\footnote{\textit{nehmen} ayant de nombreux dérivés et étant relativement fréquent dans la langue allemande, il n'est pas étonnant que le composant \texttt{\#\#genommen} existe permettant ainsi une construction économique en bi-gram pour \textit{abnehmen, vernehmen, etc.}}. Nous nous sommes ainsi refusé à utiliser la prétokenization faussée de CLTK, espérant que le composant de tokenization de BERT soit suffisant pour pallier à cette situation\footnote{Mais la différence de tokenization pousse tout de même au final à l'incapacité d'aligner -- simplement -- les tokens.}. Enfin, en cas d'usage de projections via BERT et de projection classiques par \textit{embeddings} non contextuels, on utilise soit une concaténation des vecteurs BERT avec les vecteurs issus des plongements non contextuels, soit une réduction via une réduction en réseau linéaire.
 
 \subsubsection{Le bloc d'encodage}
 \label{part:chap4:architectures:variations-architectures:encodage}
@@ -459,9 +459,9 @@ Si ces réseaux sont communs, la recherche en classification a fait émerger d'a
 
 Ce complément pour l'encodage séquentiel a aussi l'avantage de fournir au lecteur un outil d'analyse de ce qu'apprend le modèle. En ajoutant aux informations classiquement produites par le modèle, telles la classification les pondérations de l'attention, il met en exergue les traits saillants détectés. Cet outil a deux intérêts majeurs. D'une part, à travers les jeux de répétition qui auraient échappé à l'œil humain, il peut permettre de questionner une analyse plus manuelle des sèmes actualisés par une isotopie: les mots portants ces sèmes sont identifiés par le phénomène d'attention et amènent à interroger leur rôle. D'autre part, il peut permettre de détecter des phénomènes que nous qualifierions de \enquote{triche} mais qui relève bien du sur-apprentissage: dans notre cas, il nous est arrivé de trouver que pour les textes d'une édition en particulier, l'obèle de l'édition était un token spécifique au corpus positif, que le modèle a ainsi interprété comme trait saillant. Ce phénomène peut se retrouver avec d'autres mots, dont les actualisations /sexuel/ ne sont pas les plus courantes: c'est à cet endroit que l'équilibrage du corpus est important.
 
-Dans le cadre de notre usage de Bert, il existe deux situations: une première où Bert est la seule projection utilisée, une second où Bert est employé avec d'autres projections.
+Dans le cadre de notre usage de Bert, il existe deux situations: une première où BERT est la seule projection utilisée, une second où BERT est employé avec d'autres projections.
 
-Pour la première des deux, il existe plusieurs stratégies, dont la plus commune consiste à exploiter les tokens de délimitation des phrases \texttt{[CLS]} et \texttt{[SEP]} qui représentent respectivement le début de la séquence et la fin de la séquence. Bert proposant des plongements de token contextualisés, ces deux éléments ont la particularité de contenir une information contextualisée sur la phrase sans porter eux-mêmes de signification propre. Parmi les autres stratégies, on distingue les fonctions de réduction par moyenne (\textit{Reduce Mean}) et par valeur maximum (\textit{Reduce Max}), ainsi qu'une combinaison des deux via concaténation. Bert étant son propre réseau neuronal avec plusieurs couches, certains chercheurs et services recommandent d'éviter d'utiliser la dernière couche si il n'y a pas de ré-entraînement\footnote{\textit{Cf.} \url{https://github.com/hanxiao/bert-as-service/blob/master/docs/section/faq.rst\#bert-has-12-24-layers-so-which-layer-are-you-talking-about}}: elle serait ainsi trop liée à l'objectif initial de Bert (prédiction de mot ou de phrase suivante) et servirait donc de mauvaise ressource pour des tâches différentes. Afin d'ajouter une couche d'entraînement supplémentaire, on peut passer cette représentation via Bert dans un réseau ayant pour objectif de réduire l'information (couche linéaire): ainsi, d'un vecteur de 768 ou 1536 (\textit{MeanMax}) on passe alors à 256 avant d'entrer dans le bloc décisionnel. Il est aussi possible d'utiliser la projection contextualisée dans des réseaux plus traditionnels, tels que GRU, HAN ou LSTM.
+Pour la première des deux, il existe plusieurs stratégies, dont la plus commune consiste à exploiter les tokens de délimitation des phrases \texttt{[CLS]} et \texttt{[SEP]} qui représentent respectivement le début de la séquence et la fin de la séquence. BERT proposant des plongements de token contextualisés, ces deux éléments ont la particularité de contenir une information contextualisée sur la phrase sans porter eux-mêmes de signification propre. Parmi les autres stratégies, on distingue les fonctions de réduction par moyenne (\textit{Reduce Mean}) et par valeur maximum (\textit{Reduce Max}), ainsi qu'une combinaison des deux via concaténation. BERT étant son propre réseau neuronal avec plusieurs couches, certains chercheurs et services recommandent d'éviter d'utiliser la dernière couche si il n'y a pas de ré-entraînement\footnote{\textit{Cf.} \url{https://github.com/hanxiao/bert-as-service/blob/master/docs/section/faq.rst\#bert-has-12-24-layers-so-which-layer-are-you-talking-about}}: elle serait ainsi trop liée à l'objectif initial de BERT (prédiction de mot ou de phrase suivante) et servirait donc de mauvaise ressource pour des tâches différentes. Afin d'ajouter une couche d'entraînement supplémentaire, on peut passer cette représentation via BERT dans un réseau ayant pour objectif de réduire l'information (couche linéaire): ainsi, d'un vecteur de 768 ou 1536 (\textit{MeanMax}) on passe alors à 256 avant d'entrer dans le bloc décisionnel. Il est aussi possible d'utiliser la projection contextualisée dans des réseaux plus traditionnels, tels que GRU, HAN ou LSTM.
 
 \begin{figure}[ht]
     \centering
@@ -470,7 +470,7 @@ Pour la première des deux, il existe plusieurs stratégies, dont la plus commun
     \label{fig:chap4:zoom-projection}
 \end{figure}
 
-Pour le second cas, où projections par Bert et projections par embeddings non-contextualisés se complètent, on procède ainsi: la projection de Bert est effectuée comme dans le cas précédent via une méthode de \textit{pooling} et une optionnelle réduction linéaire, tandis que la projection traditionnelle est encodée via l'un des réseaux décrits plus hauts, récurrent ou convolutionnel. Les deux entrées sont ensuite ou concaténées, ou réduite via une couche linéaire, afin de fournir les deux informations (\textit{cf.} figure \ref{fig:chap4:zoom-projection}).
+Pour le second cas, où projections par BERT et projections par embeddings non-contextualisés se complètent, on procède ainsi: la projection de BERT est effectuée comme dans le cas précédent via une méthode de \textit{pooling} et une optionnelle réduction linéaire, tandis que la projection traditionnelle est encodée via l'un des réseaux décrits plus hauts, récurrent ou convolutionnel. Les deux entrées sont ensuite ou concaténées, ou réduite via une couche linéaire, afin de fournir les deux informations (\textit{cf.} figure \ref{fig:chap4:zoom-projection}).
 
 \subsubsection{Classification, similarité: la couche décisionnelle et les méthodes d'entraînement}
 
@@ -527,7 +527,7 @@ Pour définir les meilleurs modèles, nous avons procédé par test d'architectu
 
 % En cas de résultats plus bas que ce que promet la littérature scientifique, d'autres tests d'architectures ou d'outillages peuvent s'ajouter à ces méthodes. Si de nouvelles configurations ont dû être comparées, elles sont entraînées elles aussi dix fois.
 % Commencer par les métadonnées en fait
-% Ensuite, séparer Bert et Non Bert
+% Ensuite, séparer BERT et Non Bert
 
 % Expliquer itération: un run par archi. d'abord, pour évacuer les mauvaises archis.
 
@@ -626,16 +626,16 @@ Cependant, en dehors des modèles à métadonnées, le meilleur modèle sans mé
 
 \subsubsection{Embeddings contextuels}
 
-Les \textit{embeddings} traditionnels (\textit{Word2Vec, GloVe, FastText} entre autres) posent le problème de l'absence de désambiguisation. Si un travail important a lieu pour essayer d'introduire cette information dans le dictionnaire de vecteurs qu'ils produisent, il ne porte pour l'instant pas ses fruits et s'est fait dépasser par une autre approche: les \textit{embeddings} contextuels, tels \textit{Bert}. En effet, pour reprendre l'exemple de PEDRO ET AL., pour les outils traditionnels comme \textit{Word2Vec}, \texttt{Washington} représente à la fois l'état, la ville, le président (mais aussi quelques acteurs, îles, etc.). Bert, en produisant des projections en contexte, permet d'outrepasser -- en partie -- ce problème. En utilisant \textit{Latin Bert}\footcite{bamman2020latin} comme entrée seule ou comme complément à la phrase encodée, nous proposions d'évaluer les capacités de Bert dans un objectif de classification.
+Les \textit{embeddings} traditionnels (\textit{Word2Vec, GloVe, FastText} entre autres) posent le problème de l'absence de désambiguisation. Si un travail important a lieu pour essayer d'introduire cette information dans le dictionnaire de vecteurs qu'ils produisent, il ne porte pour l'instant pas ses fruits et s'est fait dépasser par une autre approche: les \textit{embeddings} contextuels, tels \textit{Bert}. En effet, pour reprendre l'exemple de PEDRO ET AL., pour les outils traditionnels comme \textit{Word2Vec}, \texttt{Washington} représente à la fois l'état, la ville, le président (mais aussi quelques acteurs, îles, etc.). Bert, en produisant des projections en contexte, permet d'outrepasser -- en partie -- ce problème. En utilisant \textit{Latin Bert}\footcite{bamman2020latin} comme entrée seule ou comme complément à la phrase encodée, nous proposions d'évaluer les capacités de BERT dans un objectif de classification.
 
 \begin{figure}[t]
     \centering
     \includegraphics[height=6cm]{figures/chap4/scoreDispersionEmbeddings.png}
-    \caption{Dispersion des résultats en fonction du système d'\textit{embeddings} utilisé. Bert est utilisé ici comme source  d'information supplémentaire, et non comme source unique, via un \textit{pool} du token \texttt{[CLS]} en dernière couche d'encodage.}
+    \caption{Dispersion des résultats en fonction du système d'\textit{embeddings} utilisé. BERT est utilisé ici comme source  d'information supplémentaire, et non comme source unique, via un \textit{pool} du token \texttt{[CLS]} en dernière couche d'encodage.}
     \label{fig:chap4:bert-dispersion-fusion}
 \end{figure}
 
-Le résultat est clair: \textit{Latin Bert} n'apporte pas de bénéfices importants en tant que complément d'information, voire enregistre des sous-performance face aux autres modèles (\textit{c.f.} figure \ref{fig:chap4:bert-dispersion-fusion}). Le premier modèle mixte \texttt{HAN(Lemme)+Bert->Linéaire} se place en 36e position du classement original avec un score F1 de 76.02\%, un rappel de 70.11\% et 83.01\% de précision, à 2 points du premier modèle n'utilisant pas Bert. La puissance de calcul demandée part Bert étant importante, si ses performances ne sont pas compétitives avec un modèle "traditionnel", il n'y a pas d'intérêt à le conserver. Non affiché dans les résultats, une tentative de ré-entraînement de Bert pour le spécialiser (anglais \textit{fine tune}) sur le dataset bloquait les résultats sous la barre des 20\%, probablement à cause de la très petite taille des données.
+Le résultat est clair: \textit{Latin Bert} n'apporte pas de bénéfices importants en tant que complément d'information, voire enregistre des sous-performance face aux autres modèles (\textit{c.f.} figure \ref{fig:chap4:bert-dispersion-fusion}). Le premier modèle mixte \texttt{HAN(Lemme)+Bert->Linéaire} se place en 36e position du classement original avec un score F1 de 76.02\%, un rappel de 70.11\% et 83.01\% de précision, à 2 points du premier modèle n'utilisant pas Bert. La puissance de calcul demandée part BERT étant importante, si ses performances ne sont pas compétitives avec un modèle "traditionnel", il n'y a pas d'intérêt à le conserver. Non affiché dans les résultats, une tentative de ré-entraînement de BERT pour le spécialiser (anglais \textit{fine tune}) sur le dataset bloquait les résultats sous la barre des 20\%, probablement à cause de la très petite taille des données.
 
 \afterpage{%
 
@@ -650,16 +650,16 @@ Le résultat est clair: \textit{Latin Bert} n'apporte pas de bénéfices importa
     \begin{subfigure}{0.48\hsize}
         \centering
         \includegraphics[width=0.9\hsize]{figures/chap4/BertPoolingDetailed.png}
-        \caption{Dispersion des résultats en fonction de la méthode d'exploitation des encodages Bert et de la couche (entre parenthèse) utilisée (-1 étant la dernière couche, -2 l'avant-dernière). Les méthodes de ré-encodages sont les plus performantes, la couche utilisée ayant peu d'effet sur les résultats. Chaque architecture est entraînée 10 fois, avec une couche linéaire comme couche décisionnelle.}
+        \caption{Dispersion des résultats en fonction de la méthode d'exploitation des encodages BERT et de la couche (entre parenthèse) utilisée (-1 étant la dernière couche, -2 l'avant-dernière). Les méthodes de ré-encodages sont les plus performantes, la couche utilisée ayant peu d'effet sur les résultats. Chaque architecture est entraînée 10 fois, avec une couche linéaire comme couche décisionnelle.}
         \label{fig:chap4:bert-pooling-detailed-eval-fscore}
     \end{subfigure}%
-    \caption{Étude des dispersions des résultats des modèles utilisant Bert dans leur architecture.}
+    \caption{Étude des dispersions des résultats des modèles utilisant BERT dans leur architecture.}
 \end{sidewaysfigure}
 \clearpage
 }
 Au contraire, une architecture reposant sur l'usage de l'encodage de Bert, sans spécialisation, par une nouvelle couche d'encodage de type GRU ou HAN fournit des résultats plus convaincants (\textit{c.f.} figure \ref{fig:chap4:bert-pooling-generic-eval}). Les méthodes mentionnées plus tôt en \ref{part:chap4:architectures:variations-architectures:encodage} n'ont pas nécessairement amélioré les résultats face à un usage classique du token \texttt{[CLS]}, mais induisent cependant bien des variations. Là où le \textit{pooling} du token \texttt{[CLS]} est nécessairement dans les 4 plus mauvais modèles en score F1, précision et rappel, la sélection par la valeur maximum (\texttt{Max}) ou par concaténation de la valeur maximum et de la moyenne (\texttt{MeanMax}) sont régulièrement dans le top 4 des modèles à \textit{pooling}. Mais ces architectures n'en restent pas moins très très loin des modèles à ré-encodage, presque 20 points entre les médianes de score F1 des deux catégories d'usage de Bert, avec un maximum pour le \textit{pooling} qui touche à peine le bas de la moustache inférieure des méthodes GRU et HAN.
 
-En général, les encodages des projections Bert par HAN et GRU, potentiellement suivis d'une couche linéaire enrichie, touchent les résultats en Score F1 du milleur modèle sans métadonnées. L'enrichissement par métadonnées influent clairement les résultats de plusieurs points et inversent même l'intérêt des modèles (HAN est meilleur que GRU sans métadonnées, mais cède sa place de premier avec). GRU montre de très bon résultat dans son premier quartile, à égalité avec les modèles enrichis. Mais, bien que les scores soient largement meilleurs comparés aux modèles \texttt{[CLS]} présentés plus haut, ils restent au niveau d'architectures plus traditionnelles, pour un coût plus élevé en entraînement et calcul d'inférence.
+En général, les encodages des projections BERT par HAN et GRU, potentiellement suivis d'une couche linéaire enrichie, touchent les résultats en Score F1 du milleur modèle sans métadonnées. L'enrichissement par métadonnées influent clairement les résultats de plusieurs points et inversent même l'intérêt des modèles (HAN est meilleur que GRU sans métadonnées, mais cède sa place de premier avec). GRU montre de très bon résultat dans son premier quartile, à égalité avec les modèles enrichis. Mais, bien que les scores soient largement meilleurs comparés aux modèles \texttt{[CLS]} présentés plus haut, ils restent au niveau d'architectures plus traditionnelles, pour un coût plus élevé en entraînement et calcul d'inférence.
 
 \subsubsection{L’échec des modèles de similarité}
 
@@ -695,67 +695,66 @@ Ces résultats sont confirmés par la seconde phase d'entraînements qui montre 
 
 Parmi les types de modèles, seuls sont à proscrire les modèles Bert, dont l'entraînement et l'usage en terrain réel sont coûteux et dont les scores sont bien éloignés du top 4, et les réseaux utilisant CNN comme encodeurs, du moins avec des filtres $[2,3,4,5]$ (\textit{cf.} figure \ref{fig:chap4:main-results-dispersion-encoder}). Au contraire, les réseaux utilisant des encodeurs LSTM, GRU ou HAN ont tendance à avoir des résultats équivalents entre eux, avec une dispersion équivalente des résultats. Parmi les paramètres, la taille de la dimension d'encodage n'a pas ou peu d'impact sur les résultats (figure \ref{fig:chap4:main-results-dispersion-dimension}). Il reste que chaque modèle ou type d'architecture présente une forte dispersion de leurs résultats, hors Score F1 (5points sur le F1 pour les meilleures architectures, mais de 10 à 15 points sur les deux autres mesures): une modification du \textit{learning rate} n'affecte pas cette disparité en précision et rappel. La taille du corpus de test peut être à la source de cette variance.
 
-\begin{table}[ht]
-\centering
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{lllll|rrr} \hline
-Morphologie & Encodeur & Enrichissement & Embeddings & Taille encodée & Précision      & Rappel         & Score F1       \\ \hline
-Aucune      & HAN      & Linéaire       & W2V        & 128            & \textbf{86.86} & \textbf{75.50} & \textbf{80.07} \\
-Aucune      & LSTM     & LSTM           & W2V        & 256            & 84.28          & 75.10          & 79.53          \\
-Agglomérée  & HAN      & Linéaire       & W2V        & 256            & 83.38          & 75.30          & 79.51          \\
-Agglomérée  & LSTM     & LSTM           & W2V        & 128            & 85.72          & 72.71          & 78.51          \\
-Agglomérée  & GRU      & -              & W2V        & 128            & \textbf{85.07} & 71.12          & \textbf{77.22} \\
-Agglomérée  & HAN      & -              & W2V        & 128            & 82.38          & \textbf{71.51} & 76.54          \\
-Agglomérée  & HAN      & -              & W2V        & 256            & 84.51          & 69.52          & 76.50          \\
-Agglomérée  & GRU      & -              & W2V        & 256            & 84.26          & 69.72          & 76.47          \\
-Aucune      & GRU      & Linéaire       & Bert       & 256            & 80.47          & 70.72          & 76.11          \\
-Aucune      & HAN      & Linéaire       & Bert       & 256            & 82.34          & 69.52          & 74.94          \\
-Agglomérée  & LSTM     & -              & W2V        & 128            & 81.80          & 70.72          & 74.57          \\
-Agglomérée  & LSTM     & -              & W2V        & 256            & 79.55          & 70.12          & 74.31          \\
-Aucune      & LSTM     & -              & Bert       & 256            & 77.97          & 70.12          & 73.15          \\
-Aucune      & GRU      & -              & Bert       & 256            & 79.41          & 67.73          & 72.50          \\
-Agglomérée  & CNN      & -              & W2V        & 128            & 82.20          & 55.78          & 66.50          \\
-Aucune      & MeanMax  & -              & Bert       & 256            & 71.63          & 54.58          & 62.07          \\
-Agglomérée  & CNN      & -              & W2V        & 256            & 84.65          & 45.62          & 59.90          \\ \hline
-\end{tabular}%
-}
-\caption{Score médian des meilleurs modèles, des modèles BERT et de modèles simples (CNN, GRU, HAN, LSTM sans enrichissements) sur 10 entraînements. En gras, les meilleurs scores des modèles avec enrichissement et sans enrichissement. L'enrichissement apporte un réel bonus (+2,8 points en Score F1, +4,40 en rappel, +1,80 en précision), contrairement à l'usage de modèles \enquote{riches} et \enquote{lourds} comme Bert, à la traîne, 1 points environ des meilleurs modèles sans enrichissements.}
-\label{tab:chap4:general-results}
-\end{table}
+\noindent\begin{minipage}{\linewidth}
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{r|lllll|rrr}
+    \toprule
+     Index & Morphologie & Encodeur & Enrichissement & Embeddings & Taille encodée &  Précision &  Rappel &  Score F1 \\
+    \midrule
+        17 &             &      HAN &         Linear &   Word2Vec &            128 &      \textbf{86.86} &   \textbf{75.50} &     \textbf{80.07} \\
+        16 &             &     LSTM &           LSTM &   Word2Vec &            256 &      84.28 &   75.10 &     79.53 \\
+        15 &  Agglomérée &      HAN &         Linear &   Word2Vec &            256 &      83.38 &   75.30 &     79.51 \\
+        14 &  Agglomérée &     LSTM &           LSTM &   Word2Vec &            128 &      85.72 &   72.71 &     78.51 \\
+        13 &  Agglomérée &      GRU &                &   Word2Vec &            128 &      \textbf{85.07} &   71.12 &     \textbf{77.22} \\
+        12 &  Agglomérée &      HAN &                &   Word2Vec &            128 &      82.38 &   \textbf{71.51} &     76.54 \\
+        11 &  Agglomérée &      HAN &                &   Word2Vec &            256 &      84.51 &   69.52 &     76.50 \\
+        10 &  Agglomérée &      GRU &                &   Word2Vec &            256 &      84.26 &   69.72 &     76.47 \\
+         9 &             &      GRU &         Linear &       BERT &            256 &      80.47 &   70.72 &     76.11 \\
+         8 &             &      HAN &         Linear &       BERT &            256 &      82.34 &   69.52 &     74.94 \\
+         7 &  Agglomérée &     LSTM &                &   Word2Vec &            128 &      81.80 &   70.72 &     74.57 \\
+         6 &  Agglomérée &     LSTM &                &   Word2Vec &            256 &      79.55 &   70.12 &     74.31 \\
+         5 &             &      HAN &                &       BERT &            256 &      77.97 &   70.12 &     73.15 \\
+         4 &             &      GRU &                &       BERT &            256 &      79.41 &   67.73 &     72.50 \\
+         3 &  Agglomérée &      CNN &                &   Word2Vec &            128 &      82.20 &   55.78 &     66.50 \\
+         2 &             &  MeanMax &                &       BERT &            256 &      71.63 &   54.58 &     62.07 \\
+         1 &  Agglomérée &      CNN &                &   Word2Vec &            256 &      84.65 &   45.62 &     59.90 \\
+    \bottomrule
+    \end{tabular}%
+    }
+    \captionof{table}{Score médian des meilleurs modèles, des modèles BERT et de modèles simples (CNN, GRU, HAN, LSTM sans enrichissements) sur 10 entraînements. En gras, les meilleurs scores des modèles avec enrichissement et sans enrichissement. L'enrichissement apporte un réel bonus (+2,8 points en Score F1, +4,40 en rappel, +1,80 en précision), contrairement à l'usage de modèles \enquote{riches} et \enquote{lourds} comme Bert, à la traîne, 1 points environ des meilleurs modèles sans enrichissements.}
+    \label{tab:chap4:general-results}
+    
+    \includegraphics[width=\linewidth]{figures/chap4/main-dispersionscores.png}
+    \captionof{figure}{Dispersion des score des meilleurs modèles, des modèles BERT et de modèles simples (CNN, GRU, HAN, LSTM sans enrichissements) sur 10 entraînements. Les détails sur les architectures sont donnés en table \ref{tab:chap4:general-results}}
+    \label{fig:chap4:main-results-dispersion}
+\end{minipage}
 
-\afterpage{%
-    \begin{figure}[h]
+\begin{figure}[ht]
+        \begin{subfigure}{0.65\textwidth}
             \centering
-            \includegraphics[width=.9\linewidth]{figures/chap4/main-dispersionscores.png}
-            \caption{Dispersion des score des meilleurs modèles, des modèles BERT et de modèles simples (CNN, GRU, HAN, LSTM sans enrichissements) sur 10 entraînements.}
-            \label{fig:chap4:main-results-dispersion}
-    \end{figure}%
-    \begin{figure}[h]
-            \begin{subfigure}{0.65\textwidth}
-                \centering
-                \includegraphics[width=\linewidth]{figures/chap4/main-lineartop5vstheworld.png}
-                \caption{Dispersion des score en fonction des types de modèles (Enrichis, Bert, Classiques) (à gauche) et en fonction des tailles d'encodage (à droite)}
-                \label{fig:chap4:main-results-dispersion-encoder}
-            \end{subfigure} \hfill %
-            \begin{subfigure}{0.30\linewidth}%
-                \centering
-                \includegraphics[width=\linewidth]{figures/chap4/main-encodingdimension.png}
-                \caption{Dispersion des score en fonction de la dimension d'encodage, toutes architectures confondues.}
-                \label{fig:chap4:main-results-dispersion-dimension}
-            \end{subfigure}
-            \caption{Dispersion des résultats au niveau macro et non au niveau architecture.}
-    \end{figure}%
+            \includegraphics[width=\linewidth]{figures/chap4/main-lineartop5vstheworld.png}
+            \caption{Dispersion des score en fonction des types de modèles (Enrichis, Bert, Classiques) (à gauche) et en fonction des tailles d'encodage (à droite)}
+            \label{fig:chap4:main-results-dispersion-encoder}
+        \end{subfigure} \hfill %
+        \begin{subfigure}{0.30\linewidth}%
+            \centering
+            \includegraphics[width=\linewidth]{figures/chap4/main-encodingdimension.png}
+            \caption{Dispersion des score en fonction de la dimension d'encodage, toutes architectures confondues.}
+            \label{fig:chap4:main-results-dispersion-dimension}
+        \end{subfigure}
+        \caption{Dispersion des résultats au niveau macro et non au niveau architecture.}
+\end{figure}%
     \clearpage
-}
 
 \subsection{Extensibilité des modèles}
 
-Pour notre recherche, nous avons bénéficié de l'immense travail de J. N. Adams qui nous a permis de compiler une base de plus d'un millier d'exemples. Cependant, le travail de ce dernier reste rare et unique par sa dimension. L'usage de l'intelligence artificielle pour produire des corpus est donc une chance de produire d'autres recherches équivalentes à celle du britannique. Mais pour cela, évaluer l'efficacité du modèle à d'autres échelles est important. Nous proposons donc trois terrains d'explorations différentes, permettant d'évaluer l'apport des différentes architectures:
+Pour notre recherche, nous avons bénéficié de l'immense travail de J. N. Adams qui nous a permis de compiler une base de plus de deux milliers d'exemples. Cependant, le travail de ce dernier reste rare et unique par sa dimension. L'usage de l'intelligence artificielle pour produire des corpus est donc une chance de produire d'autres recherches équivalentes à celle du britannique. Mais pour cela, évaluer l'efficacité du modèle à d'autres échelles est important. Nous proposons donc trois terrains d'explorations différentes, permettant d'évaluer l'apport des différentes architectures:
 
 \begin{enumerate}
     \item Explorer, avec un corpus diversifié en source, l'importance de sa taille. Avec un corpus beaucoup plus petit mais comportant une variété d'exemples (avec des métaphores, des termes \enquote{explicitement} lié à l'isotopie, etc.) plus importante.
-    \item Explorer l'efficacité d'un modèle constitué d'exemples présentant uniquement des termes particulièrement liés à l'isotopie considérées: par exemple, \textsc{culus}, \textsc{mentula}, \textsc{pedico}, etc.
-    \item Dans un objectif un peu contraire, étudier la capacité du modèle à reconnaître des termes explicites à partir du simple apprentissage d'exemples \enquote{figurés}. Cela permet d'évaluer la confiance à donner au modèle d'un point de vue qualitatif.
+    \item Étudier la capacité du modèle à reconnaître des termes explicites à partir du simple apprentissage d'exemples \enquote{métaphoriques}.
+    \item Étudier la capacité du modèle à reconnaître des exemples métaphoriques en ayant été entraîner sur des exemples ne présentant cette figure de style.
 \end{enumerate}
 
 \begin{table}[]
@@ -766,25 +765,161 @@ Pour notre recherche, nous avons bénéficié de l'immense travail de J. N. Adam
     Corpus & Set &        &       &       \\
     \midrule
     Général & Négatif &  19940 &  2493 &  2491 \\
-    Litéral & Négatif &  15701 &  1745 &  7478 \\
-    Métaphores & Négatif &  15701 &  1745 &  7478 \\
-    Partiel & Négatif &   3970 &  2493 &  2491 \\
+    Partiel &  &   3970 &  2493 &  2491 \\
+    Métaphores &  &  15701 &  1745 &  7478 \\
+    Non-Métaphores &  &  15701 &  1745 &  7478 \\ \midrule
     Général & Positif &   2013 &   252 &   251 \\
-    Litéral & Positif &   1439 &   618 &   459 \\
-    Métaphores & Positif &    413 &    46 &  2057 \\
-    Partiel & Positif &    420 &   252 &   251 \\
+    Partiel &  &    420 &   252 &   251 \\
+    Métaphores &  &    413 &    46 &  2057 \\
+    Non-Métaphores &  &   1439 &   618 &   459 \\
     \bottomrule
     \end{tabular}
     \caption{Taille des corpus d'entraînement en fonction de leur composition}
     \label{tab:chap4:dataset-sizes}
 \end{table}
-\subsubsection{Impact de la taille du dataset: random petit}
 
-\subsubsection{Entraîner à partir de termes explicites uniquement}
+\subsubsection{Impact de la taille du \textit{dataset}}
 
+Le set de données Partiel est un échantillonnage aléatoire à hauteur de 20\% des données d'entraînement du corpus principal. Son set de développement et son corpus de test sont conservés au même niveau. Le nombre total d'échantillons utilisés par le processus d'entraînement (train+dev) atteint donc 672 exemples positifs, un nombre élevé au regard d'un constitution manuelle de corpus mais atteignable par une approche lexicale (sélection de mots ``intrinsèquement'' liés à un champs ou une isotopie donnée puis recherche d'occurrences) et par une approche stylistique ``minimale'' (par connaissance du sujet, sélection de passages métaphoriques, métonymiques, etc.).
+
+Sur ce set de données, les modèles à métadonnées règnent encore en maîtres sur le tableau des scores, toutes mesures confondues (\textit{cf.} table \ref{tab:chap4:partial-results}). Une chute des scores non-négligeable est observée, comparativement au corpus complet: le meilleur modèle enrichi chute de 10,45 points en précision, de 7,57 points en rappel et de 10,09 points en score F1. La chute est d'autant plus dur pour les modèles non-enrichis n'utilisant pas BERT, en bas de tableau systématiquement, avec des écarts de 15,13 points en précision à 18,92 points en rappel entre les meilleurs modèles de chaque corpus. Avec un rappel de 52,59\%, un peu moins d'un exemple sur deux n'est pas reconnu comme portant une isotopie sexuelle par le meilleur modèle HAN Word2Vec (8) tandis qu'un exemple sur trois est un faux-positif avec 66,16\% de précision.
+
+Au contraire du set principal, un modèle non-enrichi et utilisant BERT produit des scores lui permettant de se hisser au rang 2 en score F1, au rang 3 en rappel et au rang 6 en précision, en battant systématiquement les modèles non enrichis sans Bert (\textit{cf.} figure \ref{fig:chap4:partial-results-dispersion}). Avec un jeu de données plus petit, BERT devient donc plus intéressant pour produire des modèles d'exploration, grâce à son espace sémantique plus vaste que Word2Vec ou FastText. Le coût d'entraînement est encore plus important que pour un simple modèle à projections non contextualisées, mais permet de battre ces derniers avec une marge de 5 à 10 points suivant les mesures. Sans spécialiser BERT et sur des échantillons relativements courts, les résultats sont encourageants. Un BERT plus ``propre'' que celui proposé par Latin BERT pourrait dans ce contexte proposer des résultats encore plus impressionnants, et, peut-être, battre un modèle enrichi, d'autant que le modèle enrichi est probablement dépendant, vu les résultats antécédents, d'une représentation équilibrée des auteurs, siècles ou formes.
+
+
+\noindent\begin{minipage}{\linewidth}
+    \centering
+    \resizebox{\linewidth}{!}{%}
+    \begin{tabular}{r|lllll|rrr}
+    \toprule
+     Index & Morphologie & Encodeur & Enrichissement & Embeddings & Taille encodée &  Précision &  Rappel &  Score F1 \\
+    \midrule
+        17 &             &      HAN &         Linear &       BERT &            256 &      72.56 &   \textbf{67.93} &     \textbf{69.98} \\
+        16 &             &      HAN &                &       BERT &            256 &      \textbf{71.71} &   \textbf{62.35} &     \textbf{66.74} \\
+        15 &             &  MeanMax &         Linear &       BERT &            256 &      67.09 &   64.74 &     66.08 \\
+        14 &             &      HAN &         Linear &   Word2Vec &            128 &      72.95 &   61.16 &     65.88 \\
+        13 &             &      HAN &         Linear &   Word2Vec &            256 &      72.47 &   60.76 &     65.49 \\
+        12 &             &      GRU &         Linear &       BERT &            256 &      70.14 &   61.55 &     63.10 \\
+        11 &             &      GRU &                &       BERT &            256 &      68.70 &   56.57 &     62.17 \\
+        10 &             &     LSTM &           LSTM &   FastText &            256 &      \textbf{76.41} &   50.60 &     61.32 \\
+         9 &             &  MeanMax &                &       BERT &            256 &      \textbf{71.72} &   50.00 &     58.92 \\
+         8 &  Agglomérée &      HAN &                &   Word2Vec &            128 &      66.19 &   52.59 &     58.83 \\
+         7 &  Agglomérée &      GRU &                &   Word2Vec &            128 &      64.66 &   51.00 &     56.89 \\
+         6 &  Agglomérée &     LSTM &                &   Word2Vec &            128 &      66.29 &   50.00 &     56.20 \\
+         5 &  Agglomérée &      HAN &                &   Word2Vec &            256 &      69.94 &   46.41 &     55.94 \\
+         4 &  Agglomérée &      GRU &                &   Word2Vec &            256 &      66.85 &   45.62 &     55.11 \\
+         3 &  Agglomérée &     LSTM &                &   Word2Vec &            256 &      68.70 &   44.62 &     53.91 \\
+         2 &  Agglomérée &      CNN &                &   Word2Vec &            128 &      64.59 &   41.24 &     51.52 \\
+         1 &  Agglomérée &      CNN &                &   Word2Vec &            256 &      61.23 &   43.82 &     50.56 \\
+    \bottomrule
+    \end{tabular}%
+    }
+    \captionof{table}{Score médian sur le corpus partiel des meilleurs modèles, des modèles BERT et de modèles simples (CNN, GRU, HAN, LSTM sans enrichissements) sur 10 entraînements. En gras, les meilleurs scores des modèles avec enrichissement et sans enrichissement.}
+    \label{tab:chap4:partial-results}
+
+    \includegraphics[width=\linewidth]{figures/chap4/partial-dispersionscores.png}
+    \captionof{figure}{Dispersion des score sur le corpus partiel des meilleurs modèles, des modèles BERT et de modèles simples (CNN, GRU, HAN, LSTM sans enrichissements) sur 10 entraînements . Les détails sur les architectures sont donnés en table \ref{tab:chap4:partial-results}.}
+    \label{fig:chap4:partial-results-dispersion}
+    
+\end{minipage}
+
+% \subsubsection{Entraîner à partir de termes explicites uniquement}
 %mentula, cunnus, pedico, futuo, culus ?
 
 \subsubsection{Entraîner à partir de métaphores uniquement}
+
+Le set de données Métaphores est un échantillonnage basé sur la présence du tag \texttt{\#metaphor} dans l'échantillon. Cet échantillonage produit 459 échantillons positifs, répartis entre un corpus train (413) et un corpus dev (46). Le corpus de test est constitué de tous les textes n'incluant pas ce tag, y compris ceux marqués par \texttt{\#euphemism} ou \texttt{\#metonymy}, résultant en un corpus de test bien plus important de 2057 échantillons positifs (plus grand que le corpus d'entraînement du corpus principal). Si ce corpus a peu de probabilité d'être équivalent à un corpus compilé à la main en prévision de l'élargissement d'un modèle, il nous renseigne sur ce que peut comprendre le modèle sur le contexte implicite des isotopies sexuelles.
+
+Les métadonnées permettent encore aux modèles de produire des résultats supérieurs aux autres (\textit{cf.} table \ref{tab:chap4:metaphor-results}). Mais ce sont les modèles Bert, y compris le modèle utilisant \textit{MeanMax} avec une couche linéaire enrichie qui bat les scores des autres modèles, le score de rappel étant le facteur le plus important de discrimination entre les modèles: environ 7 points d'écart entre le meilleur et pire modèle en précision, tandis que presque 20 points séparent les modèles en rappel (\textit{voir} figure \ref{fig:chap4:metaphor-results-dispersion}). La prépondérance de \textit{MeanMax}, utilisant une moyenne des vecteurs de sous-tokens concaténée à la valeur maximale de ces sous-tokens, est exceptionnel pour l'ensemble des expériences: 6 points en rappel séparent d'ailleurs le modèle \textit{MeanMax} du second, utilisant GRU comme encodeur. Dans ce modèle \textit{MeanMax}, seule la couche linéaire enrichie est donc entraînée, le \textit{pooling} et la projection ne nécessitant pas de spécialisation. Près de trois échantillons sur cinq sont ignorés par le modèle en test, mais au vue de la taille du set d'entraînement et de la variation possible dans le corpus de test, ce score est tout à fait louable.
+
+Au contraire du modèle enrichi et du modèle sur corpus partiel, les modèles non-enrichis utilisant BERT n'obtiennent pas cette fois-ci les meilleurs scores, qu'ils utilisent des encodeurs récurrents ou des systèmes de pooling. Il semblerait donc que le surentraînement provoqué par les métadonnées ``fait attendre'' des isotopies sexuelles plus que la simple projection effectuée par le \textit{transformer}: si \textit{MeanMax} enrichi est premier, il est aussi bon antépénultième quand il n'est pas enrichi, à 20.05 points de rappel derrière son alter-ego.
+
+Le premier modèle non-enrichi, et potentiellement moins surentraîné, obtient un rappel à 9 points du premier modèle, ratant ainsi deux éléments positifs sur trois du corpus test. Sa précision reste excellente, comme celle de l'ensemble des modèles: peu des éléments qu'il sélectionne comme positif sont de faux positifs (un tout petit peu plus d'un sur vingt). Avec un score aussi fort, d'un point de vue purement statistique, on peut attendre du modèle une détection fine de quelques traits saillants des isotopies sexuelles, en étant au contraire incapable de reconnaître des contextes plus vagues, peut-être plus crus. 
+
+\noindent\begin{minipage}{\linewidth}%
+    \resizebox{\linewidth}{!}{%}
+    \begin{tabular}{r|lllll|rrr}
+    \toprule
+     Index & Morphologie & Encodeur & Enrichissement & Embeddings & Taille encodée &  Précision &  Rappel &  Score F1 \\
+    \midrule
+        19 &             &  MeanMax &         Linear &       Bert &            256 &      90.20 &   \textbf{42.05} &     \textbf{57.36} \\
+        18 &             &      GRU &         Linear &       Bert &            256 &      92.17 &   36.49 &     52.28 \\
+        17 &             &     LSTM &           LSTM &   FastText &            256 &      96.56 &   35.08 &     51.34 \\
+        16 &             &      HAN &         Linear &   Word2Vec &            128 &      96.17 &   33.79 &     49.98 \\
+        15 &             &     LSTM &           LSTM &   FastText &            128 &      \textbf{97.32} &   33.23 &     49.56 \\
+        14 &  Agglomérée &      GRU &                &   Word2Vec &            256 &      94.87 &   \textbf{33.11} &     \textbf{49.05} \\
+        13 &  Agglomérée &     LSTM &                &   Word2Vec &            256 &      95.36 &   32.77 &     48.71 \\
+        12 &  Agglomérée &     LSTM &           LSTM &   Word2Vec &            128 &      95.01 &   30.31 &     45.91 \\
+        11 &             &      HAN &         Linear &       Bert &            256 &      94.27 &   30.09 &     45.61 \\
+        10 &  Agglomérée &      HAN &                &   Word2Vec &            256 &      95.98 &   29.39 &     45.02 \\
+         9 &  Agglomérée &      GRU &                &   Word2Vec &            128 &      96.33 &   28.76 &     44.28 \\
+         8 &  Agglomérée &     LSTM &           LSTM &   Word2Vec &            256 &      96.17 &   28.42 &     43.78 \\
+         7 &  Agglomérée &     LSTM &                &   Word2Vec &            128 &      95.86 &   27.49 &     42.67 \\
+         6 &             &      GRU &                &       Bert &            256 &      92.52 &   26.84 &     41.59 \\
+         5 &  Agglomérée &      HAN &                &   Word2Vec &            128 &      95.34 &   26.54 &     41.45 \\
+         4 &  Agglomérée &      CNN &                &   Word2Vec &            256 &      \textbf{96.75} &   23.07 &     37.31 \\
+         3 &             &  MeanMax &                &       Bert &            256 &      91.73 &   22.00 &     35.52 \\
+         2 &             &      HAN &                &       Bert &            256 &      92.71 &   21.93 &     35.46 \\
+         1 &  Agglomérée &      CNN &                &   Word2Vec &            128 &      96.12 &   21.22 &     34.65 \\
+    \bottomrule
+    \end{tabular}%
+    }
+    \captionof{table}{Score médian sur le corpus Métaphores des meilleurs modèles, des modèles BERT et de modèles simples (CNN, GRU, HAN, LSTM sans enrichissements) sur 10 entraînements. En gras, les meilleurs scores des modèles avec enrichissement et sans enrichissement.}
+    \label{tab:chap4:metaphor-results}
+    \includegraphics[width=\linewidth]{figures/chap4/metaphors-dispersionscores.png}
+    \captionof{figure}{Dispersion des score sur le corpus Métaphores des meilleurs modèles, des modèles BERT et de modèles simples (CNN, GRU, HAN, LSTM sans enrichissements) sur 10 entraînements . Les détails sur les architectures sont donnés en table \ref{tab:chap4:metaphor-results}.}
+    \label{fig:chap4:metaphor-results-dispersion}
+\end{minipage}
+
+% \subsubsection{Entraîner à partir de termes explicites uniquement}
+%mentula, cunnus, pedico, futuo, culus ?
+
+\subsubsection{La reconnaissance de métaphores}
+
+Le set de données ``Non-Métaphores'' est issu d'un échantillonnage inversé de celui appliqué à Métaphores: les 459 éléments marqués par \texttt{\#metaphor} sont relégués en test, tandis que l'ensemble des autres éléments sont répartis entre train et dev. Le modèle contient ainsi 1439 documents positifs pour l'entraînement et 618 pour l'aiguillage de ce dernier. Il s'agit du second corpus le plus grand pour l'entraînement, derrière le corpus Général, et du plus grand corpus de dev, permettant potentiellement de mieux guider l'entraînement loin de la surspécialisation. Ce corpus ressemble plus, en dehors de sa quantité, à un corpus compilable manuellement: il reprend des termes ``intrinsèquement'' lié à l'isotopie sexuelle et dont l'interprétation laisse peu de doute (\textit{futuo}, \textit{mentula}, \textit{cunnus}, etc.); il prend en compte les cas de métonymies (\textit{mentulas cacare}\footnote{Littéralement ``Chier des bites'', pour parler de \textit{pedicatio}}, \textit{laxo}\footnote{Élargir, rendre plus lâche.}, \textit{scortum duco}, \textit{eo}\footnote{\textit{Aller} quelque part en vue de coucher.}) et d'euphémismes (\textit{res}, \textit{partes}), plus ``faciles'' à interpréter pour le compilateur humain. La capacité ou non d'un modèle à reconnaître des métaphores à partir de ce corpus nous informe donc sur la possibilité d'étendre le modèle à des usages plus complexes, plus figurées de l'isotopie sexuelles, telle que l'usagne de \textit{columna} (la colonne) à la place du sexe.
+
+% Reprendre ici ?
+
+Les métadonnées permettent encore aux modèles de produire des résultats supérieurs aux autres (\textit{cf.} table \ref{tab:chap4:metaphor-results}). Mais ce sont les modèles Bert, y compris le modèle utilisant \textit{MeanMax} avec une couche linéaire enrichie qui bat les scores des autres modèles, le score de rappel étant le facteur le plus important de discrimination entre les modèles: environ 7 points d'écart entre le meilleur et pire modèle en précision, tandis que presque 20 points séparent les modèles en rappel (\textit{voir} figure \ref{fig:chap4:metaphor-results-dispersion}). La prépondérance de \textit{MeanMax}, utilisant une moyenne des vecteurs de sous-tokens concaténée à la valeur maximale de ces sous-tokens, est exceptionnel pour l'ensemble des expériences: 6 points en rappel séparent d'ailleurs le modèle \textit{MeanMax} du second, utilisant GRU comme encodeur. Dans ce modèle \textit{MeanMax}, seule la couche linéaire enrichie est donc entraînée, le \textit{pooling} et la projection ne nécessitant pas de spécialisation. Près de trois échantillons sur cinq sont ignorés par le modèle en test, mais au vue de la taille du set d'entraînement et de la variation possible dans le corpus de test, ce score est tout à fait louable.
+
+Au contraire du modèle enrichi et du modèle sur corpus partiel, les modèles non-enrichis utilisant BERT n'obtiennent pas cette fois-ci les meilleurs scores, qu'ils utilisent des encodeurs récurrents ou des systèmes de pooling. Il semblerait donc que le surentraînement provoqué par les métadonnées ``fait attendre'' des isotopies sexuelles plus que la simple projection effectuée par le \textit{transformer}: si \textit{MeanMax} enrichi est premier, il est aussi bon antépénultième quand il n'est pas enrichi, à 20.05 points de rappel derrière son alter-ego.
+
+Le premier modèle non-enrichi, et potentiellement moins surentraîné, obtient un rappel à 9 points du premier modèle, ratant ainsi deux éléments positifs sur trois du corpus test. Sa précision reste excellente, comme celle de l'ensemble des modèles: peu des éléments qu'il sélectionne comme positif sont de faux positifs (un tout petit peu plus d'un sur vingt). Avec un score aussi fort, d'un point de vue purement statistique, on peut attendre du modèle une détection fine de quelques traits saillants des isotopies sexuelles, en étant au contraire incapable de reconnaître des contextes plus vagues, peut-être plus crus.
+
+\noindent\begin{minipage}{\linewidth}%
+    \resizebox{\linewidth}{!}{%}
+    \begin{tabular}{r|lllll|rrr}
+    \toprule
+     Index & Morphologie & Encodeur & Enrichissement & Embeddings & Taille encodée &  Précision &  Rappel &  Score F1 \\
+    \midrule
+        19 &  Agglomérée &      HAN &         Linear &   Word2Vec &            128 &      67.05 &   61.55 &     \textbf{64.03} \\
+        18 &             &      HAN &         Linear &   Word2Vec &            256 &      65.78 &   59.59 &     62.86 \\
+        17 &  Agglomérée &      GRU &                &   Word2Vec &            256 &      63.71 &   61.11 &     \textbf{62.16} \\
+        16 &             &     LSTM &           LSTM &   FastText &            256 &      70.84 &   58.28 &     61.98 \\
+        15 &             &     LSTM &           LSTM &   FastText &            128 &      69.12 &   56.32 &     60.63 \\
+        14 &             &     LSTM &           LSTM &   Word2Vec &            128 &      \textbf{71.31} &   53.49 &     60.63 \\
+        13 &  Agglomérée &      GRU &                &   Word2Vec &            128 &      64.98 &   57.84 &     60.50 \\
+        12 &  Agglomérée &     LSTM &                &   Word2Vec &            128 &      61.71 &   59.59 &     60.48 \\
+        11 &  Agglomérée &      HAN &                &   Word2Vec &            256 &      61.89 &   58.17 &     59.78 \\
+        10 &  Agglomérée &     LSTM &                &   Word2Vec &            256 &      57.72 &   \textbf{61.33} &     59.38 \\
+         9 &  Agglomérée &      HAN &                &   Word2Vec &            128 &      67.23 &   53.81 &     58.63 \\
+         8 &             &      HAN &         Linear &       Bert &            256 &      67.19 &   52.40 &     58.20 \\
+         7 &             &  MeanMax &         Linear &       Bert &            256 &      49.72 &   \textbf{68.63} &     57.32 \\
+         6 &             &      GRU &         Linear &       Bert &            256 &      65.19 &   52.40 &     57.19 \\
+         5 &             &      GRU &                &       Bert &            256 &      61.19 &   51.63 &     55.68 \\
+         4 &             &      HAN &                &       Bert &            256 &      58.56 &   52.94 &     55.19 \\
+         3 &  Agglomérée &      CNN &                &   Word2Vec &            256 &      \textbf{67.52} &   47.06 &     55.08 \\
+         2 &             &  MeanMax &                &       Bert &            256 &      53.23 &   53.38 &     52.13 \\
+         1 &  Agglomérée &      CNN &                &   Word2Vec &            128 &      63.36 &   38.89 &     48.36 \\
+    \bottomrule
+    \end{tabular}%
+    }
+    \captionof{table}{Score médian sur le corpus Non-Métaphores des meilleurs modèles, des modèles BERT et de modèles simples (CNN, GRU, HAN, LSTM sans enrichissements) sur 10 entraînements. En gras, les meilleurs scores des modèles avec enrichissement et sans enrichissement.}
+    \label{tab:chap4:literal-results}
+    \includegraphics[width=\linewidth]{figures/chap4/literal-dispersionscores.png}
+    \captionof{figure}{Dispersion des score sur le corpus Non-Métaphores des meilleurs modèles, des modèles BERT et de modèles simples (CNN, GRU, HAN, LSTM sans enrichissements) sur 10 entraînements . Les détails sur les architectures sont donnés en table \ref{tab:chap4:literal-results}.}
+    \label{fig:chap4:literal-results-dispersion}
+\end{minipage}
 
 \subsection{Ce qu’apprend le modèle?}
 
