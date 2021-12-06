@@ -876,15 +876,14 @@ Le premier modèle non-enrichi, et potentiellement moins surentraîné, obtient 
 
 \subsubsection{La reconnaissance de métaphores}
 
-Le set de données ``Non-Métaphores'' est issu d'un échantillonnage inversé de celui appliqué à Métaphores: les 459 éléments marqués par \texttt{\#metaphor} sont relégués en test, tandis que l'ensemble des autres éléments sont répartis entre train et dev. Le modèle contient ainsi 1439 documents positifs pour l'entraînement et 618 pour l'aiguillage de ce dernier. Il s'agit du second corpus le plus grand pour l'entraînement, derrière le corpus Général, et du plus grand corpus de dev, permettant potentiellement de mieux guider l'entraînement loin de la surspécialisation. Ce corpus ressemble plus, en dehors de sa quantité, à un corpus compilable manuellement: il reprend des termes ``intrinsèquement'' lié à l'isotopie sexuelle et dont l'interprétation laisse peu de doute (\textit{futuo}, \textit{mentula}, \textit{cunnus}, etc.); il prend en compte les cas de métonymies (\textit{mentulas cacare}\footnote{Littéralement ``Chier des bites'', pour parler de \textit{pedicatio}}, \textit{laxo}\footnote{Élargir, rendre plus lâche.}, \textit{scortum duco}, \textit{eo}\footnote{\textit{Aller} quelque part en vue de coucher.}) et d'euphémismes (\textit{res}, \textit{partes}), plus ``faciles'' à interpréter pour le compilateur humain. La capacité ou non d'un modèle à reconnaître des métaphores à partir de ce corpus nous informe donc sur la possibilité d'étendre le modèle à des usages plus complexes, plus figurées de l'isotopie sexuelles, telle que l'usagne de \textit{columna} (la colonne) à la place du sexe.
+Le set de données ``Non-Métaphores'' est issu d'un échantillonnage inversé de celui appliqué à Métaphores: les 459 éléments marqués par \texttt{\#metaphor} sont relégués en test, tandis que l'ensemble des autres éléments sont répartis entre train et dev. Le modèle contient ainsi 1439 documents positifs pour l'entraînement et 618 pour l'aiguillage de ce dernier. Il s'agit du second corpus le plus grand pour l'entraînement, derrière le corpus Général, et du plus grand corpus de dev, permettant potentiellement de mieux guider l'entraînement loin de la surspécialisation. Ce corpus ressemble plus, en dehors de sa quantité, à un corpus compilable manuellement: il reprend des termes ``intrinsèquement'' lié à l'isotopie sexuelle et dont l'interprétation laisse peu de doute (\textit{futuo}, \textit{mentula}, \textit{cunnus}, etc.); il prend en compte les cas de métonymies (\textit{mentulas cacare}\footnote{Littéralement ``Chier des bites'', pour parler de \textit{pedicatio}}, \textit{laxo}\footnote{Élargir, rendre plus lâche.}, \textit{scortum duco}, \textit{eo}\footnote{\textit{Aller} quelque part en vue de coucher.}) et d'euphémismes (\textit{res}, \textit{partes}), plus ``faciles'' à interpréter pour le compilateur humain. La capacité ou non d'un modèle à reconnaître des métaphores à partir de ce corpus nous informe donc sur la possibilité d'étendre le modèle à des usages plus complexes, plus figurées de l'isotopie sexuelles, telle que l'usage de \textit{columna} (la colonne) à la place du sexe.
 
 % Reprendre ici ?
+Les modèles enrichis se partagent le top 10 des architectures avec les modèles classiques, le top 6 en score F1 étant composé uniquement des premiers et d'un modèle ``classique'' (\textit{cf.} table \ref{tab:chap4:literal-results}). L'écart cependant dans ce top 10 est bien faible en score F1, un peu plus de 4 points entre le premier et le dixième, sachant que près d'un point sépare déjà le premier et le second. Sur ce top 10, les modèles non-enrichis obtiennent des rappels équivalents ou supérieurs aux modèles classiques, ratant environ deux exemples à métaphore sur cinq (l'écart est globalement faible, de l'ordre 5 points). C'est en précision, encore, que les modèles enrichis brillent: la sur-spécialisation sur les différents idiolectes ou sociolectes permettent de sélection peu de faux positifs sur le corpus de test.
 
-Les métadonnées permettent encore aux modèles de produire des résultats supérieurs aux autres (\textit{cf.} table \ref{tab:chap4:metaphor-results}). Mais ce sont les modèles Bert, y compris le modèle utilisant \textit{MeanMax} avec une couche linéaire enrichie qui bat les scores des autres modèles, le score de rappel étant le facteur le plus important de discrimination entre les modèles: environ 7 points d'écart entre le meilleur et pire modèle en précision, tandis que presque 20 points séparent les modèles en rappel (\textit{voir} figure \ref{fig:chap4:metaphor-results-dispersion}). La prépondérance de \textit{MeanMax}, utilisant une moyenne des vecteurs de sous-tokens concaténée à la valeur maximale de ces sous-tokens, est exceptionnel pour l'ensemble des expériences: 6 points en rappel séparent d'ailleurs le modèle \textit{MeanMax} du second, utilisant GRU comme encodeur. Dans ce modèle \textit{MeanMax}, seule la couche linéaire enrichie est donc entraînée, le \textit{pooling} et la projection ne nécessitant pas de spécialisation. Près de trois échantillons sur cinq sont ignorés par le modèle en test, mais au vue de la taille du set d'entraînement et de la variation possible dans le corpus de test, ce score est tout à fait louable.
+Confirmant une attitude remarquée sur les corpus les plus important, les modèles Bert produisent les scores les plus faibles, malgré leur coût d'entraînement. Cependant, un \textit{MeanMax} enrichi sur la couche linéaire produit aussi le modèle avec le plus haut rappel, mais le plus faible taux de précision: s'il rate moins d'exemples positifs que ses concurrents, il a donc tendance à sélectionner trop de données faussement positives. Ce modèle est le seul avec un taux de rappel compétitif.
 
-Au contraire du modèle enrichi et du modèle sur corpus partiel, les modèles non-enrichis utilisant BERT n'obtiennent pas cette fois-ci les meilleurs scores, qu'ils utilisent des encodeurs récurrents ou des systèmes de pooling. Il semblerait donc que le surentraînement provoqué par les métadonnées ``fait attendre'' des isotopies sexuelles plus que la simple projection effectuée par le \textit{transformer}: si \textit{MeanMax} enrichi est premier, il est aussi bon antépénultième quand il n'est pas enrichi, à 20.05 points de rappel derrière son alter-ego.
-
-Le premier modèle non-enrichi, et potentiellement moins surentraîné, obtient un rappel à 9 points du premier modèle, ratant ainsi deux éléments positifs sur trois du corpus test. Sa précision reste excellente, comme celle de l'ensemble des modèles: peu des éléments qu'il sélectionne comme positif sont de faux positifs (un tout petit peu plus d'un sur vingt). Avec un score aussi fort, d'un point de vue purement statistique, on peut attendre du modèle une détection fine de quelques traits saillants des isotopies sexuelles, en étant au contraire incapable de reconnaître des contextes plus vagues, peut-être plus crus.
+On arrive donc, à partir d'un corpus de contenant pas de métaphores, à détecter ces dernières, en partie, le meilleur modèle non spécialisé ratant donc deux exemples sur quatre, avec un faux positif pour trois éléments sélectionnés. Plus que des questions de captures des traits, une première hypothèse rejetée est celle d'un plus grand partage des lemmes entre les différents corpus d'entraînement et de tests: avec 18,2\% de lemmes partagés avec le corpus d'entraînement\footnote{$\frac{|Lemmes(Train)| \cap |Lemmes(Test)|}{|Lemmes(Test)|}$}, il se place troisième des sets de données sur cette mesure (30\% pour le corpus principal, 19\% pour le corpus partiel, 4,9\% pour le corpus Métaphores; au contraire, les données de tests sont globalement stables en négatif). L'information auteur et une possible sur-représentation des mêmes auteurs ne pourraient pas non plus être responsable de ces bons scores, car l'écart entre les modèles non-enrichis et enrichis n'est pas assez important. On peut donc supposer que le modèle est capable de reconnaître parmi ces répétitions de lemmes (quantifiables) ou de sèmes (beaucoup plus difficilement quantifiables) ceux permettant de reconnaître une isotopie sexuelle construite via une métaphore.
 
 \noindent\begin{minipage}{\linewidth}%
     \resizebox{\linewidth}{!}{%}
@@ -923,9 +922,56 @@ Le premier modèle non-enrichi, et potentiellement moins surentraîné, obtient 
 
 \subsection{Ce qu’apprend le modèle?}
 
-\subsubsection{Comparer “l’attention” en fonction des modèles}
+\subsubsection{Comparer ``l’attention'' en fonction des modèles}
+
+Le réseau HAN (\textit{Hierarchical Attention Networks}) que nous utilisons\footnote{\textit{cf.} \ref{part:chap4:architectures:variations-architectures:encodage}.} propose d'utiliser un système de pondération au moment de la classification nommée \textit{Attention}. Cette attention répartie 100\% de sa valeur sur sa phrase, chaque mot prenant alors une part plus ou moins grande de cette dernière. Cette pondération est apprise par le modèle pendant sa phase d'entraînement et peut permettre aussi au lecteur humain de comprendre les facteurs ayant conduit à l'une ou l'autre des classifications. Dans une phrase où chacun des mots porte une importance quasi-égale pour l'isotopie de la sexualité, une attention répartie également semble logique, comme dans la phrase ``\textit{lambebat medios improba lingua viros.}'' (\textit{cf.} figure \ref{fig:chap4:attention:repartie}). Au contraire, pour une phrase où un seul un ou deux mots portent toute la ``charge'' isotopique, comme ``\textit{Corrupit frater uxorem meam quam tyrannus violaverat''} (\textit{cf.} figure \ref{fig:chap4:attention:mono}), l'attention sera très inégalement répartie.
+
+\begin{figure}
+     \centering
+     \begin{subfigure}[t]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{figures/chap4/attention.png}
+         \caption{Martial, \textit{Epigrammata}, II.61.2. ``Sa langue perverse léchait le milieu des hommes.''}
+         \label{fig:chap4:attention:repartie}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[t]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{figures/chap4/attention2.png}
+         \caption{Sénèque l'Ancien, \textit{Controverses}, I.7.4. ``Mon frère corrompit ma femme que même le tyran n'avait pas violée.''}
+         \label{fig:chap4:attention:mono}
+     \end{subfigure}
+    \caption{Différentes répartitions de l'attention en fonction de l'interprétation du modèle. Plus le mot est sur fond foncé, plus il porte d'attention.}
+    \label{fig:chap4:attention}
+\end{figure}
+
+En utilisant l'attention et les classifications produite par les architecture Morphologie+Word2Vec+HAN sans enrichissement sur le corpus test (scores médians sur la catégorie positive: meilleur pour le rappel hors architectures enrichies à 71.51\%, précision entre 82 et 84,5\% et score F1 à 76,50\%, \textit{cf.} § \ref{tab:chap4:general-results}), nous nous intéressons au rapport entre l'analyse de J. N. Adams et l'attention utilisée par le réseau. On récupère alors les informations suivantes:
+\begin{itemize}
+    \item Le rang en importance d'attention, 1 étant le mot portant l'attention la plus importante.
+    \item La classification, positive ou non, ainsi que sa justesse (faux-positif ou faux négatif).
+\end{itemize}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/chap4/rangs_distrib.png}
+    \caption{Rang relatif de l'attention dans les échantillons des termes relevés comme ``sexuels'' par J. N. Adams dans ces échantillons. Le rang relatif est calculé comme $\frac{Rang(Token)}{Nombre(Tokens)}$, ainsi, .0 ou .1 seraient dans les 10\% des mots les plus importants.}
+    \label{fig:chap4:ranks-attention}
+\end{figure}
+
+Dans un premier temps, on s'intéresse à la capacité de l'attention à reconnaître dans chacune des documents échantillons l'importance du mot retenu par J. N. Adams dans son lexique. Pour faire cela, on analyse la fréquence des rang de ces derniers. Cette méthodologie pose des limites: dans certaines phrases, la ``charge'' peut-être multiple, et J. N. Adams a pu relever le même échantillon plusieurs fois mais pour plusieurs mots différents. Ainsi, dans la phrase ``\textit{cum cunno mihi mentula est uocanda. }'' (``Il faut appeler cela une bitte et cela une chatte.''), les mots \textit{mentula} (bitte) et \textit{cunnus} (chatte) portent tous les deux une importante forte. D'après l'analyse des termes et de leur rang en figure \ref{fig:chap4:ranks-attention}, on peut conclure que le modèle intègre largement les bons mots porteurs, avec quelques rares situations où il passe vraisemblablement à côté. Le rang médian des mots de J. N. Adams est en effet 2 (donc deuxième mot portant le plus d'attention) avec un rang relatif aux environs de 6\% des mots les plus importants de la phrase.
+
+% Nous proposons alors quelques études de cas de faux-positifs avec les mots retenus comme étant les plus importants par le modèle ainsi que de vrais négatifs avec des att
+
+% Analyse de la position ANA / Rank Attention
+
+% Analyse des faux positifs
+
+%Dans la phrase ['ille', 'uxor', 'aut', 'amica', 'riualis1', 'lasciuio', 'languidus', ',', 'precor', ',', 'reddo', ','], l'attention sera probablement moins portée sur uxor / amica que sur lasciuio et languidus.
+
 
 %Note pour moi-même: Max(attention) similaire par modèle est-elle toujours la même ?
+
+
 
 \subsubsection{Analyse des erreurs des X meilleurs modèles}
 
