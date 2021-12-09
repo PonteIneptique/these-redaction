@@ -920,9 +920,13 @@ On arrive donc, à partir d'un corpus de contenant pas de métaphores, à détec
     \label{fig:chap4:literal-results-dispersion}
 \end{minipage}
 
+% Ajouter une conclusion ???
+
 \subsection{Ce qu’apprend le modèle?}
 
 \subsubsection{Comparer ``l’attention'' en fonction des modèles}
+
+%\paragraph{Une approche statistique de l'attention}
 
 Le réseau HAN (\textit{Hierarchical Attention Networks}) que nous utilisons\footnote{\textit{cf.} \ref{part:chap4:architectures:variations-architectures:encodage}.} propose d'utiliser un système de pondération au moment de la classification nommée \textit{Attention}. Cette attention répartie 100\% de sa valeur sur sa phrase, chaque mot prenant alors une part plus ou moins grande de cette dernière. Cette pondération est apprise par le modèle pendant sa phase d'entraînement et peut permettre aussi au lecteur humain de comprendre les facteurs ayant conduit à l'une ou l'autre des classifications. Dans une phrase où chacun des mots porte une importance quasi-égale pour l'isotopie de la sexualité, une attention répartie également semble logique, comme dans la phrase ``\textit{lambebat medios improba lingua viros.}'' (\textit{cf.} figure \ref{fig:chap4:attention:repartie}). Au contraire, pour une phrase où un seul un ou deux mots portent toute la ``charge'' isotopique, comme ``\textit{Corrupit frater uxorem meam quam tyrannus violaverat''} (\textit{cf.} figure \ref{fig:chap4:attention:mono}), l'attention sera très inégalement répartie.
 
@@ -953,25 +957,183 @@ En utilisant l'attention et les classifications produite par les architecture Mo
 
 \begin{figure}
     \centering
-    \includegraphics[width=\linewidth]{figures/chap4/rangs_distrib.png}
+    \includegraphics[width=\linewidth]{figures/chap4/ranksStatus.png}
     \caption{Rang relatif de l'attention dans les échantillons des termes relevés comme ``sexuels'' par J. N. Adams dans ces échantillons. Le rang relatif est calculé comme $\frac{Rang(Token)}{Nombre(Tokens)}$, ainsi, .0 ou .1 seraient dans les 10\% des mots les plus importants.}
     \label{fig:chap4:ranks-attention}
 \end{figure}
 
-Dans un premier temps, on s'intéresse à la capacité de l'attention à reconnaître dans chacune des documents échantillons l'importance du mot retenu par J. N. Adams dans son lexique. Pour faire cela, on analyse la fréquence des rang de ces derniers. Cette méthodologie pose des limites: dans certaines phrases, la ``charge'' peut-être multiple, et J. N. Adams a pu relever le même échantillon plusieurs fois mais pour plusieurs mots différents. Ainsi, dans la phrase ``\textit{cum cunno mihi mentula est uocanda. }'' (``Il faut appeler cela une bitte et cela une chatte.''), les mots \textit{mentula} (bitte) et \textit{cunnus} (chatte) portent tous les deux une importante forte. D'après l'analyse des termes et de leur rang en figure \ref{fig:chap4:ranks-attention}, on peut conclure que le modèle intègre largement les bons mots porteurs, avec quelques rares situations où il passe vraisemblablement à côté. Le rang médian des mots de J. N. Adams est en effet 2 (donc deuxième mot portant le plus d'attention) avec un rang relatif aux environs de 6\% des mots les plus importants de la phrase.
+Dans un premier temps, on s'intéresse à la capacité de l'attention à reconnaître dans chacune des documents échantillons l'importance du mot retenu par J. N. Adams dans son lexique. Pour faire cela, on analyse la fréquence des rang de ces derniers. Si l'information est importante et intéressante, un terme n'obtenant pas le rang 1 n'est pas nécessairement ignoré, et l'on peut comprendre d'autres choix lorsque l'isotopie est portée par de multiples termes à forte charge sexuelle. Ainsi, dans la phrase ``\textit{cum cunno mihi mentula est uocanda. }'' (``Il faut appeler ça une bitte et ça une chatte.''), les mots \textit{mentula} (bitte) et \textit{cunnus} (chatte) portent tous les deux une importante forte. D'après l'analyse des termes et de leur rang en figure \ref{fig:chap4:ranks-attention}, on peut conclure que le modèle intègre largement les bons mots porteurs, avec quelques rares situations où il passe vraisemblablement à côté. Le rang médian des mots de J. N. Adams est en effet 2 (donc deuxième mot portant le plus d'attention) avec un rang relatif aux environs de 6\% des mots les plus importants de la phrase.
 
-% Nous proposons alors quelques études de cas de faux-positifs avec les mots retenus comme étant les plus importants par le modèle ainsi que de vrais négatifs avec des att
+\begin{table}[]
+    \centering
+    \begin{tabular}{l|rrrr}
+    \toprule
+    Statut &  Faux négatif & Faux positif &  Vrai négatif & Vrai positif \\
+    Lemme &               &              &               &              \\
+    \midrule
+    !     &         33.33 &         0.13 &         26.97 &              \\
+    .     &          5.72 &         0.02 &         35.63 &         1.50 \\
+    ;     &          3.38 &              &         22.28 &              \\
+    ?     &          8.18 &              &         48.25 &         0.45 \\
+    ,     &          0.01 &         0.00 &          0.11 &         0.06 \\
+    \bottomrule
+    \end{tabular}
+    \caption{Pourcentage des signes de ponctuation qui se retrouvent en rang 1 de l'attention, sur 20 entraînements différents. Les points d'exclamation se retrouvant en premier rang de l'attention représentent 26,97\% des points d'exclamation des échantillons négatifs, qui sont classés en négatifs.}
+    \label{tab:my_label}
+\end{table}
 
-% Analyse de la position ANA / Rank Attention
+La distribution est différente chez les faux-négatifs -- les éléments positifs mal reconnus par le modèle -- où la médiane du rang en attention du mot central d'Adams est de 4, et son premier quartile à 2 (contre 1 du côté des vrais positifs). En regardant les termes arrivés en rang 1 de l'attention des vrais négatifs et des faux-négatifs, les signes de ponctuations sont parmi les formes les plus importantes retrouvées: à défaut de comprendre la phrase, le mécanisme d'apprentissage choisit des formes ``vides''. Cette réalité s'étend au-delà de la ponctuation, le top 10 des formes en rang 1 de l'attention chez les vrais négatifs comprenant ainsi \textit{et, sum, in, qui} et \textit{suus}. 
 
-% Analyse des faux positifs
+L'attention peut pour autant être ignorée en partie par le modèle au moment de la classification. Des termes importants tels que \textit{corrumpo} dans nos données positives se retrouvent 162 fois en rang 1 pour les vrais négatifs, et 120 fois pour les vais positifs. Le modèle arrive donc régulièrement à comprendre la polysémie de certains termes après avoir appliqué le phénomène d'attention\footnote{On le retrouve 36 fois en faux positif, 27 fois en faux négatif.}. Les termes \textit{voluptas, amor, uxor} sont ainsi parmi les 42 termes présent en rang 1 plus de 100 fois chez les vrais négatifs. Mais cette polysémie n'est pas toujours bien capturée comme le montre la présence dans les faux négatifs des termes \textit{libido, corrumpo} ou \textit{genitalis} (45 et 27) dans les cinq lemmes les plus fréquents en rang 1 d'attention\footnote{Les deux autres étant des signes de ponctuation: le point est présent 183 fois, le point d'interrogation 36.}.
 
-%Dans la phrase ['ille', 'uxor', 'aut', 'amica', 'riualis1', 'lasciuio', 'languidus', ',', 'precor', ',', 'reddo', ','], l'attention sera probablement moins portée sur uxor / amica que sur lasciuio et languidus.
+\paragraph{Lecture de l'attention}
+
+Cette attention peut aussi être utile dans le cas d'une étude des faux-positifs, échantillons sensés être négatifs dans notre set de données généré semi-automatiquement, et des faux-négatifs, échantillons classés par J. N. Adams comme positif mais non reconnus par le modèle. Nous proposons donc une étude de quelques échantillons en \textit{close reading} ainsi qu'une approche statistiques. Dans les prochains exemples, le mot en gras et le nombre qui le suit sont le mot retenant le plus l'attention du modèle (rang 1) ainsi que le nombre de fois où il s'est retrouvé à ce rang sur 20 modèles répartis sur deux architectures variant au niveau de l'encodage à 128 ou 256.
+
+\paragraph{Attention et faux-positifs}
+
+\begin{quote}[Priapées, 31]{Anonyme}
+    \textit{Donec proterua nil mei manu carpes ,{\\}  licebit ipsa sis \textbf{pudicior} Vesta . } \\
+    \enquote{Tant que tu ne cueilles rien chez moi d’une main effrontée, {\\} Tu pourras être plus pudique que Vesta elle-même.}
+\end{quote}
+
+Ici, \textit{pudicior} reçoit l'attention du modèle et donne une phrase positive 25\% du temps sur 40 modèles. Et le modèle a raison: on est face ici à une traditionnelle menace sexuelle de Priape, gardien des jardins et vergers (visible dans d'autres priapées telles que les 13, 17 -- avec la même idée ``d'élargissement de l'anus''--, 22, etc.). L'alternative sous-entendue en opposition à \textit{pudicior} est celle d'une \textit{pedicatio}, confirmée par les vers suivant. La force du comparatif et du comparé (Vesta) ne laissent cependant peu de doutes sur ce qui sera réservé au porteur d'une main voleuse. L'usage des adjectifs moraux tels que \textit{pudicus}, en euphémismes ou non, sont un des angles mort du corpus de J. N. Adams.
 
 
-%Note pour moi-même: Max(attention) similaire par modèle est-elle toujours la même ?
+\begin{quote}[Epitome anonyma (quae gynaecia uocatur) recensio Li]{Vindicianus Afer}
+    \textit{et est a foris neruosa \textbf{uulua} , cuius collum directum est positum , cuius ceruix erigitur usque ad locum , in quo res Veneris perficiuntur et sperma miscetur et fit conceptio natura uolente ex uiri et mulieris sanguine .} \\
+    \enquote{Et l'uterus est musclé par l'extérieur, son cou est aligné avec ce lieu, son cou s'étend jusqu'au lieu, dans lequel les choses de Venus sont accomplies et où le sperme se mélange et où la conception, si la nature le veut, se fait du sang de l'homme et de la femme.}
+\end{quote}
+
+\begin{quote}[Epitome anonyma (quae gynaecia uocatur) recensio Li]{Vindicianus Afer}
+    \textit{Ego cum muliere menstruata concubui et non concepit, nam purgacionis plurimo sanguine minor pars seminis \textbf{corrupta} (50.00) est.} \\
+    \enquote{Moi, je partageai mon lit avec une femme ayant ses règles et (pourtant ?) je ne me reproduisis pas, car une petite partie de ma semence fut corrompue par une grande quantité du sang de ce curage.}
+\end{quote}
+
+\begin{quote}[Formulae spiritalis intelligentiae, VI]{Eucher de Lyon}
+    \textit{{[}Umbilicus appetitus concupiscentiae. in Iob: et uirtus eius super umbilicum uentris, id est.{]}\footnote{Nous ajoutons le contexte pour la compréhension de la phrase, car l'échantillon pourrait être mal ponctué dans la source d'origine.} Quod feminae \textbf{genitalia} (52.50) per hoc significet sicut in lumbis\footnote{Lumbus comme parties sexuelles masculines ou féminines, \textit{cf.} \cite[p.48]{Adams}} uirorum.} \\
+    \enquote{Le nombril a l'attrait du désir. Chez Job, ses qualités sont au dessus du centre du ventre, c'est-à-dire que les organes génitaux de le femme expriment à travers-lui la même chose que dans les organes génitaux des hommes.}
+\end{quote}
+
+\begin{quote}[De salutaribus praeceptis, 28]{Caelius Aurelianus}
+    \textit{{[}Intellegimus virum{]} ex asperitate faucium, obtunsione vocis et rauco sonitu, inflatione etiam papillarum et \textbf{genitalium} (50.00) , et cum repente maceratum corpus in longitudinem viderimus porrectum.}
+    \enquote{{[}Nous reconnaissons l'homme{]} à travers l'âpreté de la gorge, le fracas de la voix, à son bruit rauque mais aussi au gonflement des seins et de ses organes génitaux, et lorsque nous avons vu son corps soudainement épuisé étendu en longueur.}
+\end{quote}
+
+Il s'agit encore de faux positifs ``vrai positifs'', donc des données d'entraînement mal classées et non repertoriée par J. N. Adams et le LLT, ou, au moment des recensions sur le corpus \textit{silver}, un problème de reconnaissance du lemme ou l'absence du texte dans le corpus au moment de la recension. 
+
+Ces quatre extraits de trois auteurs différents sont tous tardifs et proposent tous une analyse des corps, qu'il s'agisse de discours médicalisant chez Caelius Aurelianus et Vindicianus Afer, ou d'interprétation du rôle de chaque partie du corps dans une exégèse chez Eucher. Les mots qui y retiennent l'attention sont majoritairement connus du corpus d'Adams comme sexuel dans un contexte médical (\textit{vulva, genitalia, genitalium}), et \textit{corruptus}, précédé de \textit{seminis} (fr. semence), porte clairement une isotopie sexuelle, convoyant l'idée d'un ``danger'' pour le sperme d'être mélangé aux menstrues. Particularité du premier extrait de Vindicianus, d'après le commentaire de Louise Cilliers sur une recension différente\footcite[p.236]{cilliers_vindicianuss_2005}, l'alternance \textit{collum}/\textit{ceruix} servirait à éviter une répétition et désignerait \textit{in extenso} le vagin (\textit{cuius collum}: le cou de la matrice), là où \textit{vulva} designerait l'uterus et non ce que l'on appelle aujourd'hui la vulve.
+
+\begin{quote}[Jonas, 2.2]{Vulgate}
+    \textit{et oravit Iona ad Dominum Deum suum de \textbf{utero} (27.50) piscis} \\
+    \enquote{Et Jonas émit des prières à son Seigneur Dieu depuis le ventre du poisson.}
+\end{quote}
+
+\begin{quote}[Heroides, XVI, 43]{Ovide}
+    \textit{Matris adhuc \textbf{utero} partu remorante tenebar;} \\
+    \enquote{L'accouchement tardant, j'étais retenu jusqu'ici dans le ventre de ma mère.}
+\end{quote} 
+
+Ici encore, c'est \textit{uterus} qui récupère le principal de l'attention. S'il arrive bien que des poissons soient mêlés à des descriptions d'actes sexuels (\textit{cf.} Suétone, Tibère, 44), il ne s'agit pas dans l'extrait de la Vulgate d'un \textit{uterus} mais bien d'un ventre. Dans le même genre que les précédents faux vrais-positifs, il est plus que probable que -- chez Ovide -- \textit{uterus} représente bien le ventre et non l'organe génital féminin: il n'y a pas de discours médicalisant, il n'y a pas de raison de s'attendre à un usage aussi précis du mot \textit{uterus}. La présence de \textit{partus} (fr. accouchement) et de \textit{matris} (fr. mère) ont pu conduire le modèle à interpréter le terme \textit{uterus} plus médicalement qu'Ovide ne le souhaitait. Dans les deux cas, le modèle s'est définitivement fait tromper par la polysémie du mot \textit{uterus}, spécialisé chez les auteurs médicaux.
+
+\begin{quote}[Amours, III, 28]{Ovide}
+    \textit{\textbf{Nox} (10.00) tibi, si belles, possit, Homere, dari.} \\
+    \enquote{Si tu avais fait la guerre, Homère, la nuit aurait pu t'être donnée.}
+\end{quote}
+
+Cette métaphore d'Ovide est ignorée par notre set d'entraînement et tombe encore dans le domaine de l'isotopie sexuelle. ``La nuit aurait pu t'être donnée'' porte clairement le sens sexuel à travers l'idée d'activités nocturnes. On peut être assez étonné et ravi de la capacité du modèle à retenir ce choix, dans la mesure où aucun terme personnalisant les acteurs outre le très vague \textit{tibi} n'est présent dans la phrase analysée, et qu'Homère n'est jamais présent dans notre set de données. \textsc{Nox} y est cependant présent 59 fois, dont un usage similaire avec le verbe \textsc{do} chez Ovide (\textit{Hic mihi lasciva gaudia nocte dedit}, ``Là elle me donna dans la nuit des joies lascives'', \textit{Remèdes à l'Amour}, 727; \textit{Est data nox ?}, ``La nuit t'est-elle donnée ?'', \textit{Remèdes à l'Amour}, 523) et des phrases similaires où la nuit est bien liée aux affaires du sexe (\textit{Date illi vestem puellarem, date noctem: rapietur.}, ``Donnez lui des habits de jeunes filles, donnez-lui la nuit: il se fera violer'', Sénèque l'Ancien, Controverses, 5, 1). Adams note cet usage de $nox=stuprum$\footcite[p.178]{adams} mais omet son usage avec \textit{do}.
+
+\begin{quote}[Mathesis, IV, 14, 17]{Firmicus Maternus, Julius}
+    \textit{in uenerio \textbf{coitu} (60.00) facit libidinosos et uitiis quibusdam semper implicitos et qui adsiduis ob haec pulsantur infamiis.} \\
+    \enquote{Dans le coït de Venus\footnote{Celui a but non reproductif ?} l'on produit les hommes libidineux, ceux entourés de certains vices, et ceux qui sont frappés par des déshonneurs sans fin.}
+\end{quote}
+
+Commentaire ICI à faire en fonction du contexte de cette phrase.
+
+\begin{quote}[Mercator, 13]{Plaute}
+    \textit{ibi amare occepi forma eximia mulierem.} \\
+    \enquote{Là, je commençais à aimer une femme à la beauté remarquable.}
+\end{quote}
+
+% Forma 19 fois dans des extraits, amo 20 fois, eximius 1 fois et occipio 4 fois (donc peu important), mulier 76 fois,
+
+Faux positif qui est bien un négatif, la classification effectuée par le modèle peut sembler logique, tant le lexique présent est typique des isotopies sexuelles: \textsc{mulier} est présent 76 fois dans notre set de données, \textsc{amo} 20 fois, \textsc{forma} 19 fois. Autant de formes lexicales qui, mises bout à bout, pourrait avoir un sens particulier. Au contraire, si l'hypothèse de l'actualisation géotemporelle \textsc{ibi} poussant le modèle à classifier en isotopie sexuelle nous avait paru alléchante, l'absence d'une attention forte sur le thème et sa très très faible présence dans la corpus des échantillons poussent à en ignorer l'importance dans la classification.
+
+\paragraph{Attention et faux-négatifs}
+
+\begin{quote}[Caligula, XLI, 2]{Suétone}
+    \textit{misit circum fora et basilicas nomenculatores ad inuitandos ad \textbf{libidinem} (20) iuuenes senesque;} \\
+    \enquote{Il envoya des esclaves nomenclateurs à travers le forum et les lieux de promenades pour inviter jeunes et anciens à la débauche.}
+\end{quote}
+
+\begin{quote}[Horace, Satyres, 1.5.100]{Porphyrion}
+    \textit{Vrbanissimum nomen Iudaeo inposuit ‘Apellan’ dicens , quasi quod pellem in parte \textbf{genitali} (19) Iudaei non habeant .} \\
+    \enquote{Il assigne un nom extrêmement spirituel au Juif en l'appelant ‘Apella’, sous prétexte que les juifs n'ont pas de peau sur les parties génitales. \footnote{Porphyrion fait ici un rapprochement entre une préfixation privative \textit{a-} et le mot ``pellis'' (peau) et le nom hébreux -- semble-t-il commun -- d'Apellas} ( \url{https://poj.peeters-leuven.be/secure/POJ/downloadpdf.php?ticket_id=60e6b9ae27f24} )}
+\end{quote}
+
+Ces deux premiers exemples, bien que légèrement différents, ne laissent pas beaucoup de doute sur le sens des deux mots sélectionnés. 
+
+Du côté de Suétone, \textit{libido}, proche de \textit{iuvenes senesque}, laisse peu de doute, y compris hors contexte, au lecteur humain. Le modèle retient bien l'attention 100\% du temps sur le terme relevé par J. N. Adams mais décide de ne pas le classer positif, probablement à cause de sa polysémie. On peut faire l'hypothèse que la présence de forum, bien que présent 6 fois dans le corpus d'Adams, puisse pousser vers une lecture autre de \textit{libido}. % Petite étude de proximité libido ~ iuvenes ?
+
+Du pointe de vue de Porphyrion, commentateur d'Horace, le résultat est plus difficile à comprendre. Dix-neuf fois sur vingt, le modèle a retenu l'importance de \textit{genitali}, cooccurrent de \textit{parte} par ailleurs, mais estime que la phrase ne parle pas de sexualité. Si de fait, il n'est pas question d'acte, on a bien ici une description d'une partie de l'anatomie masculine avec une mention du rite de circoncision. La classification négative tient peu, % CHECK LES STATS COUILLON !
 
 
+\begin{quote}[Casina, 963]{Plaute}
+    \textit{nunc tu si vis \textbf{subigitare} (17) me, probast occasio.} \\
+    \enquote{Maintenant, si tu veux me caresser, c'est le bon moment.}
+\end{quote}
+
+Plautus {[...]} sometimes uses [the verb subigito] in a sexual sense, was a much milder. {[...]} Subigito in Plautus suggests no more than 'make advances to, lay hands on'. 
+p. 323 Prostitutes Adams. Le doute est ici permis dans le texte (moeurs marseillaises (homophiles) au vers précédent, mention de la chambre au vers suivant et à la scène qui vient de s'y passer.
+
+
+\begin{quote}[De Medicina, 77]{Cassius Felix}
+    \textit{Sic enim \textbf{matrix} (14) poterit fetidis odoribus a superioribus ad inferiora fugari et loco proprio reuocari , cum melioribus et iocundis ad inferiores partes fuerit inuitata et prouocata.} \\
+    \enquote{Car ainsi, la matrice pourra être l'objet de fuite d'odeurs fétides des parties supérieures vers les parties inférieures et être ramenée à un lieu propre (être ramenée à sa qualité de lieu propre ?) lorsque les parties vers le bas auront été invitées et excitées par de meilleures et plus agréables choses (odeurs ?).}
+\end{quote}
+
+% Martial, 0 Siècle (urn:cts:latinLit:phi1294.phi002.perseus-lat2)
+% 
+\begin{quote}[Epigrammata, 11.51]{Martial}
+\textit{Tanta est quae Titio columna pendet , Quantam Lampsaciae colunt \textbf{puellae} (15) .}\\
+\enquote{La colonne qui pend à Titius est si grande que les jeunes filles de Lampsaque la vénèrent.}
+\end{quote}
+
+% Pétrone, 0 Siècle ()
+% Pétrone, 0 Siècle (urn:cts:latinLit:phi0972.phi001.perseus-lat2)
+%  
+\begin{quote}[11.51]{Pétrone}
+    \textit{Ego sic perire coepi\textbf{.} (15)}\\
+    \enquote{Et c'est ainsi que, moi, je commençai à mourir.}
+\end{quote}
+
+Le poème est sexuel, mais très difficile d'en tirer l'information sans le contexte ici. Même dans le poème, le lien est léger.
+Adams le compare à des passages BEAUCOUP plus clairs en p. 159 (cum te complexa morientem, Galle, puella uidimus (Prop. 1.10.5)
+
+% Ovide, -1 Siècle (urn:cts:latinLit:phi0959.phi001.perseus-lat2)
+\begin{quote}[Amours, 3.4.4]{Ovide}
+    \textit{Quae, quia non liceat, non facit, illa facit \textbf{!} (14) }\\
+    \enquote{Celle qui ne fait pas, parce que c'est interdit, elle le fait !}
+\end{quote}
+
+Ici facio = futuo ou pedico (204 Adams). En dehors de l'indice d'interdit, il n'y a rien qui ne pousse nécessairement vers le sexe, sans contexte. C'est le reste des amours (au vers précédent, répétition de \textit{casta est} (elle est chaste), au vers suivant \textit{adultera}). Mais sans ce contexte, le vers est difficilement classable, même pour le lecteur humain.
+
+\begin{quote}[Satyricon, 130]{Pétrone}
+    \textit{Paratus miles arma non habui\textbf{.} (13)} \\
+    \enquote{Prêt comme un soldat, des armes, je n'en avais pas.}
+\end{quote}
+
+\begin{quote}[Épigrammes, 106]{Ausone}
+    \textit{tergum, colla, umeros, luteae Symplegadis antrum\textbf{.} (13) } \\
+    \enquote{Son dos, son cou, ses épaules, son antre boueuse des Symplégades}
+\end{quote}
+
+Deux problèmes se posent pour la détection: il s'agit d'un extrait très court, la phrase n'est pas complète. En recopiant ``bêtement'' l'extrait chez Adams (cité fois (114, 172, 240) et rapproché du texte de Martial (11.99.5), plus claire (sic constringuntur magni Symplegade culi). Même avec le contexte\footnote{\enquote{Il tourne alors ses bras, comme sous le dieu la Ménade : poitrine, jambes, flanc, épigastre, aines, mollets, cuisses dos, épaule, encolure, antre bouseux des symplégades, aux lieux les plus divers se perd le bras vagabond du bourreau, jusqu’ à ce que, par la vapeur engourdi du bain chaud, son prurit caressant s’ apaise en mortelles langueurs.}, \cite{ausone_d_2010}}
+
+\begin{quote}[37, 9]{Catulle}
+    \textit{namque totius vobis frontem tabernae sopionibus scribam\textbf{.} (11)} \\
+    \enquote{Et de fait, je ferai des tags de queues (bites ?) sur le fronton de toute votre taverne }
+\end{quote}
 
 \subsubsection{Analyse des erreurs des X meilleurs modèles}
 

@@ -23,6 +23,7 @@
 \usepackage{verbatim} %For comments
 \usepackage{afterpage}
 %\usepackage{showframe}
+\usepackage{titlesec}
 
 % permet de faire une table des matieres par chapitre
 \usepackage[french]{minitoc}
@@ -62,10 +63,12 @@
 \addbibresource{bibliography/TAL.bib}
 \addbibresource{bibliography/sources.bib}
 \addbibresource{bibliography/Corpora.bib}
+\addbibresource{bibliography/commentaires.bib}
 \addbibresource{bibliography/4-classification.bib}
 
-\title{Dire la sexualité en latin classique et tardif : "une étude lexicographique par apprentissage profond"}
-\author{T. Clérice}
+%\title{Dire la sexualité  : "une étude lexicographique par apprentissage profond"}
+\title{Détection d'isotopies par apprentissage profond: l'exemple de la sexualité en latin classique et tardif}
+\author{Thibault Clérice}
 \date{\today}
 
 \makeglossaries
@@ -92,6 +95,11 @@
 
 \setcounter{secnumdepth}{4}
 
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
 \begin{document}
 
 % le titre
@@ -110,12 +118,16 @@
 
 % inclusion des chapitres
 %\include{chap0_intro_digitalclassics}
-\include{chap1_corpus}
+%\include{chap1_corpus}
 % Temporairement:
-\include{chap2_deep-learning}
-\include{chap3_lemmatisation}
+%\include{chap2_deep-learning}
+%\include{chap3_lemmatisation}
 \include{chap4_modele}
 %\include{chap5_adjectifs_moraux}
+
+% Indiquer les annexes disponibles en ligne.
+% Description des fichiers
+% Déposer l'application aussi
 
 \include{conclu}
 
