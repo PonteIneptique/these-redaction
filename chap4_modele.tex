@@ -979,7 +979,7 @@ Dans un premier temps, on s'intéresse à la capacité de l'attention à reconna
     \bottomrule
     \end{tabular}
     \caption{Pourcentage des signes de ponctuation qui se retrouvent en rang 1 de l'attention, sur 20 entraînements différents. Les points d'exclamation se retrouvant en premier rang de l'attention représentent 26,97\% des points d'exclamation des échantillons négatifs, qui sont classés en négatifs.}
-    \label{tab:my_label}
+    \label{tab:chap4:ponctuation-attention}
 \end{table}
 
 La distribution est différente chez les faux-négatifs -- les éléments positifs mal reconnus par le modèle -- où la médiane du rang en attention du mot central d'Adams est de 4, et son premier quartile à 2 (contre 1 du côté des vrais positifs). En regardant les termes arrivés en rang 1 de l'attention des vrais négatifs et des faux-négatifs, les signes de ponctuations sont parmi les formes les plus importantes retrouvées: à défaut de comprendre la phrase, le mécanisme d'apprentissage choisit des formes ``vides''. Cette réalité s'étend au-delà de la ponctuation, le top 10 des formes en rang 1 de l'attention chez les vrais négatifs comprenant ainsi \textit{et, sum, in, qui} et \textit{suus}. 
@@ -1068,14 +1068,21 @@ Faux positif qui est bien un négatif, la classification effectuée par le modè
 
 \begin{quote}[Horace, Satyres, 1.5.100]{Porphyrion}
     \textit{Vrbanissimum nomen Iudaeo inposuit ‘Apellan’ dicens , quasi quod pellem in parte \textbf{genitali} (19) Iudaei non habeant .} \\
-    \enquote{Il assigne un nom extrêmement spirituel au Juif en l'appelant ‘Apella’, sous prétexte que les juifs n'ont pas de peau sur les parties génitales. \footnote{Porphyrion fait ici un rapprochement entre une préfixation privative \textit{a-} et le mot ``pellis'' (peau) et le nom hébreux -- semble-t-il commun -- d'Apellas} ( \url{https://poj.peeters-leuven.be/secure/POJ/downloadpdf.php?ticket_id=60e6b9ae27f24} )}
+    \enquote{Il assigne un nom extrêmement spirituel au Juif en l'appelant ‘Apella’, sous prétexte que les juifs n'ont pas de peau sur les parties génitales. \footnote{Porphyrion fait ici un rapprochement entre une préfixation privative \textit{a-} et le mot ``pellis'' (peau) et le nom hébreux d'Apellas, pour justifier le jeu de mot d'Horace. \cite{cordier2001romains}}}
 \end{quote}
 
-Ces deux premiers exemples, bien que légèrement différents, ne laissent pas beaucoup de doute sur le sens des deux mots sélectionnés. 
+\begin{quote}[De Medicina, 77]{Cassius Felix}
+    \textit{Sic enim \textbf{matrix} (14) poterit fetidis odoribus a superioribus ad inferiora fugari et loco proprio reuocari , cum melioribus et iocundis ad inferiores partes fuerit inuitata et prouocata.} \\
+    \enquote{Car ainsi, la matrice pourra être l'objet de fuite d'odeurs fétides des parties supérieures vers les parties inférieures et être ramenée à un lieu propre (être ramenée à sa qualité de lieu propre ?) lorsque les parties vers le bas auront été invitées et excitées par de meilleures et plus agréables choses (odeurs ?).}
+\end{quote}
 
-Du côté de Suétone, \textit{libido}, proche de \textit{iuvenes senesque}, laisse peu de doute, y compris hors contexte, au lecteur humain. Le modèle retient bien l'attention 100\% du temps sur le terme relevé par J. N. Adams mais décide de ne pas le classer positif, probablement à cause de sa polysémie. On peut faire l'hypothèse que la présence de forum, bien que présent 6 fois dans le corpus d'Adams, puisse pousser vers une lecture autre de \textit{libido}. % Petite étude de proximité libido ~ iuvenes ?
+Ces trois premiers exemples, bien que légèrement différents, ne laissent pas beaucoup de doute sur le sens des deux mots sélectionnés. 
 
-Du pointe de vue de Porphyrion, commentateur d'Horace, le résultat est plus difficile à comprendre. Dix-neuf fois sur vingt, le modèle a retenu l'importance de \textit{genitali}, cooccurrent de \textit{parte} par ailleurs, mais estime que la phrase ne parle pas de sexualité. Si de fait, il n'est pas question d'acte, on a bien ici une description d'une partie de l'anatomie masculine avec une mention du rite de circoncision. La classification négative tient peu, % CHECK LES STATS COUILLON !
+Du côté de Suétone, \textit{libido}, proche de \textit{iuvenes senesque} et en complément d'\textit{inuito}, laisse peu de doute, y compris hors contexte, au lecteur humain. Le contexte de l'extrait confirme le choix de J. N. Adams (mise en place de lupanar au palais). Le modèle retient bien l'attention 100\% du temps sur le terme relevé par J. N. Adams mais décide de ne pas le classer positif, probablement à cause de sa polysémie, avec une décision d'un poids médian de 93,44\% en faveur de la catégorie négative sur les 20 entraînements. On peut faire l'hypothèse que la présence de \textit{forum}, bien qu'il soit 6 fois dans le corpus d'Adams et qu'il ne soit pas inconnu dans ce genre de contexte, il y est même plus présent que \textit{inuito}, puisse pousser vers une lecture autre que sexuelle de \textit{libido}. 
+
+Pour l'extrait Porphyrion, commentateur d'Horace, comme pour Cassius Felix, le résultat est plus difficile à comprendre. Dix-neuf fois sur vingt, le modèle a classé la première phrase comme négative  (taux médian de 95.5\%) et a retenu l'importance de \textit{genitali}, co-occurrent de \textit{parte} par ailleurs. Pour la seconde, il la méclasse à chaque test avec 95,5\% de score médian, sélectionne quatorze fois de \textit{matrix} (deux fois \textit{prouovo} et une fois chacun des tokens suivants: \textit{fetidus, et, ``.'', }); mais il estime que la phrase ne parle pas de sexualité. Dans le premier exemple, la sexualité n'y est pas présente par acte: on a bien ici une description d'une partie de l'anatomie masculine avec une mention du rite de circoncision. Dans le second, on a aussi une discussion anatomique, mais il y a des éléments qui rappellent l'acte sexuelle. Cependant, dans la compréhension d'Adams de la sexualité, c'est-à-dire ce que qui concerne les sexes dans leur rôle reproduction ou de plaisir, il y a bien ici une isotopie sexuelle. On voit dans ce contexte comment, le modèle, a peut-être ``trop'' dépasser le modèle lexicométrique en refusant de compter des mots peu ou pas du tout polysémiques.
+
+Le problème n'est pas du côté de l'attention, quelque soit l'extrait de ces trois textes. Les trois phrases ont leur mot le plus important entre 8 et 28 points au-dessus de la médiane des attentions. Le mécanisme est donc fonctionnel, d'autant que pour la distance la plus basse (Cassius Felix), il s'agit aussi de la phrase la plus longue (et mécaniquement d'une dilution de l'attention plus étalée). Il s'agit donc d'un problème dans l'encodeur une fois l'attention appliquée, ou de la couche de décision.
 
 
 \begin{quote}[Casina, 963]{Plaute}
@@ -1083,14 +1090,8 @@ Du pointe de vue de Porphyrion, commentateur d'Horace, le résultat est plus dif
     \enquote{Maintenant, si tu veux me caresser, c'est le bon moment.}
 \end{quote}
 
-Plautus {[...]} sometimes uses [the verb subigito] in a sexual sense, was a much milder. {[...]} Subigito in Plautus suggests no more than 'make advances to, lay hands on'. 
-p. 323 Prostitutes Adams. Le doute est ici permis dans le texte (moeurs marseillaises (homophiles) au vers précédent, mention de la chambre au vers suivant et à la scène qui vient de s'y passer.
+\textit{Subigito} (\textit{Gaffiot}: caresser, solliciter; \textit{Adams}: \textit{make advances to, lay hands on}\footcite[p. 323]{adams_prostiute}) est un cas complexe, y compris dans son interprétation par J. N. Adams. Pour ce passage, on vient d'assister à une ruse ayant eu pour conséquence la rencontre sexuelle de deux hommes dans le noir, eux qui croyaient retrouver une jeune femme dans l'intimité d'une chambre. D'après J. N. Adams, Plaute utilise parfois le verbe ``dans un sens sexuel mais léger. Hors contexte ou en contexte, le doute reste permis sur le sens des caresses mentionnées, bien que les moeurs marseillaises -- \textit{a priori} connus pour leur penchant homophile -- mentionnées au vers précédents, la mention de la chambre et la scène passée nous poussent à croire à des caresses plus sexuelles qu'autre chose. La phrase est classée positivement deux fois, dix huit fois négativement avec \textit{subigito} en rang 1 dix-sept fois (25 points d'attention en moyenne) et le point final une fois.
 
-
-\begin{quote}[De Medicina, 77]{Cassius Felix}
-    \textit{Sic enim \textbf{matrix} (14) poterit fetidis odoribus a superioribus ad inferiora fugari et loco proprio reuocari , cum melioribus et iocundis ad inferiores partes fuerit inuitata et prouocata.} \\
-    \enquote{Car ainsi, la matrice pourra être l'objet de fuite d'odeurs fétides des parties supérieures vers les parties inférieures et être ramenée à un lieu propre (être ramenée à sa qualité de lieu propre ?) lorsque les parties vers le bas auront été invitées et excitées par de meilleures et plus agréables choses (odeurs ?).}
-\end{quote}
 
 % Martial, 0 Siècle (urn:cts:latinLit:phi1294.phi002.perseus-lat2)
 % 
@@ -1099,41 +1100,45 @@ p. 323 Prostitutes Adams. Le doute est ici permis dans le texte (moeurs marseill
 \enquote{La colonne qui pend à Titius est si grande que les jeunes filles de Lampsaque la vénèrent.}
 \end{quote}
 
-% Pétrone, 0 Siècle ()
-% Pétrone, 0 Siècle (urn:cts:latinLit:phi0972.phi001.perseus-lat2)
-%  
+Pour cette phrase, l'attention médiane est porté presque uniquement sur la consécutive (\textit{Quantam (7.2) Lampsaciae (10.3) colunt (11.8) puellae (20.0) . (13.2)}) tandis que le mot central, \textit{columna}, bien qu'utilisé figurativement et très claire en terme de représentation, est assez largement ignoré par le mécanisme (médiane de 5 d'attention). La métaphore de la colonne n'est que peu présente dans notre set (Martial, 6.49.1; Priapées, 10.7) et celle des objets ``pointus'' en général aussi (38 occurences, principalement des armes). Cette méconnaissance du domaine et le difficile rapprochement a du faire naître la difficulté. On notera  tout de même que la question des jeunes filles ``intriguent'', si l'on peut dire ainsi, l'attention dans cette classification.
+
 \begin{quote}[11.51]{Pétrone}
     \textit{Ego sic perire coepi\textbf{.} (15)}\\
     \enquote{Et c'est ainsi que, moi, je commençai à mourir.}
 \end{quote}
-
-Le poème est sexuel, mais très difficile d'en tirer l'information sans le contexte ici. Même dans le poème, le lien est léger.
-Adams le compare à des passages BEAUCOUP plus clairs en p. 159 (cum te complexa morientem, Galle, puella uidimus (Prop. 1.10.5)
-
-% Ovide, -1 Siècle (urn:cts:latinLit:phi0959.phi001.perseus-lat2)
-\begin{quote}[Amours, 3.4.4]{Ovide}
-    \textit{Quae, quia non liceat, non facit, illa facit \textbf{!} (14) }\\
-    \enquote{Celle qui ne fait pas, parce que c'est interdit, elle le fait !}
-\end{quote}
-
-Ici facio = futuo ou pedico (204 Adams). En dehors de l'indice d'interdit, il n'y a rien qui ne pousse nécessairement vers le sexe, sans contexte. C'est le reste des amours (au vers précédent, répétition de \textit{casta est} (elle est chaste), au vers suivant \textit{adultera}). Mais sans ce contexte, le vers est difficilement classable, même pour le lecteur humain.
 
 \begin{quote}[Satyricon, 130]{Pétrone}
     \textit{Paratus miles arma non habui\textbf{.} (13)} \\
     \enquote{Prêt comme un soldat, des armes, je n'en avais pas.}
 \end{quote}
 
-\begin{quote}[Épigrammes, 106]{Ausone}
+\begin{quote}[Amours, 3.4.4]{Ovide}
+    \textit{Quae, quia non liceat, non facit, illa facit \textbf{!} (14) }\\
+    \enquote{Celle qui ne fait pas, parce que c'est interdit, elle le fait !}
+\end{quote}
+
+
+\begin{quote}[Épigrammes, 104.9]{Ausone}
     \textit{tergum, colla, umeros, luteae Symplegadis antrum\textbf{.} (13) } \\
     \enquote{Son dos, son cou, ses épaules, son antre boueuse des Symplégades}
 \end{quote}
 
-Deux problèmes se posent pour la détection: il s'agit d'un extrait très court, la phrase n'est pas complète. En recopiant ``bêtement'' l'extrait chez Adams (cité fois (114, 172, 240) et rapproché du texte de Martial (11.99.5), plus claire (sic constringuntur magni Symplegade culi). Même avec le contexte\footnote{\enquote{Il tourne alors ses bras, comme sous le dieu la Ménade : poitrine, jambes, flanc, épigastre, aines, mollets, cuisses dos, épaule, encolure, antre bouseux des symplégades, aux lieux les plus divers se perd le bras vagabond du bourreau, jusqu’ à ce que, par la vapeur engourdi du bain chaud, son prurit caressant s’ apaise en mortelles langueurs.}, \cite{ausone_d_2010}}
+Pour les quatre extraits, l'attention réagit de manière similaire: elle sélectionne la ponctuation finale de l'extrait comme portant l'ensemble de l'attention, comme elle le fait pour une majorité de faux négatifs (\textit{cf.} \ref{tab:chap4:ponctuation-attention}). Les quatre sont de faux négatifs présentant un manque d'indice sur l'isotopie sexuelle: c'est à chaque fois le contexte qui peut aider à s'assurer de cette classe. Les quatre exemples présente un taux de classification médian fort (89\% et plus) avec une attention assez également répartie sur la phrase.
+
+Chez Pétrone, les deux passages sont inégalement difficiles à comprendre. Le premier nécessite absolument le contexte et s'éloigne d'autres passages cités par Adams reprenant l'idée de la mort comme fin des ébats sexuels (par exemple, \textit{cum te complexa morientem, Galle, puella uidimus}, \enquote{Lorsque nous te vîmes, Gallus, mourir de l'étreinte d'une jeune fille}, Prop. 1.10.5\footcite[p.159]{adams}). Le second arbore tout un vocabulaire militaire, commun aux figures sexuelles, mais qui, sans autre indice dans l'extrait (présence de jeune fille par exemple), reste difficile à classer. Nous ne somme pas dans le même cas de figure que la priapée à la \textit{Pudicior Vesta}: il n'y a pas d'exagération, de contexte ou tout simplement de temps pour l'isotopie de se déployer en aussi peu de mots, partageant tous le même type de sèmes (\textit{arme}) ou étant entourés de termes presque vides pour l'exemple 1.
+
+Chez Ovide, le problème est le même que le premier extrait de Pétrone. Si \textit{facio} signifie ici \textit{futuo} ou \textit{pedico}\footcite[p.204]{adams}, en dehors de l'indice d'interdit, il n'y a rien qui ne pousse nécessairement vers le sexe, sans contexte. C'est le contexte des Amours (au vers précédent, répétition de \textit{casta est} (elle est chaste), au vers suivant \textit{adultera}) qui nous aide à traduire. Mais sans ce contexte, le vers est difficilement classable, même pour le lecteur humain.
+
+Pour le dernier extrait, deux problèmes se posent. D'une part, l'extrait est incomplet, très court, recopié tel qu'il fut cité par Adams, bien qu'il soit cité plusieurs fois\footcite[pp.114, 172 et 240]{Adams}. Ici, ce sont les Symplégades -- deux falaises se faisant face et pouvant rappeler deux fesses dans l'esprit de l'auteur --, ``l'antre'' et le caractère boueux qui induisent une lecture sexuelle, mais cette métaphore \textit{ad-hoc}, reprise de chez Martial\footnote{\textit{sic {[tunicae]} constringuntur magni Symplegade culi} (Ainsi tes tuniques sont resserrées par les Symplégades jumelles de ton cul.), Martial, 11.99.5.}, est probablement l'une des plus difficiles à comprendre pour le modèle. Le contexte aide un peu dans la mesure où l'épigramme mentionne clairement au vers précédent un \textit{prurignis obscenae} (fr. démangeaison obscène) et avant encore de \textit{lascivos coetus meretricum} (fr. unions lascifs de prostituées), mais les co-occurrents des Symplégades, \textit{antrum lutae}, restent plus compréhensibles que la métaphore topologique.
 
 \begin{quote}[37, 9]{Catulle}
     \textit{namque totius vobis frontem tabernae sopionibus scribam\textbf{.} (11)} \\
     \enquote{Et de fait, je ferai des tags de queues (bites ?) sur le fronton de toute votre taverne }
 \end{quote}
+
+Terme rare, unique dans le corpus, \textit{sopionibus} (queue, pénis ?) n'est pas retenu par le modèle. Étant uniquement dans le corpus de test, il est impossible pour le modèle de comprendre le mot par le contexte (après tout, il est possible de dessiner bien des choses).
+
+On voit ainsi que pour les faux négatifs, le problème vient, en dehors de quelques cas peu défendables, d'un problème de contexte ou de rareté. Le modèle, n'ayant pas assez d'indice, glisse sur les termes importants, et la traite comme elle traite beaucoup des négatifs, en n'en retenant que la ponctuation.
 
 \subsubsection{Analyse des erreurs des X meilleurs modèles}
 
