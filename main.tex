@@ -26,6 +26,7 @@
 \usepackage{titlesec}
 \usepackage{tabularx}
 
+
 % permet de faire une table des matieres par chapitre
 \usepackage[french]{minitoc}
 
@@ -34,8 +35,9 @@
 \usepackage{minted}
 \usepackage{csquotes}
 \usepackage{rotating}
-
+\usepackage[hidelinks]{hyperref}
 \usepackage{color}
+
 \definecolor{gray}{rgb}{0.4,0.4,0.4}
 \definecolor{darkblue}{rgb}{0.0,0.0,0.6}
 \definecolor{cyan}{rgb}{0.0,0.6,0.6}
@@ -91,10 +93,10 @@
    \else
      \def\quoteauthor{#2~---~#1}%
    \fi
-   \oldquote}
-  {\par\nobreak\smallskip\hfill(\quoteauthor)%
+   \oldquote}{\par\nobreak\smallskip\hfill(\quoteauthor)%
    \endoldquote\addvspace{\bigskipamount}}
-
+   
+\newcommand{\sectionbreak}{\clearpage}
 \setcounter{secnumdepth}{4}
 
 \titleformat{\paragraph}
@@ -122,9 +124,8 @@
 \printglossary[type=\acronymtype,nonumberlist]
 
 % inclusion des chapitres
-\include{introduction}
+%\include{introduction}
 \include{chap1_corpus}
-% Temporairement:
 %\include{chap2_deep-learning}
 %\include{chap3_lemmatisation}
 %\include{chap4_modele}
@@ -135,7 +136,6 @@
 
 \include{conclu}
 
-\appendix
 
 \include{annexe}
 
