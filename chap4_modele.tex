@@ -13,7 +13,7 @@ L'un des objectifs de notre recherche est d'aider à l'identification de passage
     \enquote{Là se porte le jeune chef, par des voies qu'il connaît}\footcite{ausone_d_2010}
 \end{quote}
 
-\begin{quote}[\textit{Epigrammata}, 2, 33, 4]{Martial}
+\begin{quote}[\textit{Épigrammes}, 2, 33, 4]{Martial}
     \textit{Haec qui basiat, o Philaeni, \textbf{fellat}. \\}
     \enquote{Qui embrasse ces choses, ô Philaenis, suce.}
 \end{quote}
@@ -455,13 +455,13 @@ On peut ajouter à cette transformation des formes, lemmes et informations morph
 
 Le bloc d'encodage est probablement le plus simple des trois blocs. Il prend comme entrée les projections unitaires précédentes -- au niveau token -- pour produire une projection séquentielle -- au niveau texte. On utilise majoritairement dans ce contexte des réseaux récurrents, LSTM et GRU, en mode bi-directionnel, avec un \textit{dropout} de 30\% et et une taille de 50 par direction. Alternativement aux réseaux récurrents, on retrouve aussi une option pour un réseau convolutionnel, avec des tailles de filtres de 2 à 5 (n-grams) et 5 filtres, un filtrage par MaxPool et une activation par ReLU.
 
-Si ces réseaux sont communs, la recherche en classification a fait émerger d'autres moyens d'obtenir une représentation en augmentant ces modules. Le plus important de ceux-ci est sans aucun doute celui décrit dans \textit{Hierarchical Attention Networks for Document Classification}(\textit{HAN})\footcite{yang_hierarchical_2016}, présenté en 2016, basé sur des réseaux récurrents et qui sera décliné avec un modèle convoluttionnel (CHAN) en 2019\footcite{gao_hierarchical_2018}. Le principe d'\textit{attention} qu'il intègre et qui essaye de tirer d'une séquence les unités les plus importantes dans le cadre d'une classification, permet de pondérer ces unités dans le cadre de l'encodage de cette séquence. Par exemple, dans \textit{Lasciva est nobis pagina, vita proba}, dans le cadre de notre recherche, les mots présentant l'isotopie de la sexualité pourraient être en premier lieu \textit{lasciva} puis, peut-être, \textit{proba}, dans son jeu d'opposition /lascif/ contre Non(/lascif/). Les termes \textit{vita} et \textit{pagina} n'ont pas ou peu d'importance directe pour notre sujet, tandis que \textit{est}, \textit{nobis} et les signes de ponctuation n'en ont absolument aucune à priori. Cette importance des termes se traduit par une attention forte, tandis que le caractère négligeable des autres unités se traduit par une attention quasi-nulle.
+Si ces réseaux sont communs, la recherche en classification a fait émerger d'autres moyens d'obtenir une représentation en augmentant ces modules. Le plus important de ceux-ci est sans aucun doute celui décrit dans \textit{Hierarchical Attention Networks for Document Classification}(\textit{HAN})\footcite{yang_hierarchical_2016}, présenté en 2016, basé sur des réseaux récurrents et qui sera décliné avec un modèle convolutionnel (CHAN) en 2019\footcite{gao_hierarchical_2018}. Ce modèle est fondé autour d'un réseau d'encodage récurrent et d'un systême de pondération appelé \enquote{attention}. Cette \textit{attention} est une partie du modèle entraînée en même temps que l'encodeur dont l'objectif est de disperser sur l'ensemble de la phrase une mesure d'importance. Une phrase possédant 100\% de poids, ses mots les moins importants pour la classification seront dotés d'une \textit{attention} très réduite, proche de 0, tandis que ceux qui permettent d'aider au plus le modèle seront accrédité d'une très grosse partie du poids. Par exemple, dans \enquote{\textit{Lasciva est nobis pagina, vita proba}} (\enquote{Nos pages sont lascives, notre vie probe}), dans le cadre de notre corpus, les mots présentant l'isotopie de la sexualité pourraient être en premier lieu \textit{lasciva} puis, peut-être, \textit{proba}, dans son jeu d'opposition /lascif/ contre Non(/lascif/). Les termes \textit{vita} et \textit{pagina} n'ont pas ou peu d'importance directe pour notre sujet, tandis que \textit{est}, \textit{nobis} et les signes de ponctuation n'en ont absolument aucune à priori. Cette importance des termes se traduit par une attention forte, tandis que le caractère négligeable des autres unités se traduit par une attention quasi-nulle.
 
 Ce complément pour l'encodage séquentiel a aussi l'avantage de fournir au lecteur un outil d'analyse de ce qu'apprend le modèle. En ajoutant aux informations classiquement produites par le modèle, telles la classification les pondérations de l'attention, il met en exergue les traits saillants détectés. Cet outil a deux intérêts majeurs. D'une part, à travers les jeux de répétition qui auraient échappé à l'œil humain, il peut permettre de questionner une analyse plus manuelle des sèmes actualisés par une isotopie: les mots portants ces sèmes sont identifiés par le phénomène d'attention et amènent à interroger leur rôle. D'autre part, il peut permettre de détecter des phénomènes que nous qualifierions de \enquote{triche} mais qui relève bien du sur-apprentissage: dans notre cas, il nous est arrivé de trouver que pour les textes d'une édition en particulier, l'obèle de l'édition était un token spécifique au corpus positif, que le modèle a ainsi interprété comme trait saillant. Ce phénomène peut se retrouver avec d'autres mots, dont les actualisations /sexuel/ ne sont pas les plus courantes: c'est à cet endroit que l'équilibrage du corpus est important.
 
 Dans le cadre de notre usage de BERT, il existe deux situations: une première où BERT est la seule projection utilisée, une second où BERT est employé avec d'autres projections.
 
-Pour la première des deux, il existe plusieurs stratégies, dont la plus commune consiste à exploiter les tokens de délimitation des phrases \texttt{[CLS]} et \texttt{[SEP]} qui représentent respectivement le début de la séquence et la fin de la séquence. BERT proposant des plongements de token contextualisés, ces deux éléments ont la particularité de contenir une information contextualisée sur la phrase sans porter eux-mêmes de signification propre. Parmi les autres stratégies, on distingue les fonctions de réduction par moyenne (\textit{Reduce Mean}) et par valeur maximum (\textit{Reduce Max}), ainsi qu'une combinaison des deux via concaténation. BERT étant son propre réseau neuronal avec plusieurs couches, certains chercheurs et services recommandent d'éviter d'utiliser la dernière couche si il n'y a pas de ré-entraînement\footnote{\textit{Cf.} \url{https://github.com/hanxiao/bert-as-service/blob/master/docs/section/faq.rst\#bert-has-12-24-layers-so-which-layer-are-you-talking-about}}: elle serait ainsi trop liée à l'objectif initial de BERT (prédiction de mot ou de phrase suivante) et servirait donc de mauvaise ressource pour des tâches différentes. Afin d'ajouter une couche d'entraînement supplémentaire, on peut passer cette représentation via BERT dans un réseau ayant pour objectif de réduire l'information (couche linéaire): ainsi, d'un vecteur de 768 ou 1536 (\textit{MeanMax}) on passe alors à 256 avant d'entrer dans le bloc décisionnel. Il est aussi possible d'utiliser la projection contextualisée dans des réseaux plus traditionnels, tels que GRU, HAN ou LSTM.
+Pour la première des deux, il existe plusieurs stratégies, dont la plus commune consiste à exploiter les tokens de délimitation des phrases \texttt{[CLS]} et \texttt{[SEP]} qui représentent respectivement le début de la séquence et la fin de la séquence. BERT proposant des plongements de token contextualisés, ces deux éléments ont la particularité de contenir une information contextualisée sur la phrase sans porter eux-mêmes de signification propre. Parmi les autres stratégies, on distingue les fonctions de réduction par moyenne (\textit{Reduce Mean}) et par valeur maximum (\textit{Reduce Max}), ainsi qu'une combinaison des deux via concaténation. Ces méthodes sont appelées méthodes de \textit{pooling}. BERT étant son propre réseau neuronal avec plusieurs couches, certains chercheurs et services recommandent d'éviter d'utiliser la dernière couche si il n'y a pas de ré-entraînement\footnote{\textit{Cf.} \url{https://github.com/hanxiao/bert-as-service/blob/master/docs/section/faq.rst\#bert-has-12-24-layers-so-which-layer-are-you-talking-about}}: elle serait ainsi trop liée à l'objectif initial de BERT (prédiction de mot ou de phrase suivante) et servirait donc de mauvaise ressource pour des tâches différentes. Afin d'ajouter une couche d'entraînement supplémentaire, on peut passer cette représentation via BERT dans un réseau ayant pour objectif de réduire l'information (couche linéaire): ainsi, d'un vecteur de 768 ou 1536 (\textit{MeanMax}) on passe alors à 256 avant d'entrer dans le bloc décisionnel. Il est aussi possible d'utiliser la projection contextualisée dans des réseaux plus traditionnels, tels que GRU, HAN ou LSTM.
 
 \begin{figure}[ht]
     \centering
@@ -517,7 +517,7 @@ L'entraînement de modèles et la construction d'architectures sont un processus
 
 \subsubsection{Méthode de sélection globale}
 
-Pour définir les meilleurs modèles, nous avons procédé par test d'architecture: les réflexions qui suivront, leurs analyses, ont enrichi cette méthode continuellement pendant nos expériences. Le résultat produit une grande variété d'architectures: vingt-huit architectures avec couches linéaires et vingt-huit en réseau siamois, que l'on multiplie par deux -- en faisant varier la taille de la couche d'encodage entre 128 et 256 -- pour atteindre les cent~douze configurations testées au total. À partir de ce premier set d'entraînement, nous récupérons les cinq meilleures configurations toute couche décisionnelle confondue. Cette sélection d'architecture fait l'objet d'une seconde salve d'entraînements où chacune d'entre elles fait l'objet de dix entraînements: cette multiplication des entraînements permet prendre en compte les possibles variations de ces derniers (\textit{cf.} figure~\ref{fig:chap4:50configurations}). Chaque architecture est testée avec les mêmes hyperparamètres pour l'entraînement: un \textit{learning rate} de $1e^{-5}$, une taille de \textit{batch} de 4 et 20 \textit{epochs} au maximum. 
+Pour définir les meilleurs modèles, nous avons procédé par test d'architecture: les réflexions qui suivront, leurs analyses, ont enrichi cette méthode continuellement pendant nos expériences. Le résultat produit une grande variété d'architectures: vingt-huit sont composées de couches linéaires et vingt-huit autres configurées en réseau siamois, que l'on multiplie par deux -- en faisant varier la taille de la couche d'encodage entre 128 et 256 -- pour atteindre les cent~douze configurations testées au total. À partir de ce premier set d'entraînement, nous récupérons les cinq meilleures configurations toutes couches décisionnelles confondues. Cette sélection d'architecture fait l'objet d'une seconde salve d'entraînements où chacune d'entre elles fait l'objet de dix entraînements: cette multiplication des entraînements permet prendre en compte les possibles variations de ces derniers (\textit{cf.} figure~\ref{fig:chap4:50configurations}). Chaque architecture est testée avec les mêmes hyperparamètres pour l'entraînement: un \textit{learning rate} de $1e^{-5}$, une taille de \textit{batch} de 4 et 20 \textit{epochs} au maximum. 
 
 \begin{figure}[ht]
     \centering
@@ -534,7 +534,7 @@ Pour définir les meilleurs modèles, nous avons procédé par test d'architectu
 
 \subsubsection{Modèles enrichis par métadonnées}
 
-La publication de J. Kim et al.\footcite{kim_categorical_2019} proposait une méthode simple d'intégration de métadonnées dans l'entraînement de modèles de classification de texte permettant de prendre en compte les identités des locuteurs. Cette méthode, reposant donc sur une identification même partielle de traits idiolectaux ou sociolectaux, a été testée sur notre corpus avec quatre métadonnées: l'identité de l'auteur, le siècle de vie de l'auteur, la structure logique de citation de l'oeuvre et la forme de cette dernière\footnote{\textit{Cf.} section \ref{chap4:part2:metadata}}. 
+Comme nous l'avions vu en \ref{chap4:encodage:metadonnees}, la publication de J. Kim et al.\footcite{kim_categorical_2019} propose une méthode simple d'intégration de métadonnées dans l'entraînement de modèles de classification de texte permettant de prendre en compte les identités des locuteurs. Cette méthode, reposant donc sur une identification même partielle de traits idiolectaux ou sociolectaux, a été testée sur notre corpus avec quatre métadonnées: l'identité de l'auteur, le siècle de vie de l'auteur, la structure logique de citation de l'oeuvre et la forme de cette dernière\footnote{\textit{Cf.} section \ref{chap4:part2:metadata}}. 
 
 \begin{table}[ht]
 \centering
@@ -558,7 +558,7 @@ Rang & Score F1 (Positif) & Rappel (Positif) & Précision (Positif) & Couche enr
 23   & 78.54\%            & 72.91\%          & 85.12\%             & Aucune          &                   & Aucune                             \\ \bottomrule
 \end{tabular}%
 }
-\caption{Résultats ordonnés par le score F1 de la catégorie positive des meilleurs modèles sur la recherche de meilleure architecture. Les onze premiers modèles utilisent toutes les métadonnées ou toutes sauf la métadonnée auteur. Les auteurs paramètres n'ont pas d'effet aussi marquant sur le classement.}
+\caption{Résultats ordonnés par le score F1 de la catégorie positive des meilleurs modèles sur la recherche de meilleure architecture. Les onze premiers modèles utilisent toutes les métadonnées, ou toutes sauf la métadonnée auteur. Les auteurs paramètres n'ont pas d'effet aussi marquant sur le classement.}
 \label{tab:chap4:resultats-metadata}
 \end{table}
 
@@ -580,11 +580,11 @@ Aucune                             & 40   & 2                          \\ \hline
 \begin{figure}[ht]
     \centering
     \includegraphics[height=6cm]{figures/chap4/scoreMetadata.png}
-    \caption{Dispersion des résultats en fonction des usages de métadonnées (les populations ne sont pas de taille équivalente). On voit une précision sensible égale pour les meilleurs modèles de chaque catégorie, tandis que le rappel est extrêmement variant d'un usage à un autre, avec un net avantage pour les architectures bénéficiant des métadonnées.}
+    \caption{Dispersion des résultats en fonction des usages de métadonnées (les populations ne sont pas de taille équivalente). On voit une précision sensiblement égale pour les meilleurs modèles de chaque catégorie, plutôt dispersée, tandis que le rappel est peu dispersé dans chacune des catégories mais connait des écarts entre modèles plus forts, avec un net avantage pour les architectures bénéficiant des métadonnées.}
     \label{fig:chap4:metadata-boxplot}
 \end{figure}
 
-L'hypothèse de l'efficacité qu'amèneraient les éléments extralinguistiques portés par les métadonnées est confirmée (\textit{cf.} figure \ref{fig:chap4:metadata-boxplot}): sur les cinquante entraînements, en utilisant le score F1 sur la catégorie positive comme mesure de classement, les onze meilleurs utilisent un réseau enrichi de métadonnées, soit au niveau de la couche linéaire soit au niveau du réseau d'encodage LSTM. Avec 86,05\% en score F1, 87,25\% en rappel et 84,88\% en précision sur la catégorie positive, le meilleur des modèles se situe à 4.87 points du score F1 du premier modèle n'utilisant pas les métadonnées identifiant les auteurs et structures logiques\footnote{Et à 9,56 points en rappel et à 0,01 en précision, ce qui est négligeable pour ce dernier} (\textit{cf.} table \ref{tab:chap4:resultats-metadata}) . Si on le compare au premier modèle qui n'utilise aucune métadonnée, l'écart se creuse à 8 points de score F1 et 17,13 de rappel. Sur les 25 premiers modèles, 9 utilisent toutes les métadonnées (36\%), 8 utilisent toutes les métadonnées sauf celle identifiant l'auteur (32\%), 7 utilisent les métadonnées \texttt{Forme} et \texttt{Siècle} (28\%), 2 n'en utilisent aucune (8\%, \textit{cf.} table \ref{tab:chap4:metadata-p-value}). Les modèles à métadonnées dépassent donc ceux n'en ayant pas, et l'inclusion de la métadonnée Auteur ou Structure de Citation est plus importante que celles du Siècle ou de la Forme.
+L'hypothèse de l'efficacité qu'amèneraient les éléments extralinguistiques portés par les métadonnées est confirmée (\textit{cf.} figure \ref{fig:chap4:metadata-boxplot}): sur les cinquante entraînements, en utilisant le score F1 sur la catégorie positive comme mesure de classement, les onze meilleurs utilisent un réseau enrichi de métadonnées, soit au niveau de la couche linéaire soit au niveau du réseau d'encodage LSTM. Avec 86,05\% en score F1, 87,25\% en rappel et 84,88\% en précision sur la catégorie positive, le meilleur des modèles se situe à 4.87 points du score F1 du meilleur modèle n'utilisant pas les métadonnées identifiant les auteurs et structures logiques\footnote{Et à 9,56 points en rappel et à 0,01 en précision, ce qui est négligeable pour ce dernier} (\textit{cf.} table \ref{tab:chap4:resultats-metadata}) . Si on le compare au premier modèle qui n'utilise aucune métadonnée, l'écart se creuse à 8 points de score F1 et 17,13 de rappel. Sur les 25 premiers modèles, 9 utilisent toutes les métadonnées (36\%), 8 utilisent toutes les métadonnées sauf celle identifiant l'auteur (32\%), 7 utilisent les métadonnées Forme et Siècle (28\%), 2 n'en utilisent aucune (8\%, \textit{cf.} table \ref{tab:chap4:metadata-p-value}). Les modèles à métadonnées dépassent donc ceux n'en ayant pas, et l'inclusion de la métadonnée Auteur ou Structure de Citation est plus importante que celles du Siècle ou de la Forme.
 
 
 \begin{table}[ht]
@@ -595,13 +595,13 @@ L'hypothèse de l'efficacité qu'amèneraient les éléments extralinguistiques 
                    Texte & Métadonnées utilisées        & En tant que Cicéron & En tant que Martial \\
     \midrule
     \textit{De Finibus}, Cicéron & Toutes                       &               4.25\% &              72.60\% \\
-    \textit{Epigrammata}, Martial &                              &               7.89\% &              82.05\% \\ \midrule
+    \textit{Épigrammes}, Martial &                              &               7.89\% &              82.05\% \\ \midrule
     \textit{De Finibus}, Cicéron & Toutes sauf Auteur           &               4.69\% &              47.54\% \\
-    \textit{Epigrammata}, Martial &                              &               7.33\% &              59.76\% \\ \midrule
+    \textit{Épigrammes}, Martial &                              &               7.33\% &              59.76\% \\ \midrule
     \textit{De Finibus}, Cicéron & Forme et Siècle              &               0.91\% &              36.03\% \\
-    \textit{Epigrammata}, Martial &                              &               6.41\% &              48.10\% \\ \midrule
+    \textit{Épigrammes}, Martial &                              &               6.41\% &              48.10\% \\ \midrule
     \textit{De Finibus}, Cicéron & Aucune                       &               2.91\% &               2.91\% \\
-    \textit{Epigrammata}, Martial &                              &              15.29\% &              15.29\% \\
+    \textit{Épigrammes}, Martial &                              &              15.29\% &              15.29\% \\
     \bottomrule
     \end{tabular}%
     }
@@ -610,24 +610,24 @@ L'hypothèse de l'efficacité qu'amèneraient les éléments extralinguistiques 
 \end{table}
 
 
-Cependant, l'application du modèle sur des données hors domaine, sur des données de terrain, réserve une surprise: les modèles de métadonnées avec l'information Auteur et Structure logique de citation ont d'aussi bons scores parce qu'ils ont été victimes d'un surapprentissage dû aux biais inhérents de notre corpus. Pour prouver ce problème de surapprentissage, on propose l'expérience suivante:
+Cependant, l'application du modèle sur des données hors domaine, sur des données de terrain, réserve une surprise: les modèles de métadonnées avec l'information Auteur et Structure logique de citation ont d'aussi bons scores parce qu'ils ont été victimes d'un surapprentissage dû aux biais inhérents de notre corpus: le modèle reconnaît l'auteur plus qu'il ne reconnaît l'isotopie. Pour prouver ce problème de surapprentissage, on propose l'expérience suivante:
 \begin{enumerate}
     \item Le modèle est appliqué sur deux oeuvres: les \textit{Épigrammes} de Martial, connus pour la sexualité qui y est présente, mais pas omniprésente (de nombreux épigrammes si ce n'est la majorité parlent de sujets tout autres); le \textit{De Finibus} de Cicéron, texte philosophique qui ne devrait pas contenir beaucoup de passages présentant l'isotopie sexuelle.
     \item On modifie intentionnellement les métadonnées fournies au modèle: pour chaque texte, on trompe le modèle en alternant entre l'une ou l'autre des identités des textes: les \textit{Épigrammes} sont analysés une fois en tant qu'\textit{Épigrammes}, et une autre fois en tant que \textit{De Finibus}.
     \item Chaque texte est annoté avec le meilleur modèle utilisant: (1) l'ensemble des métadonnées, (2) l'ensemble sauf l'information auteur, (3) les métadonnées Forme et Siècle uniquement, et (4) sans aucune métadonnée (\textit{cf.} table \ref{tab:chap4:resultats-metadata} pour les scores de ces modèles). Les modèles n'utilisant pas de métadonnées ne produisant pas de variation en fonction de ces dernières, les résultats sont le fruit d'une seule prédiction.
-    \item On récupère le pourcentage de phrases dont la catégorie prédite par le modèle est \texttt{Positive}.
+    \item On récupère le pourcentage de phrases dont la catégorie prédite par le modèle est Positive.
 \end{enumerate}
 Le résultat de cette expérience montre un surapprentissage évident sur les métadonnées, décroissant avec le nombre de catégories de ces dernières. Le \textit{De Finibus} annoté comme \textit{Épigrammes} avec l'ensemble des métadonnées (72,60\%) contient vingt-cinq fois plus de phrases positives que celui annoté   par un modèle non enrichi (2,91\%), et près de quatre-vingts fois plus que le modèle Forme+Siècle utilisant l'identité de Cicéron (0,91\%).
 
-L'usage de métadonnées est-il à proscrire ? Si l'on en s'arrête aux résultats, en particulier l'escalade importante qui s'opère sur Martial et Cicéron, la réponse est oui, l'inclusion de métadonnées provoque une bien trop haute variation pour être prise sans risque. Même en pondérant les scores à l'aide de la précision (84,78\% pour le modèle \texttt{Siècle} et \texttt{Forme}), toutes choses égales par ailleurs\footnote{Ce qui est assez peu probable.}, le modèle trouverait 40\% de phrases présentant des traits d'une isotopie sexuelle détectée par le modèle de manière juste. Bien que le corpus présente cette surreprésentation, il sera difficile de faire autrement; les \textit{Épigrammes} seront toujours composés d'un très grand nombre de poèmes à isotopie sexuelle, tandis que Cicéron le sera très rarement, aucune recomposition de corpus ne peut changer cela. Il est dans un sens normal que le modèle soit plus attentif à des tournures particulières chez Martial que chez Cicéron: le lecteur humain sera sûrement aussi en ce sens \enquote{surentraîné} -- on dirait normalement plus attentif -- grâce à sa fine connaissance du corpus et au biais que celle-ci induit. Même en ne prenant en compte que la métadonnée \texttt{Forme}, vu le corpus latin, il est attendu que l'on trouve plus facilement en vers une isotopie de la sexualité qu'en prose. Si l'on prend en compte ce biais, le modèle fonctionne: il prend bien en compte les particularités de chaque trait idiolectal ou sociolectal qu'il identifie.
+L'usage de métadonnées est-il à proscrire ? Si l'on en s'arrête aux résultats, en particulier l'escalade importante qui s'opère sur Martial et Cicéron, la réponse est oui, l'inclusion de métadonnées provoque une bien trop haute variation pour être prise sans risque. Même en pondérant les scores à l'aide de la précision (84,78\% pour le modèle Siècle et Forme), toutes choses égales par ailleurs\footnote{Ce qui est assez peu probable.}, le modèle trouverait 40\% de phrases présentant des traits d'une isotopie sexuelle détectée par le modèle de manière juste. Bien que le corpus présente cette surreprésentation, il sera difficile de faire autrement; les \textit{Épigrammes} seront toujours composés d'un très grand nombre de poèmes à isotopie sexuelle, tandis que Cicéron le sera très rarement, aucune recomposition de corpus ne peut changer cela. Il est dans un sens normal que le modèle soit plus attentif à des tournures particulières chez Martial que chez Cicéron: le lecteur humain sera sûrement aussi en ce sens \enquote{surentraîné} -- on dirait normalement plus attentif -- grâce à sa fine connaissance du corpus et au biais que celle-ci induit. Même en ne prenant en compte que la métadonnée Forme, vu le corpus latin, il est attendu que l'on trouve plus facilement en vers une isotopie de la sexualité qu'en prose. Si l'on prend en compte ce biais, le modèle fonctionne: il prend bien en compte les particularités de chaque trait idiolectal ou sociolectal qu'il identifie.
 
-Outre les modèles à métadonnées, le meilleur modèle non enrichi, même s'il est moins efficace d'après le score obtenu sur le corpus de test, donnerait des résultats plus crédibles pour Martial et Cicéron avec 2,91\% de phases identifiées positives dans le \textit{De Finibus} et 15,29\% dans les \textit{Épigrammes} (après pondération via la précision sur le corpus de test, toutes choses égales par ailleurs, 2,47\% et 13,01\%). Il reste à choisir ce que l'on préférera: doit-on avoir plus de faux positifs, y compris à cause d'un \enquote{léger} surentraînement, ou doit-on réduire ce bruit au risque de perdre de l'information (le modèle sans métadonnée tombant à 72\% de rappel) ? 
+Outre les modèles à métadonnées, le meilleur modèle non enrichi, même s'il est moins efficace d'après le score obtenu sur le corpus de test, donne des résultats plus crédibles pour Martial et Cicéron avec 2,91\% de phases identifiées positives dans le \textit{De Finibus} et 15,29\% dans les \textit{Épigrammes} (après pondération via la précision sur le corpus de test, toutes choses égales par ailleurs, 2,47\% et 13,01\%). Il reste à choisir ce que l'on préférera: doit-on avoir plus de faux positifs, y compris à cause d'un \enquote{léger} surentraînement, ou doit-on réduire ce bruit au risque de perdre de l'information (le modèle sans métadonnée tombant à 72\% de rappel) ? 
 
 % Nous faisons le pari des faux positifs, toujours dans l'objectif de questionner le texte, de laisser la place au philologue dans la compréhension du texte, tout en lui fournissant un corpus à explorer plus facilement que s'il ne fallait chercher soi-même les centaines de phrases qui pourraient rentrer dans cette catégorie.
 
 \subsubsection{Plongements contextuels de mots}
 
-Les \textit{embeddings} traditionnels (\textit{Word2Vec, GloVe, FastText} entre autres) posent le problème de l'absence de désambiguïsation. Si un travail important a lieu pour essayer d'introduire cette information dans le dictionnaire de vecteurs qu'ils produisent, il ne porte pour l'instant pas ses fruits et s'est fait dépasser par une autre approche: les \textit{embeddings} contextuels, tels \textit{BERT}. En effet, pour reprendre l'exemple de Pedro Javier Ortiz Suárez \textit{et al.}\footcite{ortizsuarez:hal02148693}, pour les outils traditionnels comme \textit{Word2Vec}, \texttt{Washington} représente à la fois l'état, la ville, le président (mais aussi quelques acteurs, îles, etc.). BERT, en produisant des projections en contexte, permet d'outrepasser -- en partie -- ce problème. En utilisant \textit{Latin BERT}\footcite{bamman2020latin} comme entrée seule ou comme complément à la phrase encodée, nous proposions d'évaluer les capacités de BERT dans un objectif de classification.
+Les \textit{embeddings} traditionnels (\textit{Word2Vec, GloVe, FastText} entre autres) posent le problème de l'absence de désambiguïsation. Si un travail important a lieu pour essayer d'introduire cette information dans le dictionnaire de vecteurs qu'ils produisent, il ne porte pour l'instant pas ses fruits et s'est fait dépasser par une autre approche: les \textit{embeddings} contextuels, tels \textit{BERT}. En effet, pour reprendre l'exemple de Pedro Javier Ortiz Suárez \textit{et al.}\footcite{ortizsuarez:hal02148693}, pour les outils traditionnels comme \textit{Word2Vec}, \enquote{Washington} représente à la fois l'état, la ville, le président (mais aussi quelques acteurs, îles, etc.). BERT, en produisant des projections en contexte, permet d'outrepasser -- en partie -- ce problème. En utilisant \textit{Latin BERT}\footcite{bamman2020latin} comme entrée seule ou comme complément à la phrase encodée, nous proposions d'évaluer les capacités de BERT dans un objectif de classification.
 
 \begin{figure}[t]
     \centering
@@ -658,7 +658,7 @@ Le résultat est clair: \textit{Latin BERT} n'apporte pas de bénéfices importa
 \end{sidewaysfigure}
 \clearpage
 }
-Au contraire, une architecture reposant sur l'usage de l'encodage de BERT, sans spécialisation, par une nouvelle couche d'encodage de type GRU ou HAN fournit des résultats plus convaincants (\textit{c.f.} figure \ref{fig:chap4:bert-pooling-generic-eval}). Les méthodes mentionnées plus tôt en \ref{part:chap4:architectures:variations-architectures:encodage} n'ont pas nécessairement amélioré les résultats face à un usage classique du token \texttt{[CLS]}, mais induisent cependant bien des variations. Là où le \textit{pooling} du token \texttt{[CLS]} est nécessairement dans les 4 plus mauvais modèles en score F1, précision et rappel, la sélection par la valeur maximum (\texttt{Max}) ou par concaténation de la valeur maximum et de la moyenne (\texttt{MeanMax}) sont régulièrement dans le top 4 des modèles à \textit{pooling}. Mais ces architectures n'en restent pas moins très très loin des modèles à ré-encodage, presque 20 points entre les médianes de score F1 des deux catégories d'usage de BERT, avec un maximum pour le \textit{pooling} qui touche à peine le bas de la moustache inférieure des méthodes GRU et HAN.
+Pour ce qui est des architectures reposant sur BERT, sans affinage, celles utilisant une couche d'encodage de type GRU ou HAN fournit des résultats plus convaincants (\textit{c.f.} figure \ref{fig:chap4:bert-pooling-generic-eval}). Les méthodes mentionnées plus tôt en \ref{part:chap4:architectures:variations-architectures:encodage} n'ont pas nécessairement amélioré les résultats face à un usage classique du token \texttt{[CLS]}, mais induisent cependant bien des variations. Là où le \textit{pooling} du token \texttt{[CLS]} est nécessairement dans les 4 plus mauvais modèles en score F1, précision et rappel, la sélection par la valeur maximum (\texttt{Max}) ou par concaténation de la valeur maximum et de la moyenne (\texttt{MeanMax}) sont régulièrement dans le top 4 des modèles à \textit{pooling}. Mais ces architectures n'en restent pas moins très très loin des modèles à ré-encodage, presque 20 points entre les médianes de score F1 des deux catégories d'usage de BERT, avec un maximum pour le \textit{pooling} qui touche à peine le bas de la moustache inférieure des méthodes GRU et HAN.
 
 En général, les encodages des projections BERT par HAN et GRU, potentiellement suivis d'une couche linéaire enrichie, touchent les résultats en Score F1 du meilleur modèle sans métadonnées. L'enrichissement par métadonnées influent clairement les résultats de plusieurs points et inversent même l'intérêt des modèles (HAN est meilleur que GRU sans métadonnées, mais cède sa place de premier avec). GRU montre de très bons résultats dans son premier quartile, à égalité avec les modèles enrichis. Bien que les scores soient largement meilleurs comparés aux modèles \texttt{[CLS]} présentés plus haut, ils restent au niveau d'architectures plus traditionnelles, pour un coût plus élevé en entraînement et calcul d'inférence.
 
@@ -673,14 +673,14 @@ En général, les encodages des projections BERT par HAN et GRU, potentiellement
 
 Nous avions proposé en type d'architecture de faire varier les couches décisionnelles entre couche de réseaux siamois et couche en réseau linéaire, les réseaux siamois étant vantés par la littérature scientifique comme particulièrement adaptés pour les petits stocks de données. Les résultats présentés \ref{fig:chap4:modeles-siamois-vs-lineaires} ne reprennent que les modèles utilisant une couche en \textit{constrastive loss} et montrent qu'ils ne sont pas à la hauteur de nos attentes.
 
-Seuls les modèles en \textit{constrastive loss} sont présentés dans le schéma, mais toutes les variations suivantes ont été utilisées, sans provoquer de différence nette avec la configuration incluse dans les schémas:
+Seuls les modèles en \textit{constrastive loss} sont présentés dans le tableau final de résultats \ref{tab:chap4:general-results}, mais toutes les variations suivantes ont été utilisées, sans provoquer de différence nette avec la configuration incluse dans les schémas:
 \begin{itemize}
     \item les configurations en \textit{triplet loss} n'apportaient aucun bénéfice. La comparaison avec un exemple positif et un exemple négatif ou la comparaison avec un seul exemple positif ne change pas les résultats du modèle.
     \item Les techniques d'échantillonnage mentionnées plus haut -- \textit{BatchEasyHard} \footcite{xuan_improved_2020} et \textit{BatchHard}\footcite{hermans_defense_2017} -- n'ont pas modifié les résultats non plus. Ces deux méthodes cherchent à sélectionner les exemples les plus difficiles à différencier ou à classer ensemble dans un batch.
-    \item Une variation de \textit{BatchEasyHard} a été utilisée où tous les documents sont comparés à l'ensemble des autres documents d'un même batch. Cette méthode n'a amélioré les résultats non plus.
+    \item Nous avons utilisé une  variation de \textit{BatchEasyHard} dans laquelle tous les documents sont comparés à l'ensemble des autres documents d'un même batch. Cette méthode n'a pas amélioré les résultats.
 \end{itemize}
 
-Les résultats sont donc peu probants et posent légitimement la question de la source de cette \enquote{déception}. En dehors d'une possible -- mais peu probable au vu du nombre de tests -- erreur d'implémentation, il reste l'hypothèse de l'inadéquation des modèles siamois pour ce type de tâche, reposant sur des textes extrêmement courts avec une très forte disparité lexicale entre les différents éléments. En effet, la plupart des cas utilisant les réseaux en comparaison cherchent à sélectionner des éléments qui présentent de fortes similarités, graphiques ou textuelles: peu de variations existent entre un filigrane et un autre, une annonce de vente pour un téléphone portable est proche de celle d'un autre de la même marque et utilisent probablement des informations et lexiques similaires. À la surface, nos textes sont différents, et le modèle n'est pas capable de comprendre suffisamment bien leur similarité sous-jacente. Une autre hypothèse: les modèles ne restent pas catastrophiques (50\% de précision environ, soit 50\% de faux positifs parmi ceux trouvés) et pourraient très bien être plus résistants sur des données nouvelles: si l'on regarde les résultats des modèles à métadonnées et leur 36\% de contenus \enquote{sexuels} dans les \textit{Epigrammata}, il n'est pas improbable que de nombreux résultats parmi eux soient de faux positifs, plus que le taux de 75\% le promet en tout cas.
+Les résultats sont donc peu probants et posent légitimement la question de la source de cette \enquote{déception}. En dehors d'une possible -- mais peu probable au vu du nombre de tests -- erreur d'implémentation, il reste l'hypothèse de l'inadéquation des modèles siamois pour ce type de tâche, reposant sur des textes extrêmement courts avec une très forte disparité lexicale entre les différents éléments. En effet, la plupart des cas utilisant les réseaux en comparaison cherchent à sélectionner des éléments qui présentent de fortes similarités, graphiques ou textuelles: peu de variations existent entre un filigrane et un autre; une annonce de vente pour un téléphone portable est proche de celle d'un autre de la même marque et utilisent probablement des informations et lexiques similaires. À la surface, nos textes sont différents, et le modèle n'est pas capable de comprendre suffisamment bien leur similarité sous-jacente. Une autre hypothèse: les modèles ne restent pas catastrophiques (50\% de précision environ, soit 50\% de faux positifs parmi ceux trouvés) et pourraient très bien être plus résistants sur des données nouvelles: si l'on regarde les résultats des modèles à métadonnées et leur 36\% de contenus \enquote{sexuels} dans les \textit{Épigrammes}, il n'est pas improbable que de nombreux résultats parmi eux soient de faux positifs, plus que le taux de 75\% le promet en tout cas.
 
 \subsubsection{Architectures des meilleurs modèles}
 
@@ -692,7 +692,7 @@ D'après les premiers résultats (table \ref{tab:chap4:general-results}), les mo
     \item utilisant un encodeur LSTM ou un réseau avec attention (HAN).
 \end{itemize}
 
-Ces résultats sont confirmés par la seconde phase d'entraînements qui montre un net avantage aux 4 modèles principaux sélectionnés (en premiers sur la table \ref{tab:chap4:general-results}). L'enrichissement en métadonnées, même limitées à l'information formelle et celle du siècle d'appartenance de l'auteur, permet au modèle de mieux analyser les résultats. Mais l'on peut apercevoir aussi que certains modèles, bien qu'éloignés par leur médiane du top 4, peuvent rivaliser: le modèle utilisant HAN et Word2Vec sans enrichissement vient ainsi battre 3 des meilleurs modèles en précision, un modèle en GRU et Word2Vec vient battre en rappel les valeurs maximales du top 4 aussi. Il est donc possible de se reposer sur des modèles moins surentraînés, potentiellement aussi capables que des modèles enrichis, avec une perte en test de 1,80 à 4 points suivant les mesures.
+Ces résultats sont confirmés par la seconde phase d'entraînements qui montre un net avantage aux 4 modèles principaux sélectionnés (en premiers sur la table \ref{tab:chap4:general-results}). L'enrichissement en métadonnées, même limitées à l'information formelle et celle du siècle d'appartenance de l'auteur, permet au modèle de mieux analyser les résultats. Mais l'on peut apercevoir aussi que certains modèles, bien qu'éloignés par leur médiane du top 4, peuvent rivaliser: le modèle utilisant HAN et Word2Vec sans enrichissement vient ainsi battre trois des meilleurs modèles en précision, un modèle en GRU et Word2Vec vient battre en rappel les valeurs maximales du top 4 aussi. Il est donc possible de se reposer sur des modèles moins surentraînés, potentiellement aussi capables que des modèles enrichis, avec une perte en test de 1,80 à 4 points suivant les mesures.
 
 Parmi les types de modèles, seuls sont à proscrire les modèles BERT, dont l'entraînement et l'usage en terrain réel sont coûteux et dont les scores sont bien éloignés du top 4, et les réseaux utilisant CNN comme encodeurs, du moins avec des filtres $[2,3,4,5]$ (\textit{cf.} figure \ref{fig:chap4:main-results-dispersion-encoder}). Au contraire, les réseaux utilisant des encodeurs LSTM, GRU ou HAN ont tendance à avoir des résultats équivalents entre eux, avec une dispersion équivalente des résultats. Parmi les paramètres, la taille de la dimension d'encodage n'a pas ou peu d'impact sur les résultats (figure \ref{fig:chap4:main-results-dispersion-dimension}). Il reste que chaque modèle ou type d'architecture présente une forte dispersion de leurs résultats, hors Score F1 (5 points sur le F1 pour les meilleures architectures, mais de 10 à 15 points sur les deux autres mesures): une modification du \textit{learning rate} n'affecte pas cette disparité en précision et rappel. La taille du corpus de test peut être à la source de cette variance.
 
@@ -750,12 +750,14 @@ Parmi les types de modèles, seuls sont à proscrire les modèles BERT, dont l'e
 
 \subsection{Extensibilité des modèles}
 
-Pour notre recherche, nous avons bénéficié de l'immense travail de J. N. Adams qui nous a permis de compiler une base de plus de deux milliers d'exemples. Cependant, le travail de ce dernier reste rare et unique par sa dimension. L'usage de l'intelligence artificielle pour produire des corpus offre potentiellement l'opportunité d'en produire de nouveaux, centrés sur d'autres thèmes que celui du chercheur britannique. Mais pour cela, évaluer l'efficacité du modèle à d'autres échelles est important. Nous proposons donc trois terrains d'explorations différents, permettant d'évaluer l'apport des différentes architectures:
+Notre recherche est nourrie de celle de J. N. Adams: non seulement nous n'avons pas eu à chercher les exemples présentant l'isotopie sexuelle manuellement -- car l'auteur nous les avait relevé pour nous -- mais en plus nous avons bénéficié d'un travail de catégorisation de ces dernières. Cette recherche, publiée en 1983, ne connaît que peu d'équivalents dans les littératures latines classiques et tardives. En terme d'autorité, le travail de J. N. André sur les couleurs fait probablement autant référence dans son propre domaine, mais il n'a pas été réimprimé depuis 1949\footcite{andre1949etude}. Il existe ensuite quelques travaux de thèse\footnote{Le travail de Pedro Duarte semble rentrer dans cette catégorie. \textcite{duarte_vocabulaire_2010}} et des articles sur des coupes temporelles ou des parties de lexique plus restreintes. Quoiqu'il en soit, ces travaux, ou de nouveaux à venir, passent par une première compilation qui pourrait être simplifiée. Or, qu'il s'agisse de lexicographie, de stylistique ou bien même d'anthropologie historique, le premier obstacle à cette recherche est celui de la compilation d'exemples dans un corpus de plusieurs dizaines -- voire centaines suivant les bornes choisies -- de millions de mots.
+
+Dans ce cadre, l'expérience de notre recherche peut fournir un outillage à la compilation de ces futurs corpus. Il faut alors pouvoir enquêter sur les limites de cet outillage, dans d'autres conditions. Avec pour seule source notre corpus, il est possible d'évaluer l'efficacité des différents modèles en fonction d'autres versions de ce corpus, en quantifiant l'impact qu'ont par exemple la diversité lexicale, la diversité des exemples ou le nombre de ces derniers. Nous proposons donc trois terrains d'explorations différents, permettant d'évaluer l'apport des différentes architectures:
 
 \begin{enumerate}
-    \item Explorer, avec un corpus diversifié en source, l'importance de sa taille. Avec un corpus beaucoup plus petit, mais comportant une variété d'exemples (avec des métaphores, des termes \enquote{explicitement} liés à l'isotopie, etc.) plus importante.
+    \item Explorer, avec un corpus diversifié en sources, l'importance de sa taille. Avec un corpus beaucoup plus petit, mais comportant une variété d'exemples (avec des métaphores, des termes \enquote{explicitement} liés à l'isotopie, etc.) plus importante.
     \item Étudier la capacité du modèle à reconnaître des termes explicites à partir du simple apprentissage d'exemples \enquote{métaphoriques}.
-    \item Étudier la capacité du modèle à reconnaître des exemples métaphoriques en ayant été entraîner sur des exemples ne présentant cette figure de style (d'après l'analyse d'Adams).
+    \item Étudier la capacité du modèle à reconnaître des exemples métaphoriques en ayant été entraîner sur des exemples ne présentant pas cette figure de style (d'après l'analyse d'Adams).
 \end{enumerate}
 
 \begin{table}[]
@@ -784,6 +786,8 @@ Pour notre recherche, nous avons bénéficié de l'immense travail de J. N. Adam
 Le set de données Partiel est un échantillonnage aléatoire à hauteur de 20\% des données d'entraînement du corpus principal. Son set de développement et son corpus de test sont conservés au même niveau. Le nombre total d'échantillons utilisés par le processus d'entraînement (train+dev) atteint donc 672 exemples positifs, un nombre élevé au regard d'une constitution manuelle de corpus, mais atteignable par une approche lexicale (sélection de mots ``intrinsèquement'' liés à un champ ou une isotopie donnée, puis recherche d'occurrences) et par une approche stylistique ``minimale'' (par connaissance du sujet, sélection de passages métaphoriques, métonymiques, etc.).
 
 Sur ce set de données, les modèles à métadonnées règnent encore en maîtres sur le tableau des scores, toutes mesures confondues (\textit{cf.} table \ref{tab:chap4:partial-results}). Une chute des scores non négligeable est observée, comparativement au corpus complet: le meilleur modèle enrichi chute de 10,45 points en précision, de 7,57 points en rappel et de 10,09 points en score F1. La chute est d'autant plus dure pour les modèles non enrichis n'utilisant pas BERT, en bas de tableau systématiquement, avec des écarts de 15,13 points en précision à 18,92 points en rappel entre les meilleurs modèles de chaque corpus. Avec un rappel de 52,59\%, un peu moins d'un exemple sur deux n'est pas reconnu comme portant une isotopie sexuelle par le meilleur modèle HAN Word2Vec (8) tandis qu'un exemple sur trois est un faux positif avec 66,16\% de précision.
+
+% Correction stop here, p. 183w
 
 Au contraire du set principal, un modèle non enrichi et utilisant BERT produit des scores lui permettant de se hisser au rang 2 en score F1, au rang 3 en rappel et au rang 6 en précision, en battant systématiquement les modèles non enrichis sans BERT (\textit{cf.} figure \ref{fig:chap4:partial-results-dispersion}). Avec un jeu de données plus petit, BERT devient donc plus intéressant pour produire des modèles d'exploration, grâce à son espace sémantique plus vaste que Word2Vec ou FastText. Le coût d'entraînement est encore plus important que pour un simple modèle à projections non contextualisées, mais permet de battre ces derniers avec une marge de 5 à 10 points suivant les mesures. Sans spécialiser BERT et sur des échantillons relativement courts, les résultats sont encourageants. Un BERT plus ``propre'' que celui proposé par Latin BERT pourrait dans ce contexte proposer des résultats encore plus impressionnants, et, peut-être, battre un modèle enrichi, d'autant que le modèle enrichi est probablement dépendant, vu les résultats antécédents, d'une représentation équilibrée des auteurs, siècles ou formes.
 
@@ -884,7 +888,7 @@ Les modèles enrichis se partagent le top 10 des architectures avec les modèles
 
 Confirmant une attitude remarquée sur les corpus les plus importants, les modèles BERT produisent les scores les plus faibles, malgré leur coût d'entraînement. Cependant, un \textit{MeanMax} enrichi sur la couche linéaire produit aussi le modèle avec le plus haut rappel, mais le plus faible taux de précision: s'il rate moins d'exemples positifs que ses concurrents, il a donc tendance à sélectionner trop de données faussement positives. Ce modèle est le seul avec un taux de rappel compétitif.
 
-On arrive donc, à partir d'un corpus ne contenant pas de métaphores, à détecter ces dernières, en partie, le meilleur modèle non spécialisé ratant donc deux exemples sur quatre, avec un faux positif pour trois éléments sélectionnés. Plus que des questions de captures des traits, une première hypothèse rejetée est celle d'un plus grand partage des lemmes entre les différents corpus d'entraînement et de tests: avec 18,2\% de lemmes partagés avec le corpus d'entraînement\footnote{$\frac{|Lemmes(Train)| \cap |Lemmes(Test)|}{|Lemmes(Test)|}$}, il se place troisième des sets de données sur cette mesure (30\% pour le corpus principal, 19\% pour le corpus partiel, 4,9\% pour le corpus Métaphores; au contraire, les données de tests sont globalement stables en négatif). L'information auteur et une possible surreprésentation des mêmes auteurs ne pourraient pas non plus être responsables de ces bons scores, car l'écart entre les modèles non enrichis et enrichis n'est pas assez important. On peut donc supposer que le modèle est capable de reconnaître parmi ces répétitions de lemmes (quantifiables) ou de sèmes (beaucoup plus difficilement quantifiables) ceux permettant de reconnaître une isotopie sexuelle construite via une métaphore.
+À partir d'un corpus ne contenant pas de métaphores, il est donc possible d'obtenir des modèles capables d'en détecter. Ainsi, le meilleur modèle sans enrichissement n'en rate que deux sur cinq dans notre corpus de test, et ne produit qu'un faux positif pour deux vrais positifs. Ces performances étant particulièrement hautes, et prometteuses dans le cadre de la production de corpus, l'hypothèse d'un biais de corpus doit être écarté. Or, le corpus de test ne partagent que 18,2\% de ses lemmes avec le corpus d'entraînement\footnote{$\frac{|Lemmes(Train)| \cap |Lemmes(Test)|}{|Lemmes(Test)|}$}, le plaçant à la troisième place de nos corpus d'expérimentation. Cette mesure est en effet de 30\% pour le corpus principal, 19\% pour le corpus partiel et 4,9\% pour le corpus Métaphores. D'autre part, la relative résistance des modèles sans enrichissements en métadonnées permet aussi d'écarter un score uniquement lié à un sur-apprentissage sur ces dernières. Ces hypothèses exclues, on peut donc estimer que le modèle est capable de reconnaître parmi ces répétitions de lemmes (quantifiables) ou de sèmes (beaucoup plus difficilement quantifiables) celles permettant de reconnaître une isotopie sexuelle construite via une métaphore.
 
 \noindent\begin{minipage}{\linewidth}%
     \resizebox{\linewidth}{!}{%}
@@ -927,14 +931,14 @@ On arrive donc, à partir d'un corpus ne contenant pas de métaphores, à détec
 
 %\paragraph{Une approche statistique de l'attention}
 
-Le réseau HAN (\textit{Hierarchical Attention Networks}) que nous utilisons\footnote{\textit{cf.} \ref{part:chap4:architectures:variations-architectures:encodage}.} repose sur un système de pondération au moment de la classification nommée \textit{Attention}. Cette attention répartit 100\% de sa valeur sur l'échantillon (pour nous, une phrase), chaque mot prenant alors une part plus ou moins grande de cette dernière. Cette pondération est apprise par le modèle pendant sa phase d'entraînement et peut permettre aussi au lecteur humain de comprendre les facteurs ayant conduit à l'une ou l'autre des classifications. Dans une phrase où chacun des mots porte une importance quasi égale pour l'isotopie de la sexualité, une attention répartie également semble logique, comme dans la phrase ``\textit{lambebat medios improba lingua viros.}'' (\textit{cf.} figure \ref{fig:chap4:attention:repartie}). Au contraire, pour une phrase où seuls un ou deux mots portent toute la ``charge'' isotopique, comme ``\textit{Corrupit frater uxorem meam quam tyrannus violaverat''} (\textit{cf.} figure \ref{fig:chap4:attention:mono}), l'attention sera très inégalement répartie.
+Pour rappel, le réseau HAN (\textit{Hierarchical Attention Networks}) que nous utilisons\footnote{\textit{cf.} \ref{part:chap4:architectures:variations-architectures:encodage}.} repose sur un système de pondération au moment de la classification nommée \textit{Attention}. Cette attention répartit 100\% de sa valeur sur l'échantillon (pour nous, une phrase), chaque mot prenant alors une part plus ou moins grande de cette dernière. Cette pondération est apprise par le modèle pendant sa phase d'entraînement et peut permettre aussi au lecteur humain de comprendre les facteurs ayant conduit à l'une ou l'autre des classifications. Dans une phrase où chacun des mots porte une importance quasi égale pour l'isotopie de la sexualité, une attention répartie également semble logique, comme dans la phrase ``\textit{lambebat medios improba lingua viros.}'' (\textit{cf.} figure \ref{fig:chap4:attention:repartie}). Au contraire, pour une phrase où seuls un ou deux mots portent toute la ``charge'' isotopique, comme ``\textit{Corrupit frater uxorem meam quam tyrannus violaverat''} (\textit{cf.} figure \ref{fig:chap4:attention:mono}), l'attention sera très inégalement répartie.
 
 \begin{figure}
      \centering
      \begin{subfigure}[t]{0.45\textwidth}
          \centering
          \includegraphics[width=\textwidth]{figures/chap4/attention.png}
-         \caption{Martial, \textit{Epigrammata}, II.61.2. ``Sa langue perverse léchait le milieu des hommes.''}
+         \caption{Martial, \textit{Épigrammes}, II.61.2. ``Sa langue perverse léchait le milieu des hommes.''}
          \label{fig:chap4:attention:repartie}
      \end{subfigure}
      \hfill
@@ -987,19 +991,18 @@ L'attention peut pour autant être ignorée en partie par le modèle au moment d
 
 \subsection{Erreurs et usage de l'attention}
 
-Cette attention peut aussi être utile dans le cas d'une étude des faux positifs, échantillons sensés être négatifs dans notre set de données généré semi automatiquement, et des faux négatifs, échantillons classés par J. N. Adams comme positifs, mais non reconnus par le modèle. Nous proposons donc une étude de quelques échantillons en \textit{close reading} ainsi qu'une approche statistique. Dans les prochains exemples, le mot en gras et le nombre qui le suit sont le mot retenant le plus l'attention du modèle (rang 1) et le nombre de fois où il s'est retrouvé à ce rang sur 20 modèles répartis entre deux architectures de dix modèles chacune variant uniquement au niveau de l'encodage à 128 ou 256.
+Cette attention peut aussi être utile dans le cas d'une étude des faux positifs, échantillons sensés être négatifs dans notre set de données généré semi automatiquement, et des faux négatifs, échantillons classés par J. N. Adams comme positifs, mais non reconnus par le modèle. Nous proposons, en plus ainsi d'une approche statistique, un commentaire de quelques échantillons afin de mieux comprendre l'usage de ce mécanisme et sa possible responsabilité dans les erreurs. Dans les prochains exemples, le mot en gras et le nombre qui le suit sont le mot retenant le plus l'attention du modèle (rang 1) et le nombre de fois où il s'est retrouvé à ce rang sur 20 modèles répartis entre deux architectures de dix modèles chacune variant uniquement au niveau de l'encodage à 128 ou 256.
 
 \subsubsection{Attention et faux positifs}
 
 \begin{quote}[31]{\textit{Priapées}}
-    \textit{Donec proterua nil mei manu carpes ,{\\}  licebit ipsa sis \textbf{pudicior} Vesta . } \\
+    \enquote{\textit{Donec proterua nil mei manu carpes ,{\\}  licebit ipsa sis \textbf{pudicior} Vesta . }} \\
     \enquote{Tant que tu ne cueilles rien chez moi d’une main effrontée, {\\} Tu pourras être plus pudique que Vesta elle-même.}
 \end{quote}
 
-
-
 Ici, \textit{pudicior} reçoit l'attention du modèle et donne une phrase positive 25\% du temps sur 20 modèles. Et le modèle a raison: on est face ici à une traditionnelle menace sexuelle de Priape, gardien des jardins et vergers (visible dans d'autres priapées telles que les 13, 17 -- avec la même idée ``d'élargissement de l'anus''--, 22, etc.). Par implication, on comprend qu'il y a une punition en cas de vol. La force de l'adynaton formé par le comparatif et le comparé -- on ne peut pas être plus pudique que Vesta -- ne laissent cependant que peu de doutes sur ce qui sera réservé au porteur d'une main voleuse. L'alternative sous-entendue en opposition à \textit{pudicior} est celle d'une \textit{pedicatio}, confirmée par les vers suivants. L'usage des adjectifs moraux tels que \textit{pudicus}, en hyperbole ou non, sont un des angles morts du corpus de J. N. Adams.
 
+\starbreak
 
 \begin{quote}[\textit{Epitome anonyma (quae gynaecia uocatur)}, recension Li]{Vindicianus Afer}
     \textit{et est a foris neruosa \textbf{uulua} , cuius collum directum est positum , cuius ceruix erigitur usque ad locum , in quo res Veneris perficiuntur et sperma miscetur et fit conceptio natura uolente ex uiri et mulieris sanguine .} \\
@@ -1007,53 +1010,61 @@ Ici, \textit{pudicior} reçoit l'attention du modèle et donne une phrase positi
 \end{quote}
 
 \begin{quote}[\textit{Epitome anonyma (quae gynaecia uocatur)}, recension Li]{Vindicianus Afer}
-    \textit{Ego cum muliere menstruata concubui et non concepit, nam purgacionis plurimo sanguine minor pars seminis \textbf{corrupta} (50.00) est.} \\
+    \enquote{\textit{Ego cum muliere menstruata concubui et non concepit, nam purgacionis plurimo sanguine minor pars seminis \textbf{corrupta} (50.00) est.}} \\
     \enquote{Moi, je partageai mon lit avec une femme ayant ses règles et (pourtant ?) je ne me reproduisis pas, car une petite partie de ma semence fut corrompue par une grande quantité du sang de ce curage.}
 \end{quote}
 
 \begin{quote}[\textit{Formulae spiritalis intelligentiae}, 6]{Eucher de Lyon}
-    \textit{{[}Umbilicus appetitus concupiscentiae. in Iob: et uirtus eius super umbilicum uentris, id est.{]}\footnote{Nous ajoutons le contexte pour la compréhension de la phrase, car l'échantillon pourrait être mal ponctué dans la source d'origine.} Quod feminae \textbf{genitalia} (52.50) per hoc significet sicut in lumbis\footnote{\textsc{Lumbus} comme parties sexuelles masculines ou féminines, \textit{cf.} \textcite[p.~48]{adams}} uirorum.} \\
+    \enquote{\textit{{[}Umbilicus appetitus concupiscentiae. in Iob: et uirtus eius super umbilicum uentris, id est.{]}\footnote{Nous ajoutons le contexte pour la compréhension de la phrase, car l'échantillon pourrait être mal ponctué dans la source d'origine.} Quod feminae \textbf{genitalia} (52.50) per hoc significet sicut in lumbis\footnote{\textsc{Lumbus} comme parties sexuelles masculines ou féminines, \textit{cf.} \textcite[p.~48]{adams}} uirorum.}} \\
     \enquote{Le nombril a est le lieux des penchants pour la concupiscence. Chez Job, ses qualités sont au dessus du centre du ventre, c'est-à-dire que les organes génitaux de le femme expriment à travers-lui la même chose que dans les organes génitaux des hommes.}
 \end{quote}
 
 \begin{quote}[\textit{De salutaribus praeceptis}, 28]{Caelius Aurelianus}
-    \textit{{[}Intellegimus virum{]} ex asperitate faucium, obtunsione vocis et rauco sonitu, inflatione etiam papillarum et \textbf{genitalium} (50.00) , et cum repente maceratum corpus in longitudinem viderimus porrectum.}
+    \enquote{\textit{{[}Intellegimus virum{]} ex asperitate faucium, obtunsione vocis et rauco sonitu, inflatione etiam papillarum et \textbf{genitalium} (50.00) , et cum repente maceratum corpus in longitudinem viderimus porrectum.}}
     \enquote{{[}Nous reconnaissons l'homme{]} à travers l'âpreté de la gorge, le fracas de la voix, à son bruit rauque mais aussi au gonflement des seins et de ses organes génitaux, et lorsque nous avons vu son corps soudainement épuisé étendu en longueur.}
 \end{quote}
 
 Il s'agit encore de faux positifs ``vrais positifs'', donc des données d'entraînement mal classées et non répertoriées par J. N. Adams et le LLT, de données présentant des problèmes de lemmatisation qui ont empêché le recensement, ou enfin de données qui étaient absentes du corpus au moment de la compilation du catalogue d'exemples.
 
-Ces quatre extraits de trois auteurs différents sont tous tardifs et proposent tous une analyse des corps, qu'il s'agisse de discours médicalisant chez Caelius Aurelianus et Vindicianus Afer, ou d'interprétation du rôle de chaque partie du corps dans une exégèse chez Eucher. Les mots qui y retiennent l'attention sont majoritairement connus du corpus d'Adams du lexique médical de la sexualité (\textit{vulva, genitalia, genitalium, seminis}). Pour {corruptus}, précédé de \textit{seminis} (fr. semence), on se trouve face à deux tropes classiques de l'expression de la sexualité en latin: d'une part, la corruption (notamment des moeurs en latin tardif; d'autre part, d'un sperme ou d'une relation sexuelle corrompue par les règles. Particularité du premier extrait de Vindicianus, d'après le commentaire de Louise Cilliers sur une recension différente\footcite[p.236]{cilliers_vindicianuss_2005}, l'alternance \textit{collum}/\textit{ceruix} servirait à éviter une répétition et désignerait \textit{in extenso} le vagin (\textit{cuius collum}: le cou de la matrice), là où \textit{vulva} désignerait l'utérus et non ce que l'on appelle aujourd'hui la vulve.
+Ces quatre extraits de trois auteurs différents sont tous tardifs et proposent tous une analyse des corps, qu'il s'agisse de discours médicalisant chez Caelius Aurelianus et Vindicianus Afer, ou d'interprétation du rôle de chaque partie du corps dans une exégèse chez Eucher. Les mots qui y retiennent l'attention sont majoritairement connus du corpus d'Adams du lexique médical de la sexualité (\textit{vulva, genitalia, genitalium, seminis}). Pour \textit{corruptus}, précédé de \textit{seminis} (fr. semence), on se trouve face à deux tropes classiques de l'expression de la sexualité en latin: d'une part, la corruption (notamment des moeurs en latin tardif; d'autre part, d'un sperme ou d'une relation sexuelle corrompue par les règles. Particularité du premier extrait de Vindicianus, d'après le commentaire de Louise Cilliers sur une recension différente\footcite[p.236]{cilliers_vindicianuss_2005}, l'alternance \textit{collum}/\textit{ceruix} servirait à éviter une répétition et désignerait \textit{in extenso} le vagin (\textit{cuius collum}: le cou de la matrice), là où \textit{vulva} désignerait l'utérus et non ce que l'on appelle aujourd'hui la vulve.
+
+\starbreak
 
 \begin{quote}[Jonas, 2, 2]{\textit{Vulgate}}
-    \textit{et oravit Iona ad Dominum Deum suum de \textbf{utero} (27.50) piscis} \\
+    \enquote{\textit{et oravit Iona ad Dominum Deum suum de \textbf{utero} (27.50) piscis}} \\
     \enquote{Et Jonas émit des prières à son Seigneur Dieu depuis le ventre du poisson.}
 \end{quote}
 
 \begin{quote}[\textit{Héroïdes}, 16, 43]{Ovide}
-    \textit{Matris adhuc \textbf{utero} partu remorante tenebar;} \\
+    \enquote{\textit{Matris adhuc \textbf{utero} partu remorante tenebar;}} \\
     \enquote{L'accouchement tardant, j'étais retenu jusqu'ici dans le ventre de ma mère.}
 \end{quote} 
+
+\starbreak
 
 Ici encore, c'est \textit{uterus} qui récupère la majeure partie de l'attention. S'il arrive bien que des poissons soient mêlés à des descriptions d'actes sexuels (\textit{cf.} Suétone, \textit{Tibère}, 44), il ne s'agit pas dans l'extrait de la Vulgate d'un \textit{uterus} mais bien d'un ventre. Dans le même genre que les précédents faux vrais positifs, il est plus que probable que -- chez Ovide -- \textit{uterus} représente bien le ventre et non l'organe génital féminin: il n'y a pas de discours médicalisant, il n'y a pas de raison de s'attendre à un usage aussi précis du mot \textit{uterus}. La présence de \textit{partus} (fr. accouchement) et de \textit{matris} (fr. mère) a pu conduire le modèle à interpréter le terme \textit{uterus} plus médicalement qu'Ovide ne le souhaitait. Dans les deux cas, le modèle s'est définitivement fait tromper par la polysémie du mot \textit{uterus}, spécialisé chez les auteurs médicaux.
 
 \begin{quote}[\textit{Amours}, 3, 28]{Ovide}
-    \textit{\textbf{Nox} (10.00) tibi, si belles, possit, Homere, dari.} \\
+    \enquote{\textit{\textbf{Nox} (10.00) tibi, si belles, possit, Homere, dari.}} \\
     \enquote{Si tu avais fait la guerre, Homère, la nuit aurait pu t'être donnée.}
 \end{quote}
 
 Cette métaphore d'Ovide est ignorée par notre set d'entraînement et tombe encore dans le domaine de l'isotopie sexuelle. ``La nuit aurait pu t'être donnée'' porte clairement le sens sexuel à travers l'idée d'activités nocturnes. On peut être assez étonné et ravi de la capacité du modèle à retenir ce choix, dans la mesure où aucun terme personnalisant les acteurs sauf le vague \textit{tibi} n'est présent dans la phrase analysée, et qu'Homère n'est jamais présent dans notre set de données. \textsc{Nox} y est cependant présent 59 fois, dont un usage similaire avec le verbe \textsc{do} chez Ovide (\textit{Hic mihi lasciva gaudia nocte dedit}, ``Là elle me donna dans la nuit des joies lascives'', \textit{Remèdes à l'Amour}, 727; \textit{Est data nox ?}, ``La nuit t'est-elle donnée ?'', \textit{Remèdes à l'Amour}, 523) et des phrases similaires où la nuit est bien liée aux affaires du sexe (\textit{Date illi vestem puellarem, date noctem: rapietur.}, ``Donnez-lui des habits de jeunes filles, donnez-lui la nuit: il se fera violer'', Sénèque l'Ancien, Controverses, 5, 1). Adams note cet usage de $nox=stuprum$\footcite[p.178]{adams} mais omet son usage avec \textit{do}.
 
+\starbreak
+
 \begin{quote}[\textit{Mathesis}, 4, 14, 17]{Firmicus Maternus, Julius}
-    \textit{in uenerio \textbf{coitu} (60.00) facit libidinosos et uitiis quibusdam semper implicitos et qui adsiduis ob haec pulsantur infamiis.} \\
+    \enquote{\textit{in uenerio \textbf{coitu} (60.00) facit libidinosos et uitiis quibusdam semper implicitos et qui adsiduis ob haec pulsantur infamiis.}} \\
     \enquote{[La lune] produits des libidineux dans leurs coïts vénériens, des hommes toujours entourés de certains vices, et, à cause de cela, des hommes qui sont frappés par des déshonneurs sans fins.}
 \end{quote}
 
 Texte particulier parmi les exemples vus jusqu'ici, \textit{Mathesis} est une oeuvre -- entre autres -- d'astrologie, et on a un extrait ici décrivant l'effet qu'a la pleine lune, se dirigeant de Mercure à Vénus, sur les hommes naissant pendant ce trajet. Tout le vocabulaire de la condamnation morale de l'excès de sexualité est présent: \textit{libidinosos, coitu venerio, uitiis}. %On pourrait même poser la question d'un choix volontaire de \textsc{pulso}, terme utilisé aussi pour les pulsions sexuelles (pulsations du sexe par exemple \textbf{A VERIFIER}). 
 Le texte n'est donc pas en soi difficile à classer, ni pour la machine, ni pour le lecteur humain.
 
+\starbreak
+
 \begin{quote}[\textit{Mercator}, 13]{Plaute}
-    \textit{ibi amare occepi forma eximia mulierem.} \\
+    \enquote{\textit{ibi amare occepi forma eximia mulierem.}} \\
     \enquote{Là, je commençais à aimer une femme à la beauté remarquable.}
 \end{quote}
 
@@ -1062,17 +1073,17 @@ Faux positif qui est bien un négatif, la classification effectuée par le modè
 \subsubsection{Attention et faux négatifs}
 
 \begin{quote}[\textit{Caligula}, 41, 2]{Suétone}
-    \textit{misit circum fora et basilicas nomenculatores ad inuitandos ad \textbf{libidinem} (20) iuuenes senesque;} \\
+    \enquote{\textit{misit circum fora et basilicas nomenculatores ad inuitandos ad \textbf{libidinem} (20) iuuenes senesque;}} \\
     \enquote{Il envoya des esclaves nomenclateurs à travers le forum et les lieux de promenades pour inviter jeunes et anciens à la débauche.}
 \end{quote}
 
 \begin{quote}[\textit{Horace, Satyres}, 1, 5, 100]{Porphyrion}
-    \textit{Vrbanissimum nomen Iudaeo inposuit ‘Apellan’ dicens , quasi quod pellem in parte \textbf{genitali} (19) Iudaei non habeant .} \\
+    \enquote{\textit{Vrbanissimum nomen Iudaeo inposuit ‘Apellan’ dicens , quasi quod pellem in parte \textbf{genitali} (19) Iudaei non habeant .}} \\
     \enquote{Il assigne un nom extrêmement spirituel au Juif en l'appelant ‘Apella’, sous prétexte que les juifs n'ont pas de peau sur les parties génitales. \footnote{Porphyrion fait ici un rapprochement entre une préfixation privative \textit{a-} et le mot ``pellis'' (peau) et le nom hébreux d'Apellas, pour justifier le jeu de mot d'Horace. \textcite{cordier2001romains}}}
 \end{quote}
 
 \begin{quote}[\textit{De Medicina}, 77]{Cassius Felix}
-    \textit{Sic enim \textbf{matrix} (14) poterit fetidis odoribus a superioribus ad inferiora fugari et loco proprio reuocari , cum melioribus et iocundis ad inferiores partes fuerit inuitata et prouocata.} \\
+    \enquote{\textit{Sic enim \textbf{matrix} (14) poterit fetidis odoribus a superioribus ad inferiora fugari et loco proprio reuocari , cum melioribus et iocundis ad inferiores partes fuerit inuitata et prouocata.}} \\
     \enquote{Car ainsi, la matrice pourra être l'objet de fuite d'odeurs fétides des parties supérieures vers les parties inférieures et être ramenée à un lieu propre (être ramenée à sa qualité de lieu propre ?) lorsque les parties vers le bas auront été invitées et excitées par de meilleures et plus agréables choses (odeurs ?).}
 \end{quote}
 
@@ -1086,17 +1097,17 @@ Dans le premier exemple, la sexualité n'y est pas présente par acte: on a bien
 
 Le problème n'est en tout cas pas du côté de l'attention, quel que soit l'extrait pris en compte ici. Les trois phrases ont leur mot le plus important entre 8 et 28 points au-dessus de la médiane des attentions. Le mécanisme est donc fonctionnel, d'autant que pour la distance la plus basse (Cassius Felix), il s'agit aussi de la phrase la plus longue (et mécaniquement d'une dilution de l'attention). Il s'agit donc d'un problème dans l'encodeur, une fois l'attention appliquée, ou de la couche de décision.
 
+\starbreak
 
 \begin{quote}[\textit{Casina}, 963]{Plaute}
-    \textit{nunc tu si vis \textbf{subigitare} (17) me, probast occasio.} \\
+    \enquote{\textit{nunc tu si vis \textbf{subigitare} (17) me, probast occasio.}} \\
     \enquote{Maintenant, si tu veux me caresser, c'est le bon moment.}
 \end{quote}
 
 \textit{Subigito} (\textit{Gaffiot}: caresser, solliciter; \textit{Adams}: \textit{make advances to, lay hands on}\footcite[p. 323]{adams_prostitute}) est un cas complexe, y compris dans son interprétation par J. N. Adams. Pour ce passage, on vient d'assister à une ruse ayant eu pour conséquence la rencontre sexuelle de deux hommes dans le noir, eux qui croyaient retrouver une jeune femme dans l'intimité d'une chambre. D'après J. N. Adams, Plaute utilise parfois le verbe ``dans un sens sexuel, mais léger''. Hors contexte ou en contexte, le doute reste permis sur le sens des caresses mentionnées, bien que les moeurs marseillaises -- \textit{a priori} liées à l'homosexualité masculine -- mentionnées au vers précédent, la mention de la chambre et la scène antérieure nous poussent à croire à des caresses sexuelles. La phrase est classée positivement deux fois, dix-huit fois négativement avec \textit{subigito} en rang 1 dix-sept fois (25 points d'attention en moyenne) et le point final une fois.
 
+\starbreak
 
-% Martial, 0 Siècle (urn:cts:latinLit:phi1294.phi002.perseus-lat2)
-% 
 \begin{quote}[\textit{Épigrammes}, 11, 51]{Martial}
 \textit{Tanta est quae Titio columna pendet , Quantam Lampsaciae colunt \textbf{puellae} (15) .}\\
 \enquote{La colonne qui pend à Titius est si grande que les jeunes filles de Lampsaque la vénèrent.}
@@ -1104,24 +1115,25 @@ Le problème n'est en tout cas pas du côté de l'attention, quel que soit l'ext
 
 Pour cette phrase, l'attention médiane est portée presque uniquement sur la consécutive (score médian d'attention entre parenthèses: \textit{Quantam (7,2) Lampsaciae (10,3) colunt (11,8) puellae (20,0) . (13,2)}) tandis que le mot central, \textit{columna}, bien qu'utilisé figurativement et très clair en termes de représentation, est assez largement ignoré par le mécanisme (médiane de 5 d'attention). La métaphore de la colonne n'est que peu présente dans notre set (Martial, 6, 49, 1; \textit{Priapées}, 10, 7) et celle des objets ``pointus'' en général aussi (38 occurrences, principalement des armes). Cette méconnaissance du domaine et le difficile rapprochement ont dû faire naître l'impossibilité pour le modèle de comprendre la portée de cette ``colonne''. On notera  tout de même que la question des jeunes filles ``intriguent'', si l'on peut dire ainsi, l'attention dans cette classification.
 
+\starbreak
+
 \begin{quote}[11, 51]{Pétrone}
-    \textit{Ego sic perire coepi\textbf{.} (15)}\\
+    \enquote{\textit{Ego sic perire coepi\textbf{.} (15)}}\\
     \enquote{Et c'est ainsi que, moi, je commençai à mourir.}
 \end{quote}
 
 \begin{quote}[\textit{Satyricon}, 130]{Pétrone}
-    \textit{Paratus miles arma non habui\textbf{.} (13)} \\
+    \enquote{\textit{Paratus miles arma non habui\textbf{.} (13)}} \\
     \enquote{Prêt comme un soldat, des armes, je n'en avais pas.}
 \end{quote}
 
 \begin{quote}[\textit{Amours}, 3, 4, 4]{Ovide}
-    \textit{Quae, quia non liceat, non facit, illa facit \textbf{!} (14) }\\
+    \enquote{\textit{Quae, quia non liceat, non facit, illa facit \textbf{!} (14) }}\\
     \enquote{Celle qui ne fait pas, parce que c'est interdit, elle le fait !}
 \end{quote}
 
-
 \begin{quote}[\textit{Épigrammes}, 104, 9]{Ausone}
-    \textit{tergum, colla, umeros, luteae Symplegadis antrum\textbf{.} (13) } \\
+    \enquote{\textit{tergum, colla, umeros, luteae Symplegadis antrum\textbf{.} (13) }} \\
     \enquote{Son dos, son cou, ses épaules, son antre boueuse des Symplégades}
 \end{quote}
 
@@ -1133,8 +1145,10 @@ Chez Ovide, le problème est le même que le premier extrait de Pétrone. Si \te
 
 Pour le dernier extrait, deux problèmes se posent. D'une part, l'extrait est incomplet, très court, recopié tel qu'il fut cité par Adams, bien qu'il soit cité plusieurs fois\footcite[pp.114, 172 et 240]{adams}. Ici, ce sont les Symplégades -- deux falaises se faisant face et pouvant rappeler deux fesses dans l'esprit de l'auteur --, ``l'antre'' et le caractère boueux qui induisent une lecture sexuelle, mais cette métaphore \textit{ad-hoc}, reprise de chez Martial\footnote{\textit{sic {[tunicae]} constringuntur magni Symplegade culi} (Ainsi tes tuniques sont resserrées par les Symplégades jumelles de ton cul.), Martial, 11.99.5.}, est probablement l'une des plus difficiles à comprendre pour le modèle. Le contexte aide un peu dans la mesure où l'épigramme mentionne clairement au vers précédent un \textit{prurignis obscenae} (fr. démangeaison obscène) et avant encore des \textit{lascivos coetus meretricum} (fr. unions lascives de prostituées), mais les co-occurrents des Symplégades, \textit{antrum lutae}, restent plus compréhensibles que la métaphore topologique.
 
+\starbreak
+
 \begin{quote}[37, 9]{Catulle}
-    \textit{namque totius vobis frontem tabernae sopionibus scribam\textbf{.} (11)} \\
+    \enquote{\textit{namque totius vobis frontem tabernae sopionibus scribam\textbf{.} (11)}} \\
     \enquote{Et de fait, je ferai des tags de queues (bites ?) sur le fronton de toute votre taverne.}
 \end{quote}
 
@@ -1203,15 +1217,15 @@ Au contraire, la distribution des phrases positives erronées est beaucoup plus 
 (17) ``Voilà, malheureuse, je suis morte, de quelle péniche me parles-tu maintenant ?''
 \end{quote}
 
-
 Dans cette première catégorie des phrases impossibles, on retrouve les phrases 3, 13, 14 et 16 dont nous avions parlé précédemment. S'ajoutent à celles-ci trois phrases, la 10, la 15 et la 17. 
 
 La phrase 15, issue de l'\textit{Epithalame} de Claudien, fait référence au \textit{munus}, le devoir conjugal. Mais, à côté de la notion de concorde, les sens plus généraux du mot (charge, obligation, office) liés à la fonction sociale ou étatique ne sauraient être exclus sans avoir accès au reste du texte. Si J. N. Adams la classe ainsi\footcite[p.~161]{adams}, c'est surtout grâce à son contexte: il est fait référence entre autres à \enquote{\textit{oscula mille}} (``mille baisers'', vers 142) et du passage du statut de femme à celui de mère (\enquote{Ainsi tu seras épouse, ainsi tu seras mère.}, vers 148\footnote{\enquote{\textit{sic uxor, sic mater eris.}}}): l'isotopie apparait à travers la récurrence des sèmes du mariage, de l'acte sexuel et de la reproduction, en dehors de l'extrait lui-même. 
 
 Les deux autres posent des problèmes, y compris en contexte. Pour l'extrait d'Ovide, le doute autour du sens sexuel possible de \textit{iungo} ou de \textit{nubo} n'est pas levé par une lecture ``manuelle'' du texte, sachant que cette classification n'est pas issue du travail d'Adams, mais de celui du TLL, dont la mise en forme peut parfois porter à confusion\footnote{TLL, VII.2.65860ff}. Dans cette \textit{Héroïde 20}, les vers qui précèdent le 215 mettent en scène une mise à nu orchestré par le divin, mais ceux qui suivent font bien usage du lexique du mariage (``\textit{gener} (gendre)'' au vers 216, ``\textit{maritum} (mari)'' au vers 227). Il est difficile alors de pencher pour l'un ou pour l'autre des sens avec une assurance sans faille. Il est possible que le sous-entendu sexuel existe dans \textit{nubo}, mais il nous semble plus probable qu'il soit lointain et assez faible, comparé par exemple à la situation de \textit{munus} plus haut. Pour la dernière, issue des \textit{Ménechmes}, même Adams n'est pas tout à fait convaincu: ici, trois ouvrages, dont le \textit{Lewis and Short}, donnent le sens de sexe féminin à \textit{navem} (bateau, navire, traduit par péniche plus haut)\footcite[p~.89, note 1]{adams}. Il nous semble aussi difficile de soutenir cette analyse, peu de faisceaux en contexte nous permettant d'établir un double sens ici.
 
+\starbreak
 
-Cinq phrases nous semblent rentrer dans une catégorie ``compréhensible'': le contexte assure une confirmation du sens, mais il est possible de déceler des indices sans son aide.
+Six phrases nous semblent rentrer dans une catégorie ``compréhensible'': le contexte assure une confirmation du sens, mais il est possible de déceler des indices sans son aide.
 
 \begin{quote}[\textit{De Rerum Natura}, 3, 1056]{Lucrèce}
     (1) \enquote{semer dans un corps le liquide tiré de son corps}
@@ -1222,6 +1236,7 @@ Cinq phrases nous semblent rentrer dans une catégorie ``compréhensible'': le c
 \end{quote}
 
 La première est celle de Lucrèce 1). \textit{Jacio} n'est pas utilisé seulement chez Lucrèce en ce sens de semer (le \textit{Gaffiot} donne Virgile, \textit{Géorgiques}, 1, 104). \textit{Humor} n'est pas particulièrement réservé aux fluides génitaux, mais il n'existe pas beaucoup de fluides censés passer d'un corps à un autre: on comprend alors facilement la difficulté de la machine à comprendre et savoir cela. De même, dans la phrase (5) de Catulle, l'idée du jeu (\textit{ludite}) et donc de /plaisir/ alliée à celle des enfants (\textit{liberos}) et de leur /production/ (\textit{date}, littéralement ``donnez'') ne laisse pas beaucoup d'espace au doute pour le lecteur qui s'attend à ce sujet. La relation syntaxique des termes semble nécessaire à comprendre l'isotopie: la relation cause-conséquence induite par la coordination jouer/donner, la relation verbe-objet (donner + enfants), et le modèle n'arrive pas, avec ses informations, à détecter celles-ci.
+
 
 \begin{quote}[\textit{Amphitrion}, 809-810]{Plaute}
 	(4) ``Amph. Malheureux, je suis mort, parce qu’en plus, alors que j’étais loin d’ici, la pudeur lui a fait défaut !''
@@ -1240,7 +1255,9 @@ La première est celle de Lucrèce 1). \textit{Jacio} n'est pas utilisé seuleme
 	(8) ``Comment – pendant cette action dégradante – ne te venait pas à l’esprit l’habit virginal, la procession dans l’Église entre les choeurs virginaux ?''
 \end{quote}
 
-Pour les trois autres phrases, des termes précis, communs à nos exemples, sont mentionnés: \textit{pudicitia} (pudeur), \textit{vitium} (vice), \textit{turpia}, et les différents dérivés de la virginité. Les jeux honteux, l'absence de pudeur, l'action dégradante (la perte de virginité) sont autant de faits qui ne laissent pas de doute. Il est intéressant de voir que ce sont les modèles ``classiques'', sans enrichissement, qui butent systématiquement sur ces phrases, là où les modèles enrichis arrivent à les prédire au moins quelques fois.
+Pour les quatre autres phrases, des termes précis, communs à nos exemples, sont mentionnés: \textit{pudicitia} (pudeur), \textit{vitium} (vice), \textit{turpia}, et les différents dérivés de la virginité. Les jeux honteux, l'absence de pudeur, l'action dégradante (la perte de virginité) sont autant de faits qui ne laissent pas de doute. Il est intéressant de voir que ce sont les modèles ``classiques'', sans enrichissement, qui butent systématiquement sur ces phrases, là où les modèles enrichis arrivent à les prédire au moins quelques fois.
+
+\starbreak
 
 \begin{quote}[33, 2]{\textit{Priapées}}
     (9) Les Priapes d’autrefois avaient Naïades et Dryades, Et il y avait de quoi faire monter une veine tendue de dieu !

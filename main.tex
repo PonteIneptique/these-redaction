@@ -44,9 +44,12 @@
 
 \lstset{
   basicstyle=\ttfamily,
-  columns=fullflexible,
   showstringspaces=false,
-  commentstyle=\color{gray}\upshape
+  commentstyle=\color{gray}\upshape,
+  columns=fullflexible,
+%  frame=single,
+  breaklines=true,
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}
 }
 
 \lstdefinelanguage{XML}
@@ -70,6 +73,11 @@
 \addbibresource{bibliography/4-classification.bib}
 \addbibresource{bibliography/annexes.bib}
 
+\newcommand{\starbreak}{%
+    \begin{center}%
+    $\ast$~$\ast$~$\ast$%
+    \end{center}%
+}
 %\title{Dire la sexualité  : "une étude lexicographique par apprentissage profond"}
 \title{Détection d'isotopies par apprentissage profond: l'exemple de la sexualité en latin classique et tardif}
 \author{Thibault Clérice}
@@ -77,8 +85,8 @@
 
 \makeglossaries
 
-\newcommand{\newpara} {
-    \vskip 0.5cm
+\newcommand{\newpara}{%
+    \vskip 0.5cm %
 }
 
 \onehalfspacing
@@ -101,8 +109,7 @@
 
 \titleformat{\paragraph}
 {\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
-\titlespacing*{\paragraph}
-{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
 \begin{document}
 
