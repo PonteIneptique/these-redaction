@@ -25,7 +25,7 @@ Il faut noter que les études classiques ont fait usage de la lemmatisation avan
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=10cm]{results/lemmatisation/histoire/concordanciers.png}
+    \includegraphics[width=10cm]{figures/chap3/histoire/concordanciers.png}
     \caption{Accumulation par dates de concordanciers conservés à la Bibliothèque Nationale de France d'après une recherche sur le catalogue général.}
     \label{lemmatisation:concordanciers}
 \end{figure}
@@ -53,7 +53,7 @@ Pour prendre en compte ce voisinage des mots analysés, on a généralement donn
 \begin{figure}[h]
     \centering
     \resizebox{\textwidth}{!}{%
-    \includegraphics{results/lemmatisation/histoire/floating-point-operations-per-second.png}%
+    \includegraphics{figures/chap3/histoire/floating-point-operations-per-second.png}%
     }
     \caption{Opération à virgule flottante par seconde (FLOPS) entre processeur traditionnel (CPU) et de carte graphique (GPU). Source: \cite{noauthor_cuda_nodate}}
     \label{lemmatisation:histoire:puissance-gpu}
@@ -71,7 +71,7 @@ Dès 1965 et la création du LASLA donc, L. Delatte et É. Evrard cherchent à a
 \begin{figure}[h]
     \centering
     \resizebox{\textwidth}{!}{%
-    \includegraphics{results/lemmatisation/outils/CollatinusDB.png}%
+    \includegraphics{figures/chap3/outils/CollatinusDB.png}%
     }
     \caption{Modèles de données dans Collatinus. Les formes sont générées et analysées à partir des flexions et radicaux, en fonction du modèle. }
     \label{lemmatisation:outils:collatinusDB}
@@ -80,7 +80,7 @@ Dès 1965 et la création du LASLA donc, L. Delatte et É. Evrard cherchent à a
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=6cm]{results/lemmatisation/outils/collatinus.png}
+    \includegraphics[width=6cm]{figures/chap3/outils/collatinus.png}
     \caption{Algorithme simplifié de Collatinus}
     \label{lemmatisation:outils:collatinusAlgorythme}
 \end{figure}
@@ -93,7 +93,7 @@ Au milieu des années 90, mais surtout au début des années 2000 apparaissent l
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\linewidth]{results/lemmatisation/outils/treetagger_type.png}
+    \includegraphics[width=\linewidth]{figures/chap3/outils/treetagger_type.png}
     \caption{Type de fonctionnement des outils de l'époque Treetagger. Une seule représentation des données est prise en compte au moment "d'un seul" calcul. Il s'agit principalement de modèles statistiques basés sur des probabilités d'apparition de phénomènes.}
     \label{lemmatisation:outils:type-treetagger}
 \end{figure}
@@ -107,7 +107,7 @@ En 2016\footcite{kestemont_initial_2016}, Mike Kestemont propose une première v
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\linewidth]{results/lemmatisation/outils/Pie.png}
+    \includegraphics[width=\linewidth]{figures/chap3/outils/Pie.png}
     \caption{Représentation simplifiée de Pie. L'encodeur n'est utilisé que pour les classifications de mots et à l'entraînement comme support d'entraînement supplémentaire. Lettre par lettre, le lemmatiseur traduit la forme en un lemme. Bien que noté \textit{Embeddings}, le module de projection des caractères prend la forme au choix de CNN ou de RNN en plus d'une couche réelle d'\textit{Embeddings} classiques}
     \label{lemmatisation:outils:pie}
 \end{figure}
@@ -147,7 +147,7 @@ LASLA   & \textbf{1~630~825} & Non                  & \textbf{18}               
 Le corpus du LASLA, qui sera retenu de par sa taille et de par sa diversité, est un corpus dont nous avons précédemment parlé et dont la constitution a commencé dans les années 1960\footcites{delatte_laboratoire_1961}{BodsonCodification1966}. Contrairement aux autres, il ne possède aucun texte à partir du 2\up{e} siècle de notre ère, ce qui en fait sa plus grande faiblesse. L'apprentissage machine reposant principalement sur le nombre de données et leur variété, il n'était pas envisageable d'utiliser une autre source que celle produite par les philologues belges. Par ailleurs, des essais en début de thèse nous avaient prouvé l'incapacité des modèles à prédire des résultats très fiables à partir des données de \textit{Perseus} ou de \textit{Proiel}: à cause de la taille beaucoup trop faible de \textit{Perseus}, le modèle ne s'entraînait pas assez, tandis qu'à cause des données peu variées de \textit{PROIEL}, il ne connaissait que la \textit{Vulgate} et quelques mots de Cicéron.
 
 \begin{figure}
-    \includegraphics[width=\linewidth]{results/lemmatisation/corpus/tokens_per_year.png}
+    \includegraphics[width=\linewidth]{figures/chap3/corpus/tokens_per_year.png}
     \caption{Tokens accumulés, par année, en fonction des corpus latins bruts accessibles en \textit{open access} (\textit{Capitains}) ou du nombre estimé  par le \textit{Perseus Catalog}.}
     \label{fig:lemmatisation:corpus-entrainement}
 \end{figure}
@@ -344,7 +344,7 @@ Ces particularités demandent un prétraitement important qui a pu varier en fon
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=\textwidth]{results/lemmatisation/entrainement/TrainingDuration96BoxPlot.png}
+    \includegraphics[width=\textwidth]{figures/chap3/entrainement/TrainingDuration96BoxPlot.png}
     \caption{Durée d'entraînement des modèles. Les populations sont les suivantes: (Étape 1, Complète) 50, (Étape 1, Interrompue) 44, (Étape 2, Complète) 11, (Étape 2, Interrompue) 19, (Étape 3, Complète) 11, (Étape 3, Interrompue) 10.}
     \label{fig:lemmatisationTrainingTime}
 \end{figure}
@@ -358,7 +358,7 @@ Une fois les paramètres supposément optimaux trouvés, on peut lancer une batt
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.7\textwidth]{results/lemmatisation/entrainement/Variance.png}
+    \includegraphics[width=0.7\textwidth]{figures/chap3/entrainement/Variance.png}
     \caption{Distribution des écarts-types d'\textit{accuracy} sur la tâche lemme pour 18 configurations de modèles d'entraînement sur 5 entraînements chacun. On estime alors que les modèles peuvent se retrouver, en cas de distribution parfaite, dans une intervalle de résultats d'environ 0,3\%. Pour plus de détails, \textit{cf.} figure \ref{fig:training_variation_per_model} en annexe.}
     \label{fig:training_variation}
 \end{figure}
@@ -390,10 +390,10 @@ En fin d'expérimentation, un nouvel algorithme chargé de conduire l'apprentiss
 \begin{figure}[ht]
     \hspace*{-0.05\linewidth}
     \begin{minipage}[c]{0.55\linewidth}
-        \includegraphics[width=1\linewidth]{results/lemmatisation/entrainement/boxplot_accuracy_ranger.png}
+        \includegraphics[width=1\linewidth]{figures/chap3/entrainement/boxplot_accuracy_ranger.png}
     \end{minipage} \hfill
     \begin{minipage}[c]{0.55\linewidth}
-        \includegraphics[width=1\linewidth]{results/lemmatisation/entrainement/boxplot_time_ranger.png}
+        \includegraphics[width=1\linewidth]{figures/chap3/entrainement/boxplot_time_ranger.png}
     \end{minipage}
     \caption{Comparaison des résultats en fonction des optimiseurs, en temps (heure) et en \textit{accuracy}, sur trois couples: \textit{Adam/RLR} étant le système de base de \textit{pie}, \textit{Adam/CosDelayed} utilisant Adam avec un délai d'utilisation de \textit{CosineAnnealing}, Ranger/CosDelayed reprenant ce système avec \textit{Ranger} à la place d'\textit{Adam}. }
     \label{fig:lemmatisation:optimiseur:ranger}
@@ -496,7 +496,7 @@ Mood\_Tense\_Voice &     96,1 &    97,7                   &   87,0   &    92,3  
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.7\linewidth]{results/lemmatisation/extensibilite/PriapeaBoxPlot.png}
+    \includegraphics[width=0.7\linewidth]{figures/chap3/extensibilite/PriapeaBoxPlot.png}
     \caption{Variation des taux d'erreur sur l'ensemble du corpus des \textit{Priapées}}
     \label{fig:priapea_varations_boxplot}
 \end{figure}
@@ -509,7 +509,7 @@ Dans un premier temps, nous proposons de regarder quelles POS posent un problèm
 
 \begin{figure}
     \centering
-    \includegraphics[width=1\linewidth]{results/lemmatisation/extensibilite/LatinTardifPosErrorBoxPlot.png}
+    \includegraphics[width=1\linewidth]{figures/chap3/extensibilite/LatinTardifPosErrorBoxPlot.png}
     \caption{Responsabilité des POS dans les erreurs du lemmatiseur sur le corpus tardif.}
     \label{fig:latin_tardif_error_pos}
 \end{figure}
@@ -713,10 +713,10 @@ Par exemple, en figure \ref{fig:lemmatisation:longree:poetes}, le nombre de bonn
 \begin{figure}[ht]
     \hspace*{-0.05\linewidth}
     \begin{minipage}[c]{0.55\linewidth}
-        \includegraphics[width=1\linewidth]{results/lemmatisation/longreeVariante/LongreeVariante-AccuracyStyleDePoesie-Lemme.png}
+        \includegraphics[width=1\linewidth]{figures/chap3/longreeVariante/LongreeVariante-AccuracyStyleDePoesie-Lemme.png}
     \end{minipage} \hfill
     \begin{minipage}[c]{0.55\linewidth}
-        \includegraphics[width=1\linewidth]{results/lemmatisation/longreeVariante/LongreeVariante-AssocPlotStyleDePoesie-Lemme.png}
+        \includegraphics[width=1\linewidth]{figures/chap3/longreeVariante/LongreeVariante-AssocPlotStyleDePoesie-Lemme.png}
     \end{minipage}
     \caption{\textit{Accuracy} en lemme de modèles entraînés sur des poètes avec leurs résidus de Pearson}
     \label{fig:lemmatisation:longree:poetes}
@@ -729,10 +729,10 @@ Les corpus d'entraînement des auteurs Virgile et Ovide ont un effet net (r=49 e
 \begin{figure}[ht]
     \hspace*{-0.05\linewidth}
     \begin{minipage}[c]{0.55\linewidth}
-        \includegraphics[width=1\linewidth]{results/lemmatisation/longreeVariante/LongreeVariante-AccuracyStyleDAuteurStyleDeGenre-Lemme.png}
+        \includegraphics[width=1\linewidth]{figures/chap3/longreeVariante/LongreeVariante-AccuracyStyleDAuteurStyleDeGenre-Lemme.png}
     \end{minipage} \hfill
     \begin{minipage}[c]{0.55\linewidth}
-        \includegraphics[width=1\linewidth]{results/lemmatisation/longreeVariante/LongreeVariante-AssocPlotStyleDAuteurStyleDeGenre-Lemme.png}
+        \includegraphics[width=1\linewidth]{figures/chap3/longreeVariante/LongreeVariante-AssocPlotStyleDAuteurStyleDeGenre-Lemme.png}
     \end{minipage}
     \caption{Accuracy en lemme de modèles avec leurs résidus de Pearson: les corpus d'entraînements ont été élaborés pour permettre d'identifier l'importance de l'auteur et du genre en termes de lemmatisation.}
     \label{fig:lemmatisation:longree:auteurVSforme}
@@ -744,8 +744,8 @@ Dans cette étude, deux prosateurs font face à la prose de Sénèque sous deux 
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.7\linewidth]{results/lemmatisation/longreeVariante/LongreeVariante-AccuracyModeDExpression-Lemme.png}
-    \includegraphics[width=0.7\linewidth]{results/lemmatisation/longreeVariante/LongreeVariante-AssocPlotModeDExpression-Lemme.png}
+    \includegraphics[width=0.7\linewidth]{figures/chap3/longreeVariante/LongreeVariante-AccuracyModeDExpression-Lemme.png}
+    \includegraphics[width=0.7\linewidth]{figures/chap3/longreeVariante/LongreeVariante-AssocPlotModeDExpression-Lemme.png}
     \caption{\textit{Accuracy} en lemme de modèles avec leurs résidus de Pearson: chaque corpus est formé uniquement de prose ou de vers.}
     \label{fig:lemmatisation:longree:proseVSvers}
 \end{figure}
@@ -756,8 +756,8 @@ Avec la troisième expérience, le corpus double en taille, mais présente déso
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.7\linewidth]{results/lemmatisation/longreeVariante/LongreeVariante-AccuracyDiversiteDAuteursContreDiversiteDAuteur-Lemme.png}
-    \includegraphics[width=0.7\linewidth]{results/lemmatisation/longreeVariante/LongreeVariante-AssocPlotDiversiteDAuteursContreDiversiteDAuteur-Lemme.png}
+    \includegraphics[width=0.7\linewidth]{figures/chap3/longreeVariante/LongreeVariante-AccuracyDiversiteDAuteursContreDiversiteDAuteur-Lemme.png}
+    \includegraphics[width=0.7\linewidth]{figures/chap3/longreeVariante/LongreeVariante-AssocPlotDiversiteDAuteursContreDiversiteDAuteur-Lemme.png}
     \caption{Analyse de l'efficacité d'un grand corpus d'auteur contre une diversité de styles (\textit{Accuracy} en lemme et résidu de Pearson)}
     \label{fig:lemmatisation:longree:divAuteursVSTailleAuteur}
 \end{figure}

@@ -162,7 +162,7 @@ En 2011 et 2012, David Bamman, avec G.~Crane\footcite{Bamman:2011:MHW:1998076.19
 
 \begin{figure}
     \centering
-    \includegraphics[width=.8\linewidth]{figures/ocrSycophant.png}
+    \includegraphics[width=.8\linewidth]{figures/chap1/part1/ocrSycophant.png}
     \caption{Récapitulatif de la chaîne de traitement appliquée sur Archive.org}
     \label{fig:chap1:workflow-sycophant}
 \end{figure}
@@ -322,7 +322,7 @@ Quiconque a segmenté les textes, auteurs ou éditeurs, a fourni des information
 
 \begin{figure}
     \centering
-    \includegraphics[height=3cm]{figures/chap1/cts-urn.drawio.png}
+    \includegraphics[height=3cm]{figures/chap1/part2/cts-urn.drawio.png}
     \caption{Déconstruction d'un identifiant CTS équivalent au \enquote{Martial, 2, 73}: \texttt{urn:cts:latinLit:phi1294.phi002.perseus-lat2:2.73}}
     \label{fig:chap1:cts_urn}
 \end{figure}
@@ -408,11 +408,11 @@ for text in resolver.texts:
         # Traitement du texte
 \end{lstlisting}
 
-Avec la complexité que représentent l'encodage des structures logiques de citation, leur interprétation dynamique par des logiciels tiers et les restrictions produites par les recommandations CTS, la constitution de corpus Capitains est plus à même de contenir des erreurs d'encodage que ne sauraient détecter de simples schémas XML. À travers la TEI comme les \textit{guidelines} Capitains, le texte devient un programme: il est donc capable de contenir des bugs, qui sont de l'ordre de la gestion technique de la donnée, à côté de problèmes d'usages, qui relèvent de la gestion qualitative de la donnée. Nous avons donc introduit des outils de contrôle pour cet encodage particulier qui, en testant automatiquement ce dernier, simplifie la validation \enquote{technique} et laisse ainsi le loisir de s'intéresser principalement à la qualité de ce dernier. C'est pourquoi l'ensemble des textes Capitains peuvent être validés par un outil appelé \textit{HookTest}. Cet outil, en plus d'intégrer des tests de schémas TEI, vérifie que chacun des systèmes de déclaration (1) corresponde à des passages uniques, (2) ne croise pas un autre système de citation, (3) ne produise pas de conflit d'identifiants.
+Avec la complexité que représentent l'encodage des structures logiques de citation, leur interprétation dynamique par des logiciels tiers et les restrictions produites par les recommandations CTS, la constitution de corpus Capitains est plus à même de contenir des erreurs d'encodage que ne sauraient détecter de simples schémas XML. À travers la TEI comme les \textit{guidelines} Capitains, le texte devient un programme: il est donc capable de contenir des bugs, qui sont de l'ordre de la gestion technique de la donnée, à côté de problèmes d'usages, qui relèvent de la gestion qualitative de la donnée. Nous avons donc introduit des outils de contrôle pour cet encodage particulier qui, en testant automatiquement ce dernier, simplifie la validation \enquote{technique} et laisse ainsi le loisir de s'intéresser principalement à la qualité de ce dernier. C'est pourquoi l'ensemble des textes Capitains peuvent être validés par un outil appelé \textit{HookTest}. Cet outil, en plus d'intégrer des tests de schémas TEI, vérifie que chacun des systèmes de déclaration (1) corresponde à des passages uniques, (2) ne croise pas un autre système de citation, (3) ne produise pas de conflit d'identifiants (\textit{cf.} figure \ref{fig:annx:digiliblt-hooktest} en annexe).
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{figures/chap1/capitains.png}
+    \includegraphics[width=\textwidth]{figures/chap1/part2//capitains.png}
     \caption{Mode de fonctionnement de \textit{Capitains}. \textit{MyCapytain} est une brique commune  l'ensemble des programmes python du monde \textit{Capitains}, elle permet de faire fonctionner autant \textit{HookTest} que \textit{Nautilus}, l'application derrière les serveurs de textes de \textit{Perseus}.}
     \label{fig:chap1:Capitains}
 \end{figure}
@@ -434,7 +434,7 @@ Un cas particulier de conversion pour le corpus\textit{ Canonical Latin Literatu
 
 Outre le corpus original \textit{Canonical Latin Literature}, Perseus et le projet \textit{Open Greek and Latin} ont mis à disposition deux autres corpus: le CSEL et la PL. Ces deux derniers ont la particularité d'être des corpus extrêmement récents dans l'histoire de Perseus, produits majoritairement via OCR et dont la structuration en XML TEI a été externalisée à une entreprise n'étant pas formée de latinistes ou d'hellénistes mais d'encodeurs de documents administratifs. Cette méthodologie de production de données a engendré deux grands problèmes. D'une part, l'OCR peut présenter des erreurs, anodines souvent, particulièrement problématiques pour notre étude parfois. On notera par exemple l'erreur répétée de segmentation d'\textit{oraculus} en deux mots (\textit{ora} et \textit{culus}) suite à la non résolution d'une hyphénation qui n'avait plus lieu d'être dans le document XML, mais aussi de \textit{sae-culum}, d'\textit{o-culus}, de \textit{claui-culus}, \textit{taberna-culum}, etc\footnote{Quelle ne fut pas notre surprise quand nous trouvions, par moteur de recherche, un grand nombre d'emploi de \textsc{culus} chez Augustin d'Hippone.}. D'autre part, l'encodage des structures logiques de citation a pu poser des problèmes, car sa formalisation typographique peut fluctuer d'une impression à l'autre, d'autant plus sur des périodes de productions comme celle de la CSEL (plus d'un siècle), et il peut être difficile de faire la différence entre un numéro de ligne, un numéro de section, etc. Cette reproduction de l'information demande alors à la fois une compréhension des mécanismes d'édition et de langues, afin de séparer les identifiants de section du texte: il ne s'agit pas seulement de reconnaître les sauts de lignes qui sont des vers ou des changements de paragraphes, mais aussi le rôle du paratexte qui les accompagne.
 
-La constitution de ces corpus a aussi eu le malheur d'avoir lieu pendant la formalisation des \textit{guidelines} Capitains. Il a donc fallu, après la réception des données, non seulement reprendre les structures logiques mais aussi intégrer les informations requises pour leur exploitation. Ce travail était achevé pour la CSEL au cours de l'année 2017 par Matt Munson, encore employé de Leipzig. Cependant, ce travail ne fut jamais achevé depuis 2017, laissant le corpus de la PL \enquote{en friche} du point de vue de sa compatibilité avec les outils de l'écosystème \textit{Perseus}. Cet abandon du corpus, au moins momentanné, est un exemple supplémentaire du changement politique et économique de la production de corpus de Perseus. Le projet \textit{First Thousand Years of Greek} du CHS finance plus, les textes de la patrologie latine sont disponibles par ailleurs sur d'autres plate-formes: le projet change de priorités de production de corpus.
+La constitution de ces corpus a aussi eu le malheur d'avoir lieu pendant la formalisation des \textit{guidelines} Capitains. Il a donc fallu, après la réception des données, non seulement reprendre les structures logiques mais aussi intégrer les informations requises pour leur exploitation. Ce travail était achevé pour la CSEL au cours de l'année 2017 par Matt Munson, encore employé de Leipzig. Cependant, ce travail ne fut jamais achevé depuis 2017, laissant le corpus de la PL \enquote{en friche} du point de vue de sa compatibilité avec les outils de l'écosystème \textit{Perseus}. Cet abandon du corpus, au moins momentanné, est un exemple supplémentaire du changement politique et économique de la production de corpus de Perseus. Le projet \textit{First Thousand Years of Greek} du CHS finance plus, les textes de la patrologie latine sont disponibles par ailleurs sur d'autres plate-formes: le projet change de priorités de production de corpus. Un seul corpus supplémentaire est né pendant depuis 2017 en latin: le corpus OGL/Latin. Il contenait deux textes au moment de la compilation du corpus.
 
 CSEL et canonical-latinLit mis ensemble, le corpus représente environ douze millions de mots, dont les épicentres thématiques et chronologiques sont respectivement les pères de l'Église de l'antiquité tardive et la littérature classique de la Rome pré-chrétienne. Il reste alors, en vue des périodes traitées par Adams, en plus de quelques textes non convertis chez Perseus, trois secteurs qui ne sont pas adressés:
 
@@ -444,24 +444,87 @@ CSEL et canonical-latinLit mis ensemble, le corpus représente environ douze mil
     \item la littérature de la période classique peu connue ou peu étudiée avant le master: Perseus se concentre d'abord historiquement sur les corpus les plus communs pour rendre leur accès plus facile. 
 \end{enumerate}
 
-Pour le second secteur comme pour le troisième, la règle principale pour l'incorporation de texte au meta-corpus a été leur mention par Adams dans son ouvrage: tout texte dans les bornes chronologiques mentionnées -- c'est-à-dire avant la mort d'Isidore de Séville -- a fait l'objet d'une recherche d'une édition numérique dans un corpus tiers. Dans le cas où le code pour la conversion d'une édition XML-TEI, HTML ou plein texte était facilement réutilisable pour convertir d'autres oeuvres similaires d'un même site, nous ajoutions à l'oeuvre mentionnée par Adams les oeuvres similaires convertissables à bas coût. Ces conversions ont été mises à disposition dans deux corpus distincts: pour les oeuvres du projet DigilibLT, corpus encore en production et centré sur un des angles morts des corpus Perseus, la littérature tardive non chrétienne, un corpus DigilibLT-Capitains a été mis en développement par nos soins; pour les autres oeuvres, issues de sources diverses, un corpus sobrement nommé \enquote{\textit{Lasciva Roma - Additionnal Texts}} a vu le jour.
+Pour le second secteur comme pour le troisième, la règle principale pour l'incorporation de textes au meta-corpus a été leur mention par Adams dans son ouvrage: tout texte dans les bornes chronologiques mentionnées -- c'est-à-dire avant la mort d'Isidore de Séville -- a fait l'objet d'une recherche d'une édition numérique dans un corpus tiers. Dans le cas où le code pour la conversion d'une édition XML-TEI, HTML ou plein texte était facilement réutilisable pour convertir d'autres oeuvres similaires d'un même site, nous ajoutions à l'oeuvre mentionnée par Adams les oeuvres similaires convertissables à bas coût. Ces conversions ont été mises à disposition dans deux corpus distincts: pour les oeuvres du projet \textit{DigilibLT}, projet encore actif et centré sur un des angles morts des corpus Perseus, la littérature tardive non chrétienne, un corpus miroir \textit{DigilibLT-Capitains}\footcite{Clerice_Digital_Latin_Library_2021} a été mis en développement par nos soins; pour les autres oeuvres, issues de sources diverses (\textit{cf.} table \ref{tab:chap1:corpusutilises}), un corpus sobrement nommé \enquote{\textit{Lasciva Roma - Additionnal Texts}}\footcite{Clerice_Corpora_of_rare_2021} a vu le jour. Le premier compte 103 textes\footnote{sur 216 téléchargés de \textit{DigilibLT}} et 2,8 millions de mots, le second 134 textes et 3,8 millions.
+
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lr}
+        \toprule
+        Corpus numérique ou édition numérique utilisée & Fréquence \\
+        \midrule
+         OBI\footnotemark            & 73 \\
+         Lacus Curtius\footnotemark         & 18 \\
+         Corpus Corporum\footnotemark & 12 \\
+         Horatius.net\footnotemark    & 12 \\
+         The Latin Library\footnotemark   &  4 \\
+         Musisque Deoque\footnotemark &  3 \\
+         Perseus        &  3 \\
+         Remacle\footnotemark        &  2 \\
+         ALIM\footnotemark           &  1 \\
+         Lesley Bolton\footnotemark         &  1 \\
+         Latin Law Library\footnotemark    &  1 \\
+         Monumenta Germanica Historica\footnotemark            &  1 \\
+         Corpus Scriptorum Latinorum\footnotemark            &  1 \\ \midrule
+         Éditions originales à partir d'OCR    &  2 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Source des corpus utilisés. Deux sortent du lot. OBI présente 73 éditions, un nombre surgonflé: il y a 73 livres pour la \textit{Vulgate} d'après CTS). Nous remercions chaleureusement Lesley Bolton, docteure canadienne, de nous avoir permis de réutiliser son travail de thèse pour en faire une édition TEI. Les éditions originales à partir d'OCR ont été produites à partir des données d'\textit{Internet Archive}.}
+    \label{tab:chap1:corpusutilises}
+\end{table}
+\footnotetext{\textcite{barry_schein_open_1994}}
+\footnotetext{\textcite{lomarcan_lacuscurtius_1999}}
+\footnotetext{\textcite{roelli2014corpus}}
+\footnotetext{\textcite{horatiusnet}}
+\footnotetext{\textcite{carey_latin_1998}}
+\footnotetext{\textcite{gelderblom_musisque_2008}}
+\footnotetext{\textcite{philippe_remacle_site_2008}}
+\footnotetext{\textcite{d2019alim}}
+\footnotetext{\textcite{bolton_edition_2015}}
+\footnotetext{\textcite{lassard_roman_2001}}
+\footnotetext{\textcite{noauthor_openmgh_nodate}}
+\footnotetext{\textcite{csl}}
 
 Pour le troisième point, un texte fondamental pour notre recherche est absent des corpus Perseus: les \textit{Priapées}\footcite{Clerice_Digital_edition_of_2020}. Il s'agit d'un ensemble de poèmes plutôt courts et centrés autour de la personnalité de Priape, dieu gardien des vergers dont l'arme principal est un sexe en érection. Elle est constituée de deux blocs, une partie de ses poèmes y ayant été ajouté par analogie au cours des éditions du texte\footcite{callebat_les_2008}. Pour la mettre à disposition, nous avons réutilisé le texte et les traductions de R. F. Burton et L. C. Smithers de 1890\footcite{burton_priapeia_1890} comme première version du texte. Cette base de texte nous a évité de passer par la fastidieuse case de l'OCR, de sa correction et de la qualification de ses lignes en vers, poèmes ou notes de bas de page. Nous l'avons ensuite adapté en fonction de l'édition scientifique d'Emil Baehrens paru chez Teubner\footcite{baehrens_poetae_1910}. Ce texte a été intégralement traduit pour la présente recherche et annoté linguistiquement en lemme et en morpho-syntaxe: cette phase d'annotation a permis de relire intégralement le texte, et de le comparer avec l'édition de Louis Callebat paru en 2012 aux Belles lettres et dont nous avons utilisé la réimpression de 2017\footcite{callebat_priapees_2012}. Si les variations entre les deux éditions sont faibles, on a préféré donner en apparat critique quelques choix de l'éditeur français quand elles respectaient l'intégralité des manuscrits là où l'éditeur allemand en produisait une minoritaire. Comme la majeure partie des éditions de Perseus, cette édition numérique des Priapées a plus pour vocation de donner un texte qu'une édition critique, hormis ces quelques notes importées de la comparaison avec l'édition la plus récente.
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/chap1/part2/hooktest.png}
+    \caption{Processus automatisé}
+    \label{fig:chap1:ci}
+\end{figure}
 
+Une partie du travail sur \textit{DigilibLT-Capitains} et la majeure partie de la conversion de Tacite ont été réalisé dans le cadre de devoirs fournis aux étudiants et étudiantes des master \enquote{Technologies Numériques Appliquées à l'Histoire} (TNAH) et \enquote{Humanités Numériques} de l'ENC et de PSL. Dans le cadre de l'apprentissage des outils de versionnage Git, cinquante-six éditions du projet italien ont été \enquote{capitainisé}, sur choix libre des étudiants. Cet exercice permettait à la fois de comprendre les enjeux de la collaboration sur plate-forme numérique, avec une dizaine de collaborateurs travaillant sur des données partagées, ses bonnes pratiques et la gestion des contrôles qualités. En effet, \textit{HookTest} permet aussi d'être utilisé comme un outil de contrôle automatique des corpus sur des plate-forme comme Github dans le cadre d'intégration continue, c'est-à-dire dans le cadre de tests automatisés et décentralisés lancés à chaque modification du dépôt contenant les données (\textit{cf.} figure \ref{fig:chap1:ci}).
+
+Le meta-corpus final est formé des six corpus \textit{open-source} et libres de droit mentionnés pour un total d'une vingtaine de millions de mots (\textit{cf.} table \ref{tab:chap1:corpora}).
+
+\begin{table}
+    \centering
+    \begin{tabular}{lr}
+    \toprule
+    Corpus                         & Version utilisée \\ \midrule
+    PerseusDL/canonical-latinLit & 0.0.843 \\
+    OpenGreekAndLatin/csel-dev   & 1.0.223 \\
+    lascivaroma/priapeia         & 1.1.18  \\
+    lascivaroma/additional-texts & 1.0.193 \\
+    lascivaroma/digiliblt        & 0.0.64  \\
+    OpenGreekAndLatin/Latin      & v1.11.0 \\ \bottomrule
+    \end{tabular}
+    \caption{Corpus utilisés pour la formation du meta-corpus de sources.}
+    \label{tab:chap1:corpora}
+\end{table}
 % Ces corrections demandent à la fois une compréhension de la langue et des règles de mise en page. 
 % Description des corpus ciblés et du processus itératif d'adaption du corpus
 
+\subsubsection{Analyse de la diversité du corpus par période, auteur et genre}
+
+Le corpus final, une fois aggloméré
 % Enfin, statistiques sur le corpus.
     % Statistiques sur les corpus Perseus et autres
     % La conversion de DigilibLT
     % Présentation des corpus Lasciva Roma
     %% Priapées
     %% Additional-Texts
-
-
-\subsubsection{Analyse de la diversité du corpus par période, auteur et genre}
-
 
 \subsection{Du corpus au document: qu’est-ce qu’un document pour l’ordinateur ?}
 

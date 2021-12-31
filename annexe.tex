@@ -35,6 +35,73 @@ Application pour la post-correction d'annotations linguistiques (lemmatisation, 
     \item \cite{Clerice_Pyrrha_2021}
 \end{itemize}
 
+\section*{Exemples de test}[h]
+
+\begin{figure}
+\centering
+\begin{adjustbox}{width=.9\linewidth}
+\begin{lstlisting}[breaklines=false,columns=fullflexible,keepspaces]
++-----------------------------------------+---------+-------------+-----------------------------+
+|                Identifier               |  Words  |    Nodes    |         Failed Tests        |
++-----------------------------------------+---------+-------------+-----------------------------+
+|   dlt000123.dlt001.digilibLT-lat1.xml   |    0    |             |             All             |
++-----------------------------------------+---------+-------------+-----------------------------+
+|  dlt000386.dlt000386.digilibLT-lat1.xml |  46,141 |    11;269   |                             |
++-----------------------------------------+---------+-------------+-----------------------------+
+|  dlt000493.dlt000493.digilibLT-lat1.xml |   310   |      3      |                             |
++-----------------------------------------+---------+-------------+-----------------------------+
+|    phi1257.phi001.digilibLT-lat1.xml    |  3,390  |    5;225    |                             |
++-----------------------------------------+---------+-------------+-----------------------------+
+|   stoa0365.stoa002.digilibLT-lat1.xml   |  13,155 |   133;139   |                             |
++-----------------------------------------+---------+-------------+-----------------------------+
+|    tlg4096.tlg001.digilibLT-lat1.xml    |    0    |             |    Passage level parsing    |
+|                                         |         |             | Unique nodes found by XPath |
+|                                         |         |             |       Empty References      |
+|                                         |         |             |        Word Counting        |
++-----------------------------------------+---------+-------------+-----------------------------+
+
+Duplicate nodes found:
+	stoa0058.stoa001.digilibLT-lat1.xml	1, 2, 3, 4, 5, 6, 7, 8, I, II, III, IV, V, VI, VII, VIII
+	stoa0357b.stoa001.digilibLT-lat1.xml	1, 12, 2, 24, 4, 5, 8, 9
+
+Forbidden characters found:
+	stoa0357d.stoa001.digilibLT-lat1.xml	'<386-387>', '<397-399>', '546-547'
+
+DTD errors found:
+	dlt000123.dlt001.digilibLT-lat1.xml	 fatal: The markup in the document following the 
+	root element must be well-formed. [In (L216 C2)]
+	stoa0167.stoa002.digilibLT-lat1.xml	 error: attribute "unit" not allowed here [In (L35 C132); 
+	(L37 C159); (L38 C172)],  error: element "cRefPattern" not allowed here 
+	[In (L37 C159); (L38 C172)]
+
+>>> End of the test !
+
++----------------------+-----------+
+|   HookTestResults    |           |
++----------------------+-----------+
+|     Total Texts      |    216    |
++----------------------+-----------+
+|    Passing Texts     |    103    |
++----------------------+-----------+
+|    Metadata Files    |    348    |
++----------------------+-----------+
+|   Passing Metadata   |    348    |
++----------------------+-----------+
+|       Coverage       |   91.91   |
++----------------------+-----------+
+| Total Citation Units |   51,212  |
++----------------------+-----------+
+|     Total Words      | 2,755,504 |
++----------------------+-----------+
+|     Words in LAT     | 2,754,128 |
++----------------------+-----------+
+|     Words in GRC     |   1,376   |
++----------------------+-----------+
+\end{lstlisting}
+\end{adjustbox}
+\caption{Exemple de résultats (tronqués) de HookTest sur le corpus DigilibLT.}
+\label{fig:annx:digiliblt-hooktest}
+\end{figure}
 
 \section*{Résultats de lemmatiseurs}
 
@@ -279,7 +346,7 @@ Application pour la post-correction d'annotations linguistiques (lemmatisation, 
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{results/lemmatisation/entrainement/StabilityBoxPlot.png}
+    \includegraphics[width=\textwidth]{figures/chap3/entrainement/StabilityBoxPlot.png}
     \caption{Variance des résultats par configuration manuelle essayée lors de la recherche manuelle d'optimisation.}
     \label{fig:training_variation_per_model}
 \end{figure}
