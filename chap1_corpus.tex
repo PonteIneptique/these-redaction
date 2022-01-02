@@ -505,53 +505,119 @@ Une partie du travail sur \textit{DigilibLT-Capitains} et la majeure partie de l
     %% Priapées
     %% Additional-Texts
     
-\subsubsection{Analyse de la diversité du corpus par période, auteur et genre}
+\subsubsection{Description du meta-corpus final}
 
-Le meta-corpus final est formé des six corpus \textit{open-source} et libres de droit mentionnés pour un total d'une vingtaine de millions de mots (\textit{cf.} table \ref{tab:chap1:corpora}). Certaines sources n'ont pas pu être trouvées en numérique: on note l'absence des \textit{Declamatio minores} de Quintilien du corpus, bien qu'elles soient quelques fois utilisées ou citées par le TLL ou Adams. Tout comme Perseus, les écrivains fragmentaires, dont les extraits sont normalement cités chez divers auteurs, sont ignorés par notre corpus. 
+Le meta-corpus final est formé des six corpus \textit{open-source} et libres de droit mentionnés pour un total d'une vingtaine de millions de mots (\textit{cf.} table \ref{tab:chap1:corpora}). Il est constitué de 204 auteurs ou regroupements d'oeuvres (par exemple, le \textit{Nouveau Testament} compte comme un regroupement de textes) pour 853 oeuvres. Tous les textes cités par le TLL ou par Adams n'ont pas pu être ajoutés au corpus: par exemple, on note l'absence des \textit{Declamatio minores} de Quintilien, des commentaires de Donat ou de textes du \textit{Corpus Grammaticorum Latinorum}. Nous avons suivi les principes de production de corpus originaux de Perseus, à savoir de ne pas inclure les auteurs fragmentaires: majoritairement collectés via des citations chez d'autres auteurs, leur introduction pourrait introduire du bruit. 
 
-Chaque corpus concerne une période qui lui est propre (\textit{cf.} figure \ref{fig:chap1:mots-par-corpus}): \textit{Canonical Latin Literature} de \textit{Perseus} concerne majoritairement la période classique en couvrant largement de -300 à 150 de notre ère. Il connaît une légère production supplémentaire aux alentours du IVe siècle avec les oeuvres de Jérôme et d'Ausone, inclues dans le corpus pour des raisons pédagogiques. Quant à lui, le CSEL couvre bien avec les pères de l'Église la période de 300 à 950. Le corpus \textit{DigilibLT} est constitué d'oeuvres majoritairement de la fin du IIIe siècle au Ve. Au contraire des autres corpus, \textit{Additional Texts} ne présente pas d'homogénéité dans sa production: il est le fruit d'un \enquote{remplissage des manques} et génère donc des pics à différentes périodes. Il connaît deux pics clairement marqués: le premier est formé de la rédaction de la \textit{Vulgate} et des commentaires de Servius pendant le IVe siècle; au Ve siècle, le second pic est constitué d'un seul texte massif, le \textit{Code Justinien}.
+En dehors des manques particuliers à la collecte ou à l'histoire des corpus réutilisés, notre corpus présente des caractéristiques assez attendues d'un corpus de sources anciennes et littéraires. Il est constitué majoritairement d'auteurs dont on ne possède qu'une seule oeuvre (près de 120 auteurs sont dans ce cas) avec quelques auteurs extrêmement prolifiques, comme Augustin et Cicéron avec une soixantaine d'oeuvres (\textit{cf.} \ref{fig:chap1:oeuvres-par-auteur}). Les textes sont principalement assez courts: les trois quarts font moins de 20~000 mots (\textit{cf.} table \ref{tab:chap1:mots-par-textes}). Quatre-vingt textes font moins de mille mots (10\% du corpus) tandis que quanrante neuf en font plus de cent mille. Les textes les plus grands atteignent le million de mots (\textit{cf.} \ref{fig:chap1:mots-par-texte}).
+
+Chaque corpus du meta-corpus concerne une période qui lui est propre (\textit{cf.} figure \ref{fig:chap1:mots-par-corpus}): \textit{Canonical Latin Literature} de \textit{Perseus} propose des oeuvres majoritairement issues de la période classique, de -254 à 150 de notre ère. Il connaît une légère production supplémentaire aux alentours du IVe siècle avec les oeuvres de Jérôme et d'Ausone, inclues par l'équipe du projet pour des raisons pédagogiques. Le deuxième grand corpus, le CSEL, couvre la période de 300 à 950 avec les pères de l'Église. Le corpus \textit{DigilibLT} est constitué d'oeuvres écrites principalement entre la fin du IIIe siècle au Ve. Au contraire des autres corpus, \textit{Additional Texts} ne présente pas d'homogénéité dans sa production: il est le fruit d'un \enquote{remplissage des manques} et génère donc des pics à différentes périodes. Il connaît deux périodes sur-représentées: le premier est formé de la rédaction de la \textit{Vulgate} et des commentaires de Servius pendant le IVe siècle; au Ve siècle, le second pic est constitué d'un seul texte massif, le \textit{Code Justinien}.
 
 \afterpage{%
 \begin{table}
-    \centering
-    \begin{tabular}{lr}
-    \toprule
-    Corpus                         & Version utilisée \\ \midrule
-    PerseusDL/canonical-latinLit & 0.0.843 \\
-    OpenGreekAndLatin/csel-dev   & 1.0.223 \\
-    lascivaroma/priapeia         & 1.1.18  \\
-    lascivaroma/additional-texts & 1.0.193 \\
-    lascivaroma/digiliblt        & 0.0.64  \\
-    OpenGreekAndLatin/Latin      & v1.11.0 \\ \bottomrule
-    \end{tabular}
-    \caption{Corpus utilisés pour la formation du meta-corpus de sources.}
-    \label{tab:chap1:corpora}
+\begin{minipage}{.4\linewidth}%
+        \centering
+        \resizebox{\textwidth}{!}{%
+        \begin{tabular}{lr}%
+            \toprule
+            Corpus                         & Version \\ \midrule
+            PerseusDL/canonical-latinLit & 0.0.843 \\
+            OpenGreekAndLatin/csel-dev   & 1.0.223 \\
+            lascivaroma/priapeia         & 1.1.18  \\
+            lascivaroma/additional-texts & 1.0.193 \\
+            lascivaroma/digiliblt        & 0.0.64  \\
+            OpenGreekAndLatin/Latin      & v1.11.0 \\ \bottomrule
+        \end{tabular}%
+        }
+        \caption{Corpus utilisés pour la formation du meta-corpus de sources.}
+        \label{tab:chap1:corpora}
+\end{minipage}%
+\hfill
+\begin{minipage}{.56\linewidth}%
+        \centering
+        \resizebox{\textwidth}{!}{%
+        \begin{tabular}{l|rr|rr}
+            \toprule
+                      Auteur &      Mots &  Rang      &  Oeuvres &  Rang         \\
+            \midrule
+                    Augustin & 2~566~421 &          1 &       68 &             2 \\
+                   Justinien & 1~430~321 &          2 &        2 &            62 \\
+                     Cicéron & 1~389~163 &          3 &       60 &             3 \\
+                      Jérôme &   879~855 &          4 &        9 &            19 \\
+                     Servius &   717~622 &          5 &        4 &            34 \\
+                    Ambroise &   685~483 &          6 &       19 &            10 \\
+                  Tertullien &   678~635 &          7 &       50 &             4 \\
+                   Tite-Live &   614~940 &          8 &        1 &            87 \\
+                     Vulgate &   603~091 &          9 &       73 &             1 \\
+                     Sénèque &   525~489 &         10 &       27 &             7 \\ 
+                            \multicolumn{5}{c}{...}                \\
+                      Plaute &   233~258 &         23 &       20 &             9 \\
+            Histoire Auguste &   128~128 &         35 &       30 &             5 \\
+                      Ausone &    68~418 &         67 &       29 &             6 \\
+              Cornélis Népos &    33~604 &         89 &       25 &             8 \\
+            \bottomrule
+        \end{tabular}%
+        }
+        \caption{Auteurs ou groupes de textes les plus importants en oeuvres et en mots, classés par le nombre de mots.}
+        \label{tab:chap1:rang-auteurs}
+\end{minipage}
 \end{table}
 \begin{figure}
     \centering
-    \includegraphics{figures/chap1/part2/motsPaCorpus.png}
+    \includegraphics[width=.9\linewidth]{figures/chap1/part2/motsPaCorpus.png}
     \caption{Distribution du nombre de mots par corpus}
     \label{fig:chap1:mots-par-corpus}
 \end{figure}
 \clearpage
 }
 
-Notre meta-corpus contient par ailleurs deux grandes périodes de rédaction, correspondant à deux phénomènes bien identifiés par les historiens de la littérature(\textit{cf.} \ref{fig:chap1:accum-mot}). On a d'une part la littérature dite classique, allant de la fin de la république au règne des Antonins à la fin du Ier siècle de notre ère: elle est constituée -- entre autres -- du surproducteur Cicéron, des philosophes Sénèque et Lucrèce, des poètes augustéens et de l'apogée du genre élégiaque, des épopées latines les plus connues, et disparaît avec le \enquote{meilleurs des poètes de son temps}, Martial. Ces siècles ont été consacrés par l'enseignement du latin, du thème, césarien et cicéronien, à l'apogée du style virgilien en passant par les historiens \enquote{acceptables}. Il représente un peu moins de la moitié du corpus avec près de dix millions de mots. La deuxième période de production massive est ce que Fredouille et Zhenacker à la fois \enquote{l'âge d'or de la patristique}: avec la reconnaissance officielle du christianisme, on assiste à la rédaction des oeuvres d'Hilaire, Ambroise, Augustin et de Jérôme, dont la production -- partiellement représentée dans notre corpus -- correspond à plus de 10\% du meta-corpus complet. D'autres auteurs, aux quantités minimes face aux quatre Pères, n'en sont pas pour autant peu important pour notre recherche: ainsi, le IVe siècle est aussi le siècle d'Ausone, et donc du \textit{Centon Nuptial}, réarrangement littéraire des vers de Virgile afin de raconter une scène de mariage et la partie érotique qui la suit.
+Le meta-corpus contient par ailleurs deux grandes périodes de rédaction, correspondant à deux phénomènes bien identifiés par les historiens de la littérature(\textit{cf.} \ref{fig:chap1:accum-mot}). On a d'une part la littérature dite classique, allant de la fin de la république au règne des Antonins à la fin du Ier siècle de notre ère: elle est constituée -- entre autres -- du surproducteur Cicéron, des philosophes Sénèque et Lucrèce, des poètes augustéens et de l'apogée du genre élégiaque, des épopées latines les plus connues, et se termine avec les écrivains Martial, Juvénal et Pline le Jeune. Ces siècles ont été consacrés par l'enseignement du latin à travers le thème, dont la langue est calquée sur les styles césariens et cicéroniens, et l'études des grands classiques comme l'\textit{Énéide} de Virgile et les \textit{Annales} de Tacite. Cette période représente un peu moins de la moitié du corpus avec près de dix millions de mots. 
 
-Il peut être particulièrement compliqué de quantifier les manques du corpus. Si l'on en croit le nombre de textes convertis du DigilibLT, il y aurait au moins autant de textes tardifs hors-patristique absent que présents de notre corpus. Pour la patristique, les chiffres du \textit{Corpus Corporum} sont énormes: quatre-vingt huit millions de mots pour la patrologie latine, qui s'étend plus loin que notre corpus, mais près de deux millions et demi de mots pour Jérôme à lui-seul. Pour cette partie du corpus, notre conversion de textes ayant été faite en fonction des besoins de la collecte d'exemples cités par Adams, peu de textes en dehors des CSEL ont été convertis. 
+La deuxième période de production massive est ce que Fredouille et Zhenacker appelle \enquote{l'âge d'or de la patristique}\footcite{fredouille}: avec la reconnaissance officielle du christianisme, on assiste à la rédaction des oeuvres d'Hilaire, Ambroise, Augustin et de Jérôme, dont la production -- partiellement représentée dans notre corpus -- correspond à 20,7\% du meta-corpus complet en nombre de mots et 12,5\% en nombre de textes. D'autres auteurs, aux quantités minuscules en regard de celles des quatre Pères, restent majeurs pour notre recherche: ainsi, le IVe siècle est aussi le siècle d'Ausone, et donc du \textit{Centon Nuptial}, ré-arrangement littéraire des vers de Virgile visant à raconter un mariage et la première nuit des mariés. C'est aussi le siècle des grammairiens et commentaires: on y retrouve l'oeuvre de Donat, de Servius et, suivant les datations, des \textit{Adnotationes super Lucanum}. Les commentaires peuvent avoir une grande importance pour la compréhension des textes anciens ou du moins de leur réception, et, en termes d'approche quantitative, permettent d'ajouter du contexte aux passages originaux.
 
-Pour la période classique, nous bénéficions du travail du \textit{Perseus Catalog} et du PHI. À partir des données de ce dernier, le catalogue de Perseus, dont la vocation est de répertorié les éditions tombées dans le domaine publiques d'oeuvres disponibles numériquement, y compris uniquement sous forme de PDF ou d'images, propose pour une sélection de textes un décompte supposé du nombre de mots. Ce décompte, visible en figure \ref{fig:chap1:accum-mot-diff-perseus-catalog}, permet d'estimer un écart de quelques centaines de milliers de mots au plus sur la période classique. Mais il est à interpréter avec précaution: en étudiant les auteurs dont les oeuvres sont sous-représentées (\textit{cf.} figure \ref{fig:chap1:ecarts-auteurs}), nous avons trouvé qu'Ovide aurait près de deux cent mille mots de moins dans notre meta-corpus que chez le PHI. Or, Ovide n'est pas un auteur d'un très grand nombre d'oeuvres ou de recueil, et un tel manque indiquerait l'oubli d'un classique \textit{a priori}. En cherchant les données manquantes, il s'est avéré que le texte produisant la majorité de cet écart n'est autre que \textit{l'Epicedion Drusi}, un poème de 474 vers dont le nombre de mots est évalué -- faussement -- à plus de deux cent vingt mille mots\footcite{clerice_catalog_dataphi0959phi015_2021}. Il reste probable que pour Cicéron (dont les oeuvres complètes ne sont pas toutes présentes sur Perseus), Sénèque (dont quelques ouvrages manquent) et Quintilien (dont il nous manque au moins les \textit{Declamatio Minores}) soient véritablement parcellaires dans le meta-corpus.
+Pour ce qui est des manques, ils peuvent être particulièrement compliqués à quantifier. Si l'on en croit le nombre de textes convertis du DigilibLT, il y aurait au moins autant de textes tardifs hors-patristique absents que présents de notre corpus. Pour la patristique, le \textit{Corpus Corporum} fournit une taille pour chaque corpus: la patrologie latine serait formée de quatre-vingt huit millions de mots. Ce chiffre doit être pris comme un ordre de grandeur, car les documents XML de la PL du projets fourmillent de citations en plein texte du type \enquote{(Joan. XV, 17).}, représentant un bruit important pour le décompte de mots. Il reste qu'avec ce nombre, plus de quatre fois la taille de notre corpus, il est certain que nous avons des manques: Jérôme y est représenté par 2,5 millions de mots pour 105 oeuvres (en ne comptant que les oeuvres attribuées assurément par le projet), tandis que nous culminons à 880~000 mots pour 9 oeuvres (\textit{cf.} \ref{tab:chap1:rang-auteurs}). La conversion et collection des textes ayant été guidées par les citations du TLL et d'Adams, ces auteurs sont sous-représentés.
 
-Enfin, en dehors des manques particuliers à la collecte ou à l'histoire des corpus réutilisés, notre corpus présente des caractéristiques assez attendues d'un corpus de sources anciennes et littéraires. Il est constitué par exemple d'auteurs dont on ne connaît qu'une seule oeuvre dans le meta-corpus (près de 120 auteurs sont dans ce cas) avec quelques auteurs extrêmement prolifiques, comme Cicéron avec une quarantaine d'oeuvres (\textit{cf.} \ref{fig:chap1:oeuvres-par-auteur}). Les textes sont principalement moyennement longs (dix mille mots, \textit{cf.} \ref{fig:chap1:mots-par-texte}) et atteignent quelques fois des extrêmes intéressants: certains textes ne font pas beaucoup plus que cent mots pendant que d'autres atteignent presque le million de mots.
 
-Pour conclure, nous faisons face à un meta-corpus varié (204 auteurs ou regroupements d'oeuvres, 853 oeuvres) dont le caractère incomplet est dû en partie aux critères initiaux, à savoir la possibilité d'exploiter mécaniquement les ressources textuelles via une explicitation de leurs structures. S'il devait être compléter, les zones suivantes devraient être priorisées:
+Pour la période classique, nous bénéficions du travail du \textit{Perseus Catalog}\footcite{babeu2019perseus} et du PHI. Projet enfant de \textit{Perseus}, le catalogue, dirigé par Alison Babeu, a pour vocation de répertorier les auteurs, oeuvres, éditions et traductions des auteurs antiques, et tout particulièrement celles tombées dans le domaine publiques. Ce catalogage s'accompagne souvent de liens vers des textes disponibles sous formes de numérisations PDF sur les plate-formes comme \textit{Google Book}, \textit{Internet Archive} ou \textit{Hathi Trust}. Il est complété du nombre de mots quand l'oeuvre est disponible sur le PHI. Ce décompte, visible en figure \ref{fig:chap1:accum-mot-diff-perseus-catalog}, permet d'estimer qu'il manque -- au plus -- quelques centaines de milliers de mots au plus sur la période classique. Mais tout comme les chiffres de la PL, il est à interpréter avec précaution: en étudiant les auteurs dont les oeuvres sont sous-représentées (\textit{cf.} figure \ref{fig:chap1:ecarts-auteurs}), nous avons trouvé qu'Ovide aurait près de deux cent mille mots de moins dans notre meta-corpus que chez le PHI. Or, Ovide n'est pas auteur d'un très grand nombre d'oeuvres ou de recueil, et un tel manque indiquerait donc l'oubli d'un classique qui aurait été ignoré par Perseus, dont le projet même était de mettre à disposition les textes couramment étudiés. En cherchant les données manquantes, il s'est avéré que le texte produisant la majorité de cet écart est une oeuvre mineure, \textit{l'Epicedion Drusi}, un poème de 474 vers dont le nombre de mots est évalué -- faussement -- à plus de deux cent vingt mille mots\footcite{clerice_catalog_dataphi0959phi015_2021}. Il reste probable que pour Cicéron (dont les oeuvres complètes ne sont pas toutes présentes sur Perseus), Sénèque (dont quelques ouvrages manquent) et Quintilien (dont il nous manque au moins les \textit{Declamatio Minores}) soient véritablement parcellaires dans le meta-corpus.
+
+Pour conclure, nous faisons face à un meta-corpus varié dont le caractère incomplet est dû en partie aux critères initiaux, à savoir la possibilité d'exploiter mécaniquement les ressources textuelles via une explicitation de leurs structures. S'il devait être compléter, les zones suivantes devraient être priorisées:
 \begin{itemize}
-    \item la conversion complète des oeuvres du DigilibLT;
+    \item la conversion complète des oeuvres du \textit{DigilibLT};
     \item la conversion des textes de la patrologie latines dont les auteurs précèdent la mort d'Isidore de Séville;
-    \item la conversion et l'obtention des textes des grammairiens latins, dont le corpus n'a pas pu être obtenu à temps, soit à travers le Corpus Grammaticorum Latinorum, dont les sources sont réutilisées par le Corpus Corporum, soit à travers le projet HyperDonat;
-    \item la création d'éditions \enquote{fac-similaires} simples, à la Perseus, pour les textes des auteurs classiques manquants, au premier titre desquels figurent Cicéron et Quintilien.
+    \item la conversion et l'obtention des textes des grammairiens latins, dont le corpus n'a pas pu être obtenu à temps, soit à travers le \textit{Corpus Grammaticorum Latinorum}, dont les sources sont réutilisées par le C\textit{orpus Corporum}, soit à travers le projet \textit{HyperDonat};
+    \item la création d'éditions \enquote{fac-similaires} simples, à la \textit{Perseus}, pour les textes des auteurs classiques manquants, au premier titre desquels figurent Cicéron et Quintilien.
 \end{itemize}
 Ces recommandations sont par ailleurs dépendantes de l'évolution des techniques de lemmatisation, dont l'adaptation aux textes documentaires et épigraphiques nous pousserait à recommander d'incorporer, surtout pour notre thématique, les inscriptions et graffitis, dont ceux de Pompei.
+
+
+\afterpage{%
+\begin{figure}
+    \centering
+    \includegraphics[width=.8\linewidth]{figures/chap1/part2/motsParTexte.png}
+    \caption{Distribution des tailles de textes (en nombre de mots).}
+    \label{fig:chap1:mots-par-texte}
+\end{figure}
+\begin{table}[]
+    \centering
+    \small
+    \begin{tabular}{lrrrrrrrr}
+    \toprule
+    {} &  Oeuvres &          Moyenne &           std &    min &     25\% &     50\% &      75\% &        max \\
+    \midrule
+    Mots &  853 &  25003 &  59386 &  126 &  3~188 &  8~697 &  20~639 &  1~036~035 \\
+    \bottomrule
+    \end{tabular}
+    \caption{Détails sur la répartition des tailles de textes}
+    \label{tab:chap1:mots-par-textes}
+\end{table}
+\begin{figure}
+    \centering
+    \includegraphics[height=8cm]{figures/chap1/part2/oeuvresParAuteur.png}
+    \caption{Distribution du nombre d'oeuvres par auteurs. Les chiffres sont partiellement faussés par la segmentation de la bible en livres, produisant une oeuvre par livre.}
+    \label{fig:chap1:oeuvres-par-auteur}
+\end{figure}
+\clearpage
+}
 
 \afterpage{%
 \begin{sidewaysfigure}%
@@ -579,29 +645,12 @@ Ces recommandations sont par ailleurs dépendantes de l'évolution des technique
     \hfill%
     \begin{subfigure}{0.45\hsize}
         \centering
-        \includegraphics[width=\linewidth]{figures/chap1/part2/ecartsAuteurs.png}
+        \includegraphics[width=.8\linewidth]{figures/chap1/part2/ecartsAuteurs.png}
         \caption{Écart supérieurs à 25~000 mots en défaveur de notre corpus en fonction du décompte de mots du catalogue de Perseus.}
         \label{fig:chap1:ecarts-auteurs}
     \end{subfigure}%
     \caption{Évolution de la masse du corpus. La date de composition utilisée est celle de la date de naissance présumée de l'auteur.}
 \end{sidewaysfigure}%
-\clearpage
-}
-
-\afterpage{%
-\begin{figure}
-    \centering
-    \includegraphics[height=8cm]{figures/chap1/part2/motsParTexte.png}
-    \caption{Distribution des tailles de textes (en nombre de mots).}
-    \label{fig:chap1:mots-par-texte}
-\end{figure}
-\vfill
-\begin{figure}
-    \centering
-    \includegraphics[height=8cm]{figures/chap1/part2/oeuvresParAuteur.png}
-    \caption{Distribution du nombre d'oeuvres par auteurs. Les chiffres sont partiellement faussés par la segmentation de la bible en livres, produisant une oeuvre par livre.}
-    \label{fig:chap1:oeuvres-par-auteur}
-\end{figure}
 \clearpage
 }
 % Le corpus final, une fois aggloméré
