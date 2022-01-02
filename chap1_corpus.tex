@@ -658,13 +658,13 @@ Ces recommandations sont par ailleurs dépendantes de l'évolution des technique
 
 \subsection{Du corpus au document: qu’est-ce qu’un document pour l’ordinateur ?}
 
-Nous avons vu que le corpus numérisé latin, disponible dans des formats acceptables, dépasse de loin le meta-corpus accumulé ici, ne serait-ce qu'à travers la \textit{Patrologia Latina} et \textit{DigilibLT}. Or, ces textes ont été laissés de côté au profit d'un corpus suivant intégralement les normes \textit{Capitains}, dont l'encodage est coûteux en temps. Nous proposons d'évaluer l'impact que peut avoir cette segmentation structurelle et son exploitabilité à travers une simple expérience: évaluer l'impact, dans une étude statistique des co-occurrents, de la prise en compte des segmentations structurelles \textit{machine actionable} de \textit{Capitains}. Dans un premier temps, nous définirons les concepts de cette expérience, à travers son héritage en linguistique de corpus mais aussi à travers une définition de ce qu'est une rupture dans un continuum de texte. Dans un second temps, nous définirons la méthode d'évaluation des corpus. Enfin, nous étudierons l'hypothétique différence entre les résultats des différentes analyses.
+Nous avons vu que le corpus numérisé latin, disponible dans des formats acceptables, dépasse de loin le meta-corpus accumulé ici, ne serait-ce qu'à travers la \textit{Patrologia Latina} et \textit{DigilibLT}. Or, ces textes ont été laissés de côté au profit d'un corpus suivant intégralement les normes \textit{Capitains}, dont l'encodage est coûteux en temps. Nous proposons d'évaluer l'impact que peut avoir cette segmentation structurelle et son exploitabilité à travers une simple expérience: évaluer l'impact, dans une étude statistique des co-occurrents, de la prise en compte des segmentations structurelles \textit{machine actionable} de \textit{Capitains}. Dans un premier temps, nous définirons les concepts de cette expérience, à travers son héritage en linguistique de corpus mais aussi à travers une définition de ce qu'est une rupture dans un continuum de texte. Dans un second temps, nous définirons la méthode d'évaluation des corpus. Enfin, nous étudierons l'hypothétique différence entre les résultats des différentes analyses\footnote{Ce texte a été réutilisé dans la publication en cours, \enquote{Thibault Clérice. \textit{"Don't worry, it's just noise": quantifying the impact of files treated as single textual units when they are really collections}}}.
 
 \subsubsection{Concepts}
 
 En 1957 est publié un ouvrage de Firth dont la phrase \enquote{On reconnaît un mot à son voisinage.}\footcite{firth_papers_1957} devient une citation classique pour définir la sémantique distributionnelle: pour trouver et comprendre le sens d'un ``mot'', on s'intéresse à ses co-occurrents, car ce contexte définit ce qui peut s'y trouver. Dans des phrases à trou telles que \enquote{Ce matin, j'ai bu un jus {[TROU]}}, il est facile de proposer des mots qui s'y retrouveraient logiquement, au premier titre des quels \enquote{d'orage} figureraient. Or, ce principe de sémantique distributionnelle est devenu si important qu'on le retrouve employé dans un très grand nombre d'outils, sans pour autant que la question de ce que forme un \enquote{voisinage} y soit remis en question. Cette approche du lexique est très utilisée dans les domaines du latin et du grec ancien de la littérature classique \footcite{gillivray_grec}, de l'antiquité tardive \footcite{munson_biblique_2017}, médiévale \footcite{guerreau_pourquoi_1989,perreaux:eau} et post-médiévale \footcite{bloem-etal-2020-distributional} avec des corpus allant de quelques dizaines de milliers de mots à quelques millions. Mais bien souvent, la question de la mise en forme des corpus et de leur exploitation est ignorée des documents produits, et ce qui constitue le contexte est défini majoritairement par une mesure: la fenêtre -- c'est-à-dire le nombre de mots à gauche et à droite -- de capture du voisinage. 
 
-Nous faisons l'hypothèse qu'ignorer les ruptures inhérentes aux oeuvres numérisées peut porter préjudice à la sémantique distributionnelle, d'autant plus sur des petits corpus comme le nôtre, à peine vingt millions de mots lorsque des corpus comme CHABADOUBADOU en atteignent quelques centaines de millions ou quelques milliards. Parce que les oeuvres numérisées sont bien souvent des calques de la transmission papier, elles tiennent parfois plus de la collection d'oeuvre, comme les recueil d'épigrammes ou de poésie en général, que d'une oeuvre \enquote{simple}. Dans le cadre d'un commentaire de texte, il ne viendrait pas à l'idée d'un latiniste de s'appuyer sur les premiers mots de l'épigramme suivant chez Martial: bien qu'il arrive qu'une unité thématique joignent quelques épigrammes, ce sont des oeuvres courtes et indépendantes les unes des autres. Or, si l'on traite un corpus de textes bruts ou de TEI sans faire attention aux rôles des divisions structurelles, c'est exactement ce que pourrait faire la machine.
+Nous faisons l'hypothèse qu'ignorer les ruptures inhérentes aux oeuvres numérisées peut porter préjudice à la sémantique distributionnelle, d'autant plus sur des petits corpus comme le nôtre, à peine vingt millions de mots lorsque des corpus comme l'encyclopédie en ligne \textit{Wikipedia} en atteint un milliard et demi\footcite{noauthor_statistiques_nodate} et d'autres beaucoup plus massifs comme OSCAR en atteignent huit cent milliards pour cent cinquante six langues couvertes\footcite{ortizsuarez_hal-02148693}. Parce que les oeuvres numérisées sont bien souvent des calques de la transmission papier, elles tiennent parfois plus de la collection d'oeuvre, comme les recueil d'épigrammes ou de poésie en général, que d'une oeuvre \enquote{simple}. Dans le cadre d'un commentaire de texte, il ne viendrait pas à l'idée d'un latiniste de s'appuyer sur les premiers mots de l'épigramme suivant chez Martial: bien qu'il arrive qu'une unité thématique joignent quelques épigrammes, ce sont des oeuvres courtes et indépendantes les unes des autres. Or, si l'on traite un corpus de textes bruts ou de TEI sans faire attention aux rôles des divisions structurelles, c'est exactement ce que pourrait faire la machine.
 
 Nous avons vu précédemment que les oeuvres présentaient une grande variation de contenus, du discours juridique à la collection de recette chez \textit{Apicius}. Ces textes présentent différents niveaux de segmentation structurelle, du chapitre pour les ouvrages d'histoire par exemple aux sections pour les grands discours, en passant bien sûr par les poèmes, les livres, les recettes, etc. Ces types de contenus sont parfois introduits par la transmission des textes, parfois d'origine, mais tous renseignent au moins en partie sur la relation qui lient les unités. Il est attendu qu'une recette et une autre recette ne se retrouvent voisines que \enquote{par hasard}, ou parce qu'elles sont toutes deux des recettes de viande, tandis que deux chapitres d'un ouvrage d'histoire formeront une probable continuité narrative.
 
@@ -689,36 +689,36 @@ Si le taux de contamination théorique de la fenêtre constitue un outil efficac
 \begin{figure}
 \resizebox{1\linewidth}{!}{%
 \begin{minipage}[l]{0.45\textwidth}
-(Poem~39)\\*
+(Poème~39)\\*
 Iliaco similem puerum, Faustine, ministro\\*
 Lusca Lycoris amat. Quam bene lusca videt!\\
-(Poem~40)\\*
+(Poème~40)\\*
 \underline{Inserta phialae Mentoris manu} \textbf{ducta}\\*
 \underline{Lacerta vivit et timetur argentum}.\\
-(Poem~41)\\*
+(Poème~41)\\*
 Mutua quod nobis ter quinquagena dedisti\\*
 Ex opibus tantis, quas gravis arca premit,\\* {[...]}
 \end{minipage} \hfill
 \begin{minipage}[l]{0.45\textwidth}
-(Poem~39)\\*
+(Poème~39)\\*
 Iliaco similem puerum, Faustine, ministro\\*
 Lusca \underline{Lycoris amat. Quam bene lusca videt}!\\
-(Poem~40)\\*
+(Poème~40)\\*
 \underline{Inserta phialae Mentoris manu} \textbf{ducta}\\*
 \underline{Lacerta vivit et timetur argentum}.\\
-(Poem~41)\\*
+(Poème~41)\\*
 \underline{Mutua quod nobis ter quinquagena} dedisti\\*
 Ex opibus tantis, quas gravis arca premit,\\*  {[...]}
 \end{minipage}%
 }
-\caption{Book 3 Poem 39--41 from Martial's \textit{Epigrammata}. The co-occurring words of \textbf{ducta} for $W=10$ are underlined, on the left in a segmented corpus, on right in a raw corpus.}
+\caption{Livre 3, poèmes 39 à 40 des \textit{Épigrammes} de Martial. Les mots considérés comme co-occurrents de \textit{ducta} pour une fenêtre de dix mots ($W=10$) sont soulignés. À gauche, le résultat attendu pour un lecteur humain, prenant en compte l'absence de continuité entre les deux poèmes. À droite, la même approche, mais en prenant l'oeuvre comme une seule unité à analyser.}
 \label{exc:epigrams}
 \end{figure}
 
 
 \subsubsection{Méthode d'évaluation}
 
-% Afin d'évaluer l'effet du rejet de l'importance des (S)ATU, nous proposons une étude basée sur le \textit{Corpus Latin antiquité et antiquité tardive lemmatisé} \cite{latinlemmatisé} qui regroupe des œuvres originales de Perseus \cite{perseus}, Open Greek and Latin \cite{csel}, Lasciva Roma \cite{priapea,additional_texts} et DigilibLT \cite{digiliblt,digiliblt_capitains}. La lemmatisation de ce corpus et son prétraitement ont été appliqués avec le modèle LASLA de Pie-Extended \cite{pie, pie_extended, lasla_model} qui a une précision de 97,34\%. Dans l'ensemble, le corpus agrégé s'étend de 254~BCE à 799~CE avec 21 222 911 tokens~~-~y compris la ponctuation, après tokénisation et lemmatisation~~-plus de 853 œuvres \footnote{17 804 769, sans la ponctuation.}, composites ou non (certaines étant des collections d'œuvres de plusieurs auteurs, parfois de plusieurs auteurs non identifiés, comme le \textit{Anthologia Latina}). Chaque corpus source a été encodé - au moins partiellement - avec les directives CapiTainS \cite{capitains}, permettant une segmentation exploitable par une machine dans les documents TEI et nous permettant ainsi de retrouver ou de segmenter des œuvres entières avec leur segmentation éditoriale, comme des poèmes, des vers, des livres, etc. 
+Pour quantifier l'impact de la segmentation ou son absence, nous mettons en place toute une chaîne d'analyse permettant d'être reproduite facilement et de mettre en avant ces différences de traitement. Étant donné la particularité de l'approche -- les résultats de ces analyses ne nous intéressent pas directement, ce sont leurs différences qui sont importantes --, nous effectuons ces comparaisons à différents niveaux de traitement avec une grande variétés de paramètres, souhaitant ainsi capturer plusieurs approche des textes.
 
 
 \begin{figure}
@@ -728,56 +728,57 @@ Ex opibus tantis, quas gravis arca premit,\\*  {[...]}
     \label{fig:venn}
 \end{figure}
 
-Nous divisons ensuite le corpus principal en trois sous-corpus~(\textit{cf.} Figure~\ref{fig:venn}) :
+Afin de quantifier l'effet de la segmentation ou de son absence, nous avons attribué à chaque texte un niveau auquel il doit être divisé, permettant ainsi de traiter les (S)ATU comme des unités non séquentielles. Pour les textes qui ne présentent pas de (S)ATU, par exemple un texte court formé de nombreux paragraphes, le texte complet a été conservé comme une seule unité. Nous produisons deux versions de chaque texte et donc de chaque corpus:
+\begin{itemize}
+    \item $S(T)$ (pour \textit{segment} de $T$, où $T$ est un corpus): les (S)ATU sont utilisées et les oeuvres sont découpées en autant de textes indépendants. C'est le corpus segmenté.
+    \item $U(T)$ (pour \textit{*unsegment} de $T$): les (S)ATU sont ignorées et toute oeuvre présente en un seul fichier dans notre corpus est considéré comme une seule unité. C'est le corpus non-segmenté
+\end{itemize}
+
+Puis, nous divisons notre meta-corpus en trois sous-corpus~(\textit{cf.} Figure~\ref{fig:venn}), représentant trois réalités différentes du point de vue des quantités, des thèmes ou encore des compositions des oeuvres qui nous ont été transmises:
 \begin{enumerate}
-    \item Le premier corpus ne contient que le \textit{Epigrammata} de Martial et le \textit{Priapea} anonyme. (\textit{Martial \& Priapea} ci-après) : ils forment un très petit corpus ($\left | t \right |=61,082$), avec des thèmes et un vocabulaire partagés (ils sont pleins de %ly ?
-    et de mots obscènes) et sont fortement composites. En fait, le premier est séparé en trois niveaux (livre, poème, ligne), le second en seulement deux niveaux (poème, ligne). Les deux textes fournissent des niveaux ATU (poèmes).
-    \item Le second (\textit{Corpus ATU} ci-après) est constitué de toutes les œuvres dans lesquelles il existe un niveau d'unité qualifié de ``poème'', ``commentaire'' ou ``scholia'', ``lettre'', ``discours'' et ``entrée'' (on trouve des ouvrages de type dictionnaire ou des recueils de recettes) : cela représente 125 œuvres et 3 549 249 tokens. Ils ne partagent pas d'unité thématique spécifique mais sont massivement composés de poésie. C'est également un sur-ensemble de \textit{Martial \& Priapea}.
-    \item Le dernier consiste en le corpus complet avec ses 17 639 626 tokens (\textit{All}) après avoir retiré la ponctuation et les autres tokens étrangers.
+    \item Le premier corpus ne contient que les \textit{Épigrammes} de Martial et les \textit{Priapées} (\textit{Martial \& Priapea} ci-après). Ils forment un très petit corpus ($\left | t \right |=61,082$), avec des thèmes et un lexique communs -- ils parlent tous deux de sexualité et de manière obscène la majeure partie du temps -- et sont des textes particulièrement composites. Le premier a une structure logique en trois niveaux (livre, poème, vers), le second en seulement deux niveaux (poème, vers). Ils sont composés de poèmes qui ne forment pas de séquences narratives et donc uniquement d'ATU.
+    \item Le second, \textit{Corpus ATU} ci-après, est constitué de toutes les œuvres dans lesquelles il existe un niveau de la structure logique de citation qualifié de ``poème'', ``commentaire'' ou ``scholia'', ``lettre'', ``discours'' et ``entrée'' (on trouve ces dernières pour qualifier les recettes et les niveaux des \textit{Étymologies}): cela représente 125 œuvres et 3~549~249 mots. Ils ne forment pas d'unité thématique mais sont tout de même majoritairement composés de poésie, y compris à travers les répétions dans les \textit{scholia}. Il comprend \textit{Martial \& Priapea}.
+    \item Le dernier est le meta-corpus complet avec ses 17~639~626 mots (\textit{All}) mots.
 \end{enumerate}
 
-Chaque corpus affiche une valeur différente de la propriété combinée "Nombre d'(UAT)-Taille du corpus" (\textit{cf.} Table \ref{tab:corpora_properties}) : le premier est un très petit corpus avec un nombre élevé d'unités textuelles autonomes, le second a un nombre élevé d'UAT mais atteint un plus grand nombre de tokens (proche de 1. Le dernier est un mélange massivement construit de longs passages en petite quantité par œuvre à l'exception de son sous-corpus contenu \textit{Corpus ATU} et de quelques autres textes qui ne pourraient pas être facilement intégrés automatiquement dans le dernier.
+Chaque corpus affiche une valeur différente de la propriété combinée ``Nombre d'(UAT)-Taille du corpus'' (\textit{cf.} table \ref{tab:chap1:noise:corpora_properties}): le premier est un très petit corpus avec un nombre élevé d'unités textuelles autonomes, le second a un nombre élevé d'ATU mais atteint un plus grand nombre de mots. Le dernier est un mélange massivement construit de longs passages en petite quantité par œuvre, et seul dix pourcent de ce corpus est riche en ATU.
 
 \begin{table*}[ht!]
-\centering
-
-\resizebox{1\linewidth}{!}{%
-\begin{tabular}{l|rr|rr|rr|rrrrrrr}
-\toprule
-{} & \multicolumn{2}{l}{(S)ATU} & \multicolumn{2}{l}{Tokens} & \multicolumn{2}{l}{Texts} & \multicolumn{7}{l}{Distribution of Tokens / ATU} \\
-{} &  Count &     \% &     Count &     \% & Count &     \% & Mean &  Std & Min & 25\% & 50\% & 75\% &    max \\
-\midrule
-Martial \& Priapea &   1607 &   2.8 &     61,056 &   0.3 &     2 &   0.2  &  38 &   32 &   7 &  13 &  27 &  54 &    280 \\
-ATU Corpus        &  39,591 &  68.5 &   3,549,249 &  20.1 &   125 &  14.8 &  90 &  603 &   1 &   9 &  17 &  36 &  47,783 \\
-All               &  57,761 & 100.0 &  17,639,626 & 100.0 &   845 & 100.0 & 305 & 2,159 &   1 &  11 &  24 &  77 & 248,564 \\
-\bottomrule
-\end{tabular}%
-}
-\caption{Properties of the different corpora. Punctuation and foreign tokens are ignored in the token count.}
-\label{tab:corpora_properties}
+    \centering
+    \resizebox{1\linewidth}{!}{%
+    \begin{tabular}{l|rr|rr|rr|rrrrrrr}
+    \toprule
+    {} & \multicolumn{2}{l}{(S)ATU} & \multicolumn{2}{l}{Mots} & \multicolumn{2}{l}{Oeuvres} & \multicolumn{7}{l}{Distribution du ratio Mots / (S)ATU} \\
+    {} &  Count &     \% &     Count &     \% & Count &     \% & Mean &  Std & Min & 25\% & 50\% & 75\% &    max \\
+    \midrule
+    \textit{Martial \& Priapea} &   1607 &   2.8 &     61,056 &   0.3 &     2 &   0.2  &  38 &   32 &   7 &  13 &  27 &  54 &    280 \\
+    Corpus ATU        &  39,591 &  68.5 &   3,549,249 &  20.1 &   125 &  14.8 &  90 &  603 &   1 &   9 &  17 &  36 &  47,783 \\
+    \textit{All}               &  57,761 & 100.0 &  17,639,626 & 100.0 &   845 & 100.0 & 305 & 2,159 &   1 &  11 &  24 &  77 & 248,564 \\
+    \bottomrule
+    \end{tabular}%
+    }
+    \caption{Propriétés des différents corpus. Les signes de ponctuations sont ignorés dans le décompte des mots.}
+    \label{tab:chap1:noise:corpora_properties}
 \end{table*}
 
-Pour chaque corpus, afin de quantifier l'effet de la segmentation ou de son absence, nous avons attribué à chaque texte un niveau auquel il doit être divisé, permettant ainsi de traiter les (S)ATU comme des unités non séquentielles : pour les textes qui ne présentent pas de (S)ATU, le texte complet a été conservé comme une seule unité. Nous produisons deux versions de nos corpus : la première où les (S)ATU sont utilisées pour éviter que la fenêtre ne déborde, que nous appelons corpus segmenté $S(T)$, et la seconde où chaque fichier est traité comme une seule unité d'information continue, appelée corpus non segmenté $U(T)$.
-
+% Reprendre ici
 % \subsubsection{Analyse sémantique et dispositif expérimental}
 
-Comme l'objectif principal est d'analyser l'impact de la segmentation du texte sur l'analyse sémantique, nous mettons en place l'expérience sur la base de quatre paramètres que nous combinons ensuite pour produire des analyses en utilisant les deux versions de $T$ et comparer leurs résultats.
+Comme l'objectif principal est d'analyser l'impact de la segmentation du texte sur l'analyse sémantique, nous mettons en place l'expérience sur la base de quatre paramètres que nous combinons ensuite pour produire des analyses en utilisant les deux versions de $T$ et comparer leurs résultats. Ces quatre paramètres représentent ensemble un assez grand nombre de variation permettant de contrôler les conditions dans lesquelles $Analyse(S(T)) \neq Analyse(U(T))$: il s'agit des groupes de mots étudiés, de la taille de la fenêtre de capture des co-occurrents, des fréquences minimales pour qu'un mot soit comptabilisé dans les analyses, et enfin du nombre de groupes que l'on veut produire par \textit{clusterisation}.
 
-Le premier ensemble de paramètres est composé de quatre groupes de mots que nous voulons analyser dans le corpus. Ces groupes de mots, que nous appelons pivots, fournissent une distribution différente selon les corpus et sont composés de mots apparaissant au moins 10 fois :
-
+Pour les groupes de mots étudiés, on utilise des termes appartenant à des champs lexicaux identifiés (famille, poésie et écriture, sexualité) afin que leur séparation en sous-groupes soit nettes quand nous les regroupons. Ces groupes de mots, que nous appelons pivots, présentent aussi des particularités en termes de fréquences -- ils apparaissent cependant tous au moins dix fois -- et de spécificités génériques:
 
 \begin{enumerate}
-    \item Le premier, \textit{Puer et al.}, contient des mots liés aux personnes et n'est spécifique à aucun des corpus. Il s'agit de \textit{dominus, mater, pater, puella, puer, uir, uxor}.
-    Elles vont de 2 036 occurrences (\textit{puella}) à 48 519 (\textit{dominus}) dans \textit{All}.
-    \item Le second, \textit{Carmen et al.}, pourrait être plus spécifique aux grammairiens et à la poésie, qui sont surreprésentés dans \textit{Corpus ATU}. Il contient \textit{scribo, poeta, libellus, lego2, carmen1, liber1} (\textit{cf. } Table \ref{tab:freq_corpora})\footnote{Lorsque les lemmes se terminent par des chiffres comme \textit{lego2}, cela représente un indice de désambiguïsation : en latin, la première personne de l'indicatif présent est souvent utilisée pour représenter le lemme, mais deux verbes partagent la forme \textit{lego} : l'un est conjugué \textit{legis} à la deuxième personne (signifiant : lire, \textit{lego2}) tandis que l'autre devient \textit{legas} (signifiant : nom, \textit{lego1})}. 
+    \item Le premier, \textit{Puer et al.}, contient des mots liés au foyer romain et n'est spécifique à aucun des corpus. Il s'agit de \textit{dominus, mater, pater, puella, puer, uir, uxor}, qui sont présents entre 2~036 (\textit{puella}) à 48~519 fois (\textit{dominus}) dans \textit{All}.
+    \item Le second, \textit{Carmen et al.}, pourrait être plus spécifique aux grammairiens et à la poésie, qui sont surreprésentés dans \textit{Corpus ATU}. Il contient \textit{scribo, poeta, libellus, lego2, carmen1, liber1} (\textit{cf. } Table \ref{tab:freq_corpora})\footnote{Lorsque les lemmes se terminent par des chiffres comme \textit{lego2}, cela représente un indice de désambiguïsation : en latin, la première personne de l'indicatif présent est souvent utilisée pour représenter le lemme, mais deux verbes partagent la forme \textit{lego} : l'un est conjugué \textit{legis} à la deuxième personne (signifiant : lire, \textit{lego2}) tandis que l'autre devient \textit{legas} (signifiant : nommer, \textit{lego1})}. 
     \item Le troisième, \textit{Puer, Carmen et al.}, est une combinaison des deux premiers et offre en tant que tel deux sous-groupes sémantiques clairement séparés qui devraient être faciles à regrouper le moment venu.
-    \item Le dernier, \textit{Futuo, Carmen, Puer et al.}, est une combinaison des deux premiers ainsi que des mots crus et des mots qui sont liés à la sexualité : pour certains, ils sont fortement spécifiques à \textit{Martial et Priapea}, ont une fréquence très faible par rapport au premier groupe, mais sont aussi quelque peu spécifiques à \textit{Corpus ATU}. Il s'agit de \textit{cunnus, fello, futuo, irrumo, lasciuus, mentula, paedico2} (\textit{cf.} Tableau \ref{tab:freq_corpora} pour chaque fréquence de mots selon le corpus).
+    \item Le dernier, \textit{Futuo, Carmen, Puer et al.}, est une combinaison des deux premiers ainsi que des mots obscènes ou du moins liés à l'expression de la sexualité : pour certains, ils sont fortement spécifiques à \textit{Martial et Priapea}, ont une fréquence très faible par rapport au premier groupe, mais sont aussi quelque peu spécifiques à \textit{Corpus ATU}. Il s'agit de \textit{cunnus, fello, futuo, irrumo, lasciuus, mentula, paedico2} (\textit{cf.} Tableau \ref{tab:freq_corpora} pour chaque fréquence de mots selon le corpus).
     \item Afin d'évaluer le bruit avant l'analyse, nous considérons également un cinquième ensemble de mots composé des 1000 mots les plus fréquents du jeu de données \textit{All}.
 \end{enumerate}
 
-Un deuxième paramètre est la taille de la fenêtre, notée $W$. Pour analyser les mots, nous ne récupérerons que les mots apparaissant dans cette fenêtre. Nous faisons varier cette fenêtre entre quatre valeurs ($\left [ 5, 10, 15, 20 \right ]$).
+Nos deuxièmes et troisièmes paramètres sont la taille de la fenêtre, $W$, et notre seuil plancher de fréquence, $F$. Nous faisons varier $W$ autour de quatre valeurs ($\left [ 5, 10, 15, 20 \right ]$) capturant différentes approche du contexte: des mots immédiatement à côté de notre terme étudié à ceux dans les phrases ou ensembles syntaxiques autour de ce dernier. Pour $F$, on filtre le bruit en ne considérant les mots qui ne sont présent qu'au moins $F$ fois dans les contextes récupérés: si \texttt{lemma1} apparaît $2$ fois avec \texttt{pivot1} et $5$ fois avec \texttt{pivot2}, il est conservé comme caractéristique si $F\geq5$. $F$ est sélectionné parmi $\left [ 1, 5, 10, 20 \right ]$: plus le nombre est haut, moins le bruit statistique sera important, les cooccurrences uniques seront ignorées lorsque $F > 1$ par exemple.
 
-Un troisième paramètre est la fréquence plancher-seuil, notée $F$ par la suite. Les lemmes co-occurrents avec nos pivots ne seront considérés que s'ils apparaissent au moins $F$ fois dans le corpus de fenêtres : si \texttt{lemma1} apparaît $F-5$ fois avec \texttt{pivot1} et $5$ fois avec \texttt{pivot2}, il est conservé comme caractéristique. $F$ varie dans les limites de $\left [ 1, 5, 10, 20 \right ]$ ce qui devrait permettre d'obtenir des situations moins sujettes au bruit : les cooccurrences uniques seront ignorées lorsque $F > 1$ par exemple, et des lemmes moins importants suivront lorsque nous augmenterons la valeur.
+% [2/1/22] RÉDACTION REPRENDRE ICI
 
 Le flux de travail suivant est ensuite appliqué aux quatre premiers ensembles de mots\footnote{\textit{Top1000} n'est pas utilisé dans toute l'expérience, voir ci-dessous.} en utilisant toutes les combinaisons de $W$ et $F$ pour un total de 16 résultats différents par version du corpus :
 \begin{enumerate}
