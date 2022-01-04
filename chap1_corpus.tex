@@ -571,7 +571,7 @@ Chaque corpus du meta-corpus concerne une période qui lui est propre (\textit{c
 \clearpage
 }
 
-Le meta-corpus contient par ailleurs deux grandes périodes de rédaction, correspondant à deux phénomènes bien identifiés par les historiens de la littérature(\textit{cf.} \ref{fig:chap1:accum-mot}). On a d'une part la littérature dite classique, allant de la fin de la république au règne des Antonins à la fin du Ier siècle de notre ère: elle est constituée -- entre autres -- du surproducteur Cicéron, des philosophes Sénèque et Lucrèce, des poètes augustéens et de l'apogée du genre élégiaque, des épopées latines les plus connues, et se termine avec les écrivains Martial, Juvénal et Pline le Jeune. Ces siècles ont été consacrés par l'enseignement du latin à travers le thème, dont la langue est calquée sur les styles césariens et cicéroniens, et l'études des grands classiques comme l'\textit{Énéide} de Virgile et les \textit{Annales} de Tacite. Cette période représente un peu moins de la moitié du corpus avec près de dix millions de mots. 
+Le meta-corpus contient par ailleurs deux grandes périodes de rédaction, correspondant à deux phénomènes bien identifiés par les historiens de la littérature(\textit{cf.} \ref{fig:chap1:accum-mot}). On a d'une part la littérature dite classique, allant de la fin de la république au règne des Antonins à la fin du Ier siècle de notre ère: elle est constituée -- entre autres -- du surproducteur Cicéron, des philosophes Sénèque et Lucrèce, des poètes augustéens et de l'apogée du genre élégiaque, des épopées latines les plus connues, et se termine avec les écrivains Martial, Juvénal et Pline le Jeune. Ces siècles ont été consacrés par l'enseignement du latin à travers le thème, dont la langue est calquée sur les styles césariens et cicéroniens, et l'études des grands classiques comme l'\textit{Énéide} de Virgile et les \textit{Annales} de Tacite\footnote{Il suffit de voir que l'\textit{Anthologie de la littérature latine} de J. Gaillard et R. Martin s'arrête à Apulée (IIe siècle) et ignore l'ensemble de la littérature chrétienne et tardive pour se rendre compte de la focalisation de la réception sur cette période de la littérature. \textcite{gaillard_anthologie_2005}}. Cette période représente un peu moins de la moitié du corpus avec près de dix millions de mots. 
 
 La deuxième période de production massive est ce que Fredouille et Zhenacker appelle \enquote{l'âge d'or de la patristique}\footcite{fredouille}: avec la reconnaissance officielle du christianisme, on assiste à la rédaction des oeuvres d'Hilaire, Ambroise, Augustin et de Jérôme, dont la production -- partiellement représentée dans notre corpus -- correspond à 20,7\% du meta-corpus complet en nombre de mots et 12,5\% en nombre de textes. D'autres auteurs, aux quantités minuscules en regard de celles des quatre Pères, restent majeurs pour notre recherche: ainsi, le IVe siècle est aussi le siècle d'Ausone, et donc du \textit{Centon Nuptial}, ré-arrangement littéraire des vers de Virgile visant à raconter un mariage et la première nuit des mariés. C'est aussi le siècle des grammairiens et commentaires: on y retrouve l'oeuvre de Donat, de Servius et, suivant les datations, des \textit{Adnotationes super Lucanum}. Les commentaires peuvent avoir une grande importance pour la compréhension des textes anciens ou du moins de leur réception, et, en termes d'approche quantitative, permettent d'ajouter du contexte aux passages originaux.
 
@@ -658,17 +658,17 @@ Ces recommandations sont par ailleurs dépendantes de l'évolution des technique
 
 \subsection{Du corpus au document: qu’est-ce qu’un document pour l’ordinateur ?}
 
-Nous avons vu que le corpus numérisé latin, disponible dans des formats acceptables, dépasse de loin le meta-corpus accumulé ici, ne serait-ce qu'à travers la \textit{Patrologia Latina} et \textit{DigilibLT}. Or, ces textes ont été laissés de côté au profit d'un corpus suivant intégralement les normes \textit{Capitains}, dont l'encodage est coûteux en temps. Nous proposons d'évaluer l'impact que peut avoir cette segmentation structurelle et son exploitabilité à travers une simple expérience: évaluer l'impact, dans une étude statistique des co-occurrents, de la prise en compte des segmentations structurelles \textit{machine actionable} de \textit{Capitains}. Dans un premier temps, nous définirons les concepts de cette expérience, à travers son héritage en linguistique de corpus mais aussi à travers une définition de ce qu'est une rupture dans un continuum de texte. Dans un second temps, nous définirons la méthode d'évaluation des corpus. Enfin, nous étudierons l'hypothétique différence entre les résultats des différentes analyses\footnote{Ce texte a été réutilisé dans la publication en cours, \enquote{Thibault Clérice. \textit{"Don't worry, it's just noise": quantifying the impact of files treated as single textual units when they are really collections}}}.
+Nous avons vu que le corpus numérisé latin, disponible dans des formats acceptables, dépasse de loin le meta-corpus accumulé ici, ne serait-ce qu'à travers la \textit{Patrologia Latina} et \textit{DigilibLT}. Or, ces textes ont été laissés de côté au profit d'un corpus suivant intégralement les normes \textit{Capitains}, dont l'encodage est coûteux en temps. Nous proposons d'évaluer l'importance que peut avoir cette segmentation structurelle et son exploitabilité à travers une simple expérience: évaluer l'impact, dans une étude statistique des co-occurrents, de la prise en compte des segmentations structurelles \textit{machine actionable} de \textit{Capitains}. Dans un premier temps, nous définirons les concepts de cette expérience, à travers son héritage en linguistique de corpus mais aussi à travers une définition de ce qu'est une rupture dans un \enquote{flux textuel}. Dans un second temps, nous définirons la méthode d'évaluation des corpus. Enfin, nous étudierons l'hypothétique différence entre les résultats des analyses effectuées\footnote{Ce texte a été réutilisé dans la publication en cours, \enquote{Thibault Clérice. \textit{"Don't worry, it's just noise": quantifying the impact of files treated as single textual units when they are really collections}}}.
 
 \subsubsection{Concepts}
 
-En 1957 est publié un ouvrage de Firth dont la phrase \enquote{On reconnaît un mot à son voisinage.}\footcite{firth_papers_1957} devient une citation classique pour définir la sémantique distributionnelle: pour trouver et comprendre le sens d'un ``mot'', on s'intéresse à ses co-occurrents, car ce contexte définit ce qui peut s'y trouver. Dans des phrases à trou telles que \enquote{Ce matin, j'ai bu un jus {[TROU]}}, il est facile de proposer des mots qui s'y retrouveraient logiquement, au premier titre des quels \enquote{d'orage} figureraient. Or, ce principe de sémantique distributionnelle est devenu si important qu'on le retrouve employé dans un très grand nombre d'outils, sans pour autant que la question de ce que forme un \enquote{voisinage} y soit remis en question. Cette approche du lexique est très utilisée dans les domaines du latin et du grec ancien de la littérature classique \footcite{gillivray_grec}, de l'antiquité tardive \footcite{munson_biblique_2017}, médiévale \footcite{guerreau_pourquoi_1989,perreaux:eau} et post-médiévale \footcite{bloem-etal-2020-distributional} avec des corpus allant de quelques dizaines de milliers de mots à quelques millions. Mais bien souvent, la question de la mise en forme des corpus et de leur exploitation est ignorée des documents produits, et ce qui constitue le contexte est défini majoritairement par une mesure: la fenêtre -- c'est-à-dire le nombre de mots à gauche et à droite -- de capture du voisinage. 
+\enquote{On reconnaît un mot à ses compagnons.\footnote{\enquote{\textit{You shall know a word by the company it keeps }}\textcite{firth_papers_1957}}} Cette phrase, publiée en 1957 et écrite J. R. Firth, est devenue une citation classique pour définir la sémantique distributionnelle: pour trouver et comprendre le sens d'un ``mot'', on s'intéresse à ses co-occurrents, car ce contexte définit ce qui peut s'y trouver. Dans des phrases à trous telles que \enquote{Ce matin, j'ai bu un jus {[TROU]}}, il est facile de proposer des mots qui s'y retrouveraient logiquement, au premier titre desquels on aurait \enquote{d'orange}. Or, ce principe de sémantique distributionnelle est devenu si important qu'on le retrouve employé dans un très grand nombre d'outils, sans pour autant que la question de ce que forme une \enquote{compagnie} y soit remis en question\footnote{On trouve aussi le terme de \textit{voisinage} ou bien sûr de contexte en ce sens.}. Cette approche du lexique est très utilisée dans les domaines du latin et du grec ancien de la littérature classique\footcite{gillivray_greek}, de l'antiquité tardive\footcite{munson_biblical_2017}, médiévale\footcite{guerreau_pourquoi_1989,perreaux:eau} et \enquote{post-médiévale\footcite{bloem-etal-2020-distributional}} avec des corpus allant de quelques dizaines de milliers de mots à quelques millions. Mais bien souvent, la question de la mise en forme des corpus et de leur exploitation est ignorée des descriptions des processus d'analyse, et ce qui constitue le contexte est défini majoritairement par une mesure: la fenêtre de capture de cette compagnie, c'est-à-dire le nombre de mots à gauche et à droite. 
 
-Nous faisons l'hypothèse qu'ignorer les ruptures inhérentes aux oeuvres numérisées peut porter préjudice à la sémantique distributionnelle, d'autant plus sur des petits corpus comme le nôtre, à peine vingt millions de mots lorsque des corpus comme l'encyclopédie en ligne \textit{Wikipedia} en atteint un milliard et demi\footcite{noauthor_statistiques_nodate} et d'autres beaucoup plus massifs comme OSCAR en atteignent huit cent milliards pour cent cinquante six langues couvertes\footcite{ortizsuarez_hal-02148693}. Parce que les oeuvres numérisées sont bien souvent des calques de la transmission papier, elles tiennent parfois plus de la collection d'oeuvre, comme les recueil d'épigrammes ou de poésie en général, que d'une oeuvre \enquote{simple}. Dans le cadre d'un commentaire de texte, il ne viendrait pas à l'idée d'un latiniste de s'appuyer sur les premiers mots de l'épigramme suivant chez Martial: bien qu'il arrive qu'une unité thématique joignent quelques épigrammes, ce sont des oeuvres courtes et indépendantes les unes des autres. Or, si l'on traite un corpus de textes bruts ou de TEI sans faire attention aux rôles des divisions structurelles, c'est exactement ce que pourrait faire la machine.
+Nous faisons l'hypothèse qu'ignorer les ruptures inhérentes aux oeuvres numérisées peut porter préjudice à la sémantique distributionnelle, d'autant plus sur des petits corpus comme le nôtre, à peine vingt millions de mots lorsque des corpus comme l'encyclopédie en ligne \textit{Wikipedia Français} en atteint un milliard et demi\footcite{noauthor_statistiques_nodate} et d'autres beaucoup plus massifs comme OSCAR en atteignent huit cent milliards avec cent cinquante six langues représentées\footcite{ortizsuarez_hal-02148693}. Parce que les oeuvres numérisées sont bien souvent des calques de la transmission papier, elles tiennent parfois plus de la collection d'oeuvres, comme les recueil d'épigrammes ou de poésie en général, que d'une oeuvre \enquote{simple}. Dans le cadre d'un commentaire d'un épigramme de Martial, il ne viendrait pas à l'idée d'un latiniste de s'appuyer sur les premiers mots de l'épigramme suivant: bien qu'il arrive qu'une unité thématique joignent quelques poèmes chez Martial, ce sont des oeuvres courtes et indépendantes les unes des autres. Or, si l'on traite un corpus de textes bruts ou de TEI sans faire attention aux rôles des divisions structurelles, c'est exactement ce que pourrait faire la machine.
 
-Nous avons vu précédemment que les oeuvres présentaient une grande variation de contenus, du discours juridique à la collection de recette chez \textit{Apicius}. Ces textes présentent différents niveaux de segmentation structurelle, du chapitre pour les ouvrages d'histoire par exemple aux sections pour les grands discours, en passant bien sûr par les poèmes, les livres, les recettes, etc. Ces types de contenus sont parfois introduits par la transmission des textes, parfois d'origine, mais tous renseignent au moins en partie sur la relation qui lient les unités. Il est attendu qu'une recette et une autre recette ne se retrouvent voisines que \enquote{par hasard}, ou parce qu'elles sont toutes deux des recettes de viande, tandis que deux chapitres d'un ouvrage d'histoire formeront une probable continuité narrative.
+Nous avons vu précédemment que les oeuvres présentaient une grande variation de contenus, du discours juridique à la collection de recette chez Apicius. Ces textes sont formés par différents niveaux de segmentation structurelle, du chapitre pour les ouvrages d'histoire par exemple aux sections pour les grands discours, en passant bien sûr par les poèmes, les livres, les recettes, etc. Ces types de contenus sont parfois introduits par la transmission des textes, parfois d'origine, mais tous décrivent -- au moins partiellement -- la relation qui lient chacune de ces unités. Il est attendu qu'une recette et une autre recette ne se retrouvent voisines que \enquote{par hasard}, ou parce qu'elles sont toutes deux des recettes de viande, tandis que deux chapitres d'un ouvrage d'histoire formeront une probable continuité narrative.
 
-Nous souhaitons alors qualifier ces unités dans deux grandes catégories. Il y a d'une part les \enquote{unités textuelles autonomes}~(ATU): ces unités marquent une rupture avec leurs voisines. Leur contenu de pourrait être considéré comme cooccurrents d'un point de vue lexical et sémantique: le dernier mot d'une ATU ne peut être considéré comme suivi par le premier mot de l'ATU suivante. C'est le cas d'une très grande majorité de poèmes, des définitions des \textit{Étymologies} d'Isidore de Seville, des recettes d'Apicius, des commentaires ligne à ligne de Porphyrion. D'autre part, le reste des unités peuvent être qualifiées d'\enquote{unités textuelles semi-autonomes}~(SATU): ces unités présentent une continuité narrative, sémantique d'un élément à un autre. Ces le cas des vers, des sections, des chapitres, etc. Cette semi-autonomie se manifeste par exemple par la difficulté de lecture d'une unité sans avoir pris en compte les précédentes, mais aussi par une nette discontinuité narrative, sous la forme d'une ellipse temporelle: la continuité et les ruptures sont avant tout affaire de style avant d'être des traits caractérisants de ces unités.
+Nous souhaitons alors qualifier ces unités dans deux grandes catégories. Il y a d'une part les \enquote{unités textuelles autonomes}~(ATU): ces unités marquent une rupture avec leurs voisines. Leur contenu ne pourrait être considéré comme cooccurrents d'un point de vue lexical et sémantique: le dernier mot d'une ATU ne peut être considéré comme suivi par le premier mot de l'ATU suivante. C'est le cas d'une très grande majorité de poèmes, des définitions des \textit{Étymologies} d'Isidore de Seville, des recettes d'Apicius, des commentaires ligne à ligne de Porphyrion. D'autre part, le reste des unités peuvent être qualifiées d'\enquote{unités textuelles semi-autonomes}~(SATU): ces unités présentent une continuité narrative, sémantique d'un élément à un autre. C'est le cas des vers, des sections, des chapitres, etc. Par exemple, cette semi-autonomie se manifeste par la difficile lecture d'une unité sans avoir pris en compte les précédentes, ou la présence d'ellipses narratives volontaires. Continuité et ruptures sont avant tout affaire de style avant d'être des traits caractérisants des (S)ATU.
 
 Si l'on utilise des textes sans prendre en compte leurs structures, il est probable que des unités autonomes aient leur texte compté comme co-occurrent des unités voisines. Pour évaluer ce risque, on propose de mesurer un \enquote{taux théorique de contamination des fenêtres}. Pour un texte $t$, ce taux peut être calculé en fonction du nombre de (S)ATU du texte $\left | U_{t} \right |$, de la taille de la fenêtre utilisée $W$ et enfin du nombre de mots dans le texte $\left | t \right |$ tel que
 
@@ -682,48 +682,47 @@ Si l'on utilise des textes sans prendre en compte leurs structures, il est proba
 \label{equation:twcr}
 \end{equation*}
 
-\noindent où chaque mot dans une (S)ATU est contaminé par un maximum de $2W$ tokens co-occurrents tirés des (S)ATU voisines, à l'exception des toutes premières et dernières (S)ATU de l'oeuvre ($\left|U\right| - 2 \times \frac{1}{2}$), qui n'ont qu'une unité voisine (d'où $\frac{1}{2}$). Ce taux représente la quantité relative de mots dont la fenêtre comporte au moins un voisin qui n'est pas censé être compté comme cooccurrent. Dans ce contexte, avec une fenêtre par défaut de 5 mots d'outils telle que celle utilisée par un outil comme Gensim \footcite{vrehuuvrek2011gensim}, nous avons des taux élevés pour des textes tels que les \textit{Épigrammes} de Martial qui est constitué de 1527 poèmes contenant au total 71~911 mots. Au contraire, pour des travaux en prose comme le \textit{Iugurthia} de Salluste, nous ne dépassons pas les 0\% de contamination cat il est considéré comme un texte ne présentant pas plus d'une (S)ATU, malgré ses 25~411 tokens. Cela impliquerait que jusqu'à un quart des tokens de l'œuvre de Martial pourraient finir pollués par des mots non cooccurrents, bien qu'à différentes échelles (les premiers et derniers mots de chaque unité étant plus pollués que les $W+1$ qui finissent avec seulement 1 token de bruit). 
+\noindent où chaque mot dans une (S)ATU est contaminé par un maximum de $2W$ tokens co-occurrents tirés des (S)ATU voisines, à l'exception des toutes premières et dernières (S)ATU de l'oeuvre ($\left|U\right| - 2 \times \frac{1}{2}$), qui n'ont qu'une unité voisine (d'où $\frac{1}{2}$). Ce taux représente la quantité relative de mots dont la fenêtre comporte au moins un voisin qui n'est pas censé être compté comme cooccurrent. Dans ce contexte, si l'on utilise les valeurs par défauts d'outils comme Gensim\footcite{vrehuuvrek2011gensim}, où la fenêtre est fixée à cinq ($W=5$), pour produire des analyses distributionnelles, et que l'on applique cette analyse à des oeuvres comme celle de Martial, constituée de 1527 épigrammes pour 71~911 mots, ce taux théorique est de 21,22\%. La contamination pourrait donc s'étendre jusqu'à plus d'un mot sur cinq. Au contraire, sur des textes comme le \textit{Contre Pison} de Cicéron, constitué de sections qui ne forment pas de rupture et donc dont le texte est continu, le taux de contamination sera nul.
 
 Si le taux de contamination théorique de la fenêtre constitue un outil efficace pour considérer la question, il considère que toute (S)ATU est de longueur égale, ce qui n'est bien évidemment jamais le cas. Le taux de contamination réel dépend à la fois de la taille des trois (S)ATU à considérer: la précédente, l'actuelle et la suivante. Dans le cas de très petits poèmes comme l'\textit{Épigramme} 3.40 de Martial (10 mots), pas une seule fenêtre est indemne de contamination si $W=5$. Pire encore, si la fenêtre adoptée est de dix mots, une taille loin de toute démesure, chaque mot tire des co-occurrents des deux unités voisines en même temps (\textit{cf.} Figure~\ref{exc:epigrams}).
 
 \begin{figure}
-\resizebox{1\linewidth}{!}{%
-\begin{minipage}[l]{0.45\textwidth}
+\small
+\begin{minipage}[t]{0.45\textwidth}
 (Poème~39)\\*
 Iliaco similem puerum, Faustine, ministro\\*
 Lusca Lycoris amat. Quam bene lusca videt!\\
 (Poème~40)\\*
-\underline{Inserta phialae Mentoris manu} \textbf{ducta}\\*
-\underline{Lacerta vivit et timetur argentum}.\\
+\textit{Inserta phialae Mentoris manu} \textbf{ducta}\\*
+\textit{Lacerta vivit et timetur argentum}.\\
 (Poème~41)\\*
 Mutua quod nobis ter quinquagena dedisti\\*
 Ex opibus tantis, quas gravis arca premit,\\* {[...]}
 \end{minipage} \hfill
-\begin{minipage}[l]{0.45\textwidth}
+\begin{minipage}[t]{0.45\textwidth}
 (Poème~39)\\*
 Iliaco similem puerum, Faustine, ministro\\*
-Lusca \underline{Lycoris amat. Quam bene lusca videt}!\\
+Lusca \textit{Lycoris amat. Quam bene lusca videt}!\\
 (Poème~40)\\*
-\underline{Inserta phialae Mentoris manu} \textbf{ducta}\\*
-\underline{Lacerta vivit et timetur argentum}.\\
+\textit{Inserta phialae Mentoris manu} \textbf{ducta}\\*
+\textit{Lacerta vivit et timetur argentum}.\\
 (Poème~41)\\*
-\underline{Mutua quod nobis ter quinquagena} dedisti\\*
+\textit{Mutua quod nobis ter quinquagena} dedisti\\*
 Ex opibus tantis, quas gravis arca premit,\\*  {[...]}
-\end{minipage}%
-}
-\caption{Livre 3, poèmes 39 à 40 des \textit{Épigrammes} de Martial. Les mots considérés comme co-occurrents de \textit{ducta} pour une fenêtre de dix mots ($W=10$) sont soulignés. À gauche, le résultat attendu pour un lecteur humain, prenant en compte l'absence de continuité entre les deux poèmes. À droite, la même approche, mais en prenant l'oeuvre comme une seule unité à analyser.}
+\end{minipage}
+\caption{Livre 3, poèmes 39 à 40 des \textit{Épigrammes} de Martial. Les mots considérés comme co-occurrents de \textit{ducta} pour une fenêtre de dix mots ($W=10$) sont en italique. À gauche, le résultat attendu pour un lecteur humain, prenant en compte l'absence de continuité entre les deux poèmes. À droite, la même approche, mais en prenant l'oeuvre comme une seule unité à analyser.}
 \label{exc:epigrams}
 \end{figure}
 
 
 \subsubsection{Méthode d'évaluation}
 
-Pour quantifier l'impact de la segmentation ou son absence, nous mettons en place toute une chaîne d'analyse permettant d'être reproduite facilement et de mettre en avant ces différences de traitement. Étant donné la particularité de l'approche -- les résultats de ces analyses ne nous intéressent pas directement, ce sont leurs différences qui sont importantes --, nous effectuons ces comparaisons à différents niveaux de traitement avec une grande variétés de paramètres, souhaitant ainsi capturer plusieurs approche des textes.
+Pour quantifier l'impact de la segmentation ou son absence, nous mettons en place toute une chaîne d'analyse permettant d'être reproduite facilement et de mettre en avant ces différences de traitement. Étant donné la particularité de l'approche -- les résultats de ces analyses ne nous intéressent pas directement, ce sont leurs différences qui sont importantes --, nous effectuons ces comparaisons à différents niveaux de traitement avec une grande variétés de paramètres, souhaitant ainsi capturer plusieurs approches des textes.
 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.7\linewidth]{figures/chap1/part2/VennCorpus.png}
+    \includegraphics[width=0.6\linewidth]{figures/chap1/part2/VennCorpus.png}
     \caption{Représentation à l'échelle des trois sous-corpus et de leur relation les uns avec les autres : chaque corpus contient le ou les plus petits. }
     \label{fig:venn}
 \end{figure}
@@ -731,17 +730,17 @@ Pour quantifier l'impact de la segmentation ou son absence, nous mettons en plac
 Afin de quantifier l'effet de la segmentation ou de son absence, nous avons attribué à chaque texte un niveau auquel il doit être divisé, permettant ainsi de traiter les (S)ATU comme des unités non séquentielles. Pour les textes qui ne présentent pas de (S)ATU, par exemple un texte court formé de nombreux paragraphes, le texte complet a été conservé comme une seule unité. Nous produisons deux versions de chaque texte et donc de chaque corpus:
 \begin{itemize}
     \item $S(T)$ (pour \textit{segment} de $T$, où $T$ est un corpus): les (S)ATU sont utilisées et les oeuvres sont découpées en autant de textes indépendants. C'est le corpus segmenté.
-    \item $U(T)$ (pour \textit{*unsegment} de $T$): les (S)ATU sont ignorées et toute oeuvre présente en un seul fichier dans notre corpus est considéré comme une seule unité. C'est le corpus non-segmenté
+    \item $U(T)$ (pour \textit{*unsegment} de $T$): les (S)ATU sont ignorées et toute oeuvre présente en un seul fichier dans notre corpus est considéré comme une seule unité. C'est le corpus non-segmenté.
 \end{itemize}
 
 Puis, nous divisons notre meta-corpus en trois sous-corpus~(\textit{cf.} Figure~\ref{fig:venn}), représentant trois réalités différentes du point de vue des quantités, des thèmes ou encore des compositions des oeuvres qui nous ont été transmises:
 \begin{enumerate}
-    \item Le premier corpus ne contient que les \textit{Épigrammes} de Martial et les \textit{Priapées} (\textit{Martial \& Priapea} ci-après). Ils forment un très petit corpus ($\left | t \right |=61,082$), avec des thèmes et un lexique communs -- ils parlent tous deux de sexualité et de manière obscène la majeure partie du temps -- et sont des textes particulièrement composites. Le premier a une structure logique en trois niveaux (livre, poème, vers), le second en seulement deux niveaux (poème, vers). Ils sont composés de poèmes qui ne forment pas de séquences narratives et donc uniquement d'ATU.
+    \item Le premier corpus ne contient que les \textit{Épigrammes} de Martial et les \textit{Priapées} (\textit{Martial \& Priapea} ci-après). Ils forment un très petit corpus ($\left | t \right |=61~082$), avec des thèmes et des lexiques communs -- ils parlent tous deux de sexualité et de manière obscène la majeure partie du temps -- et sont des textes particulièrement composites. Le premier a une structure logique en trois niveaux (livre, poème, vers), le second en seulement deux niveaux (poème, vers). Ils sont composés de poèmes qui ne forment pas de séquences narratives et donc uniquement d'ATU.
     \item Le second, \textit{Corpus ATU} ci-après, est constitué de toutes les œuvres dans lesquelles il existe un niveau de la structure logique de citation qualifié de ``poème'', ``commentaire'' ou ``scholia'', ``lettre'', ``discours'' et ``entrée'' (on trouve ces dernières pour qualifier les recettes et les niveaux des \textit{Étymologies}): cela représente 125 œuvres et 3~549~249 mots. Ils ne forment pas d'unité thématique mais sont tout de même majoritairement composés de poésie, y compris à travers les répétions dans les \textit{scholia}. Il comprend \textit{Martial \& Priapea}.
     \item Le dernier est le meta-corpus complet avec ses 17~639~626 mots (\textit{All}) mots.
 \end{enumerate}
 
-Chaque corpus affiche une valeur différente de la propriété combinée ``Nombre d'(UAT)-Taille du corpus'' (\textit{cf.} table \ref{tab:chap1:noise:corpora_properties}): le premier est un très petit corpus avec un nombre élevé d'unités textuelles autonomes, le second a un nombre élevé d'ATU mais atteint un plus grand nombre de mots. Le dernier est un mélange massivement construit de longs passages en petite quantité par œuvre, et seul dix pourcent de ce corpus est riche en ATU.
+Chaque corpus affiche une valeur différente de la propriété combinée ``Nombre d'(UAT)-Taille du corpus'' (\textit{cf.} table \ref{tab:chap1:noise:corpora_properties}). Le premier est un très petit corpus avec un nombre élevé d'unités textuelles autonomes. Le second a un nombre élevé d'ATU mais atteint un plus grand nombre de mots. Le dernier est un mélange massivement construit de longs passages en petite quantité par œuvre, et seul dix pourcent de ce corpus est riche en ATU.
 
 \begin{table*}[ht!]
     \centering
@@ -749,11 +748,11 @@ Chaque corpus affiche une valeur différente de la propriété combinée ``Nombr
     \begin{tabular}{l|rr|rr|rr|rrrrrrr}
     \toprule
     {} & \multicolumn{2}{l}{(S)ATU} & \multicolumn{2}{l}{Mots} & \multicolumn{2}{l}{Oeuvres} & \multicolumn{7}{l}{Distribution du ratio Mots / (S)ATU} \\
-    {} &  Count &     \% &     Count &     \% & Count &     \% & Mean &  Std & Min & 25\% & 50\% & 75\% &    max \\
+    {} &  Total &     \% &     Total &     \% & Total &     \% & Moy. &  Dév. & Min & 25\% & 50\% & 75\% &    Max \\
     \midrule
-    \textit{Martial \& Priapea} &   1607 &   2.8 &     61,056 &   0.3 &     2 &   0.2  &  38 &   32 &   7 &  13 &  27 &  54 &    280 \\
-    Corpus ATU        &  39,591 &  68.5 &   3,549,249 &  20.1 &   125 &  14.8 &  90 &  603 &   1 &   9 &  17 &  36 &  47,783 \\
-    \textit{All}               &  57,761 & 100.0 &  17,639,626 & 100.0 &   845 & 100.0 & 305 & 2,159 &   1 &  11 &  24 &  77 & 248,564 \\
+    \textit{Martial \& Priapea} &   1607 &   2,8 &     61~056 &   0m3 &     2 &   0m2  &  38 &   32 &   7 &  13 &  27 &  54 &    280 \\
+    Corpus ATU        &  39~591 &  68,5 &   3~549~249 &  20,1 &   125 &  14,8 &  90 &  603 &   1 &   9 &  17 &  36 &  47~783 \\
+    \textit{All}               &  57~761 & 100,0 &  17~639~626 & 100,0 &   845 & 100,0 & 305 & 2~159 &   1 &  11 &  24 &  77 & 248~564 \\
     \bottomrule
     \end{tabular}%
     }
@@ -764,139 +763,185 @@ Chaque corpus affiche une valeur différente de la propriété combinée ``Nombr
 % Reprendre ici
 % \subsubsection{Analyse sémantique et dispositif expérimental}
 
-Comme l'objectif principal est d'analyser l'impact de la segmentation du texte sur l'analyse sémantique, nous mettons en place l'expérience sur la base de quatre paramètres que nous combinons ensuite pour produire des analyses en utilisant les deux versions de $T$ et comparer leurs résultats. Ces quatre paramètres représentent ensemble un assez grand nombre de variation permettant de contrôler les conditions dans lesquelles $Analyse(S(T)) \neq Analyse(U(T))$: il s'agit des groupes de mots étudiés, de la taille de la fenêtre de capture des co-occurrents, des fréquences minimales pour qu'un mot soit comptabilisé dans les analyses, et enfin du nombre de groupes que l'on veut produire par \textit{clusterisation}.
+Comme l'objectif principal est d'analyser l'impact de la segmentation du texte sur l'analyse sémantique, nous mettons en place l'expérience sur la base de quatre paramètres que nous combinons ensuite pour produire des analyses en utilisant les deux versions de $T$ et comparer leurs résultats. Ces quatre paramètres représentent ensemble un assez grand nombre de variations permettant de contrôler les conditions dans lesquelles $Analyse(S(T)) \neq Analyse(U(T))$: il s'agit des groupes de mots étudiés, de la taille de la fenêtre de capture des co-occurrents, des fréquences minimales pour qu'un mot soit comptabilisé dans les analyses, et enfin du nombre de groupes que l'on veut produire par \textit{clusterisation}.
 
 Pour les groupes de mots étudiés, on utilise des termes appartenant à des champs lexicaux identifiés (famille, poésie et écriture, sexualité) afin que leur séparation en sous-groupes soit nettes quand nous les regroupons. Ces groupes de mots, que nous appelons pivots, présentent aussi des particularités en termes de fréquences -- ils apparaissent cependant tous au moins dix fois -- et de spécificités génériques:
 
 \begin{enumerate}
     \item Le premier, \textit{Puer et al.}, contient des mots liés au foyer romain et n'est spécifique à aucun des corpus. Il s'agit de \textit{dominus, mater, pater, puella, puer, uir, uxor}, qui sont présents entre 2~036 (\textit{puella}) à 48~519 fois (\textit{dominus}) dans \textit{All}.
-    \item Le second, \textit{Carmen et al.}, pourrait être plus spécifique aux grammairiens et à la poésie, qui sont surreprésentés dans \textit{Corpus ATU}. Il contient \textit{scribo, poeta, libellus, lego2, carmen1, liber1} (\textit{cf. } Table \ref{tab:freq_corpora})\footnote{Lorsque les lemmes se terminent par des chiffres comme \textit{lego2}, cela représente un indice de désambiguïsation : en latin, la première personne de l'indicatif présent est souvent utilisée pour représenter le lemme, mais deux verbes partagent la forme \textit{lego} : l'un est conjugué \textit{legis} à la deuxième personne (signifiant : lire, \textit{lego2}) tandis que l'autre devient \textit{legas} (signifiant : nommer, \textit{lego1})}. 
-    \item Le troisième, \textit{Puer, Carmen et al.}, est une combinaison des deux premiers et offre en tant que tel deux sous-groupes sémantiques clairement séparés qui devraient être faciles à regrouper le moment venu.
-    \item Le dernier, \textit{Futuo, Carmen, Puer et al.}, est une combinaison des deux premiers ainsi que des mots obscènes ou du moins liés à l'expression de la sexualité : pour certains, ils sont fortement spécifiques à \textit{Martial et Priapea}, ont une fréquence très faible par rapport au premier groupe, mais sont aussi quelque peu spécifiques à \textit{Corpus ATU}. Il s'agit de \textit{cunnus, fello, futuo, irrumo, lasciuus, mentula, paedico2} (\textit{cf.} Tableau \ref{tab:freq_corpora} pour chaque fréquence de mots selon le corpus).
-    \item Afin d'évaluer le bruit avant l'analyse, nous considérons également un cinquième ensemble de mots composé des 1000 mots les plus fréquents du jeu de données \textit{All}.
+    \item Le second, \textit{Carmen et al.}, pourrait être plus spécifique aux grammairiens et à la poésie, qui sont surreprésentés dans \textit{Corpus ATU}. Il contient \textit{scribo, poeta, libellus, lego2, carmen1, liber1} (\textit{cf. } Table \ref{tab:chap1:noise:freq_corpora})\footnote{Lorsque les lemmes se terminent par des chiffres comme \textit{lego2}, cela représente un indice de désambiguïsation : en latin, la première personne de l'indicatif présent est souvent utilisée pour représenter le lemme, mais deux verbes partagent la forme \textit{lego} : l'un est conjugué \textit{legis} à la deuxième personne (signifiant : lire, \textit{lego2}) tandis que l'autre devient \textit{legas} (signifiant : nommer, \textit{lego1})}. 
+    \item Le troisième, \textit{Puer, Carmen et al.}, est une combinaison des deux premiers et offre en tant que tel deux sous-groupes sémantiques clairement distincts qui devraient être faciles à retrouver par lexicométrie.
+    \item Le dernier, \textit{Futuo, Carmen, Puer et al.}, est une combinaison des deux premiers ainsi que des mots obscènes ou du moins liés à l'expression de la sexualité : pour certains, ils sont fortement spécifiques à \textit{Martial et Priapea}, ont une fréquence très faible par rapport au premier groupe, mais sont aussi quelque peu spécifiques à \textit{Corpus ATU}. Il s'agit de \textit{cunnus, fello, futuo, irrumo, lasciuus, mentula, paedico2} (\textit{cf.} table \ref{tab:chap1:noise:freq_corpora} pour chaque fréquence de mots selon le corpus).
+    \item Afin d'évaluer le bruit avant l'analyse, nous considérons également un cinquième ensemble de mots composé des 1000 mots les plus fréquents du jeu de données \textit{All}. Seuls les adverbes, adjectifs, pronoms, noms ou verbes sont pris en compte pour former ce \textit{Top 1000}.
 \end{enumerate}
 
-Nos deuxièmes et troisièmes paramètres sont la taille de la fenêtre, $W$, et notre seuil plancher de fréquence, $F$. Nous faisons varier $W$ autour de quatre valeurs ($\left [ 5, 10, 15, 20 \right ]$) capturant différentes approche du contexte: des mots immédiatement à côté de notre terme étudié à ceux dans les phrases ou ensembles syntaxiques autour de ce dernier. Pour $F$, on filtre le bruit en ne considérant les mots qui ne sont présent qu'au moins $F$ fois dans les contextes récupérés: si \texttt{lemma1} apparaît $2$ fois avec \texttt{pivot1} et $5$ fois avec \texttt{pivot2}, il est conservé comme caractéristique si $F\geq5$. $F$ est sélectionné parmi $\left [ 1, 5, 10, 20 \right ]$: plus le nombre est haut, moins le bruit statistique sera important, les cooccurrences uniques seront ignorées lorsque $F > 1$ par exemple.
 
-% [2/1/22] RÉDACTION REPRENDRE ICI
+\begin{table}[p]
+    \centering
+    \begin{tabular}{l|rrr|rrrr}
+    \toprule
+    {} &  \makecell{Martial \\ \& Priapea} &  ATU &       All &  \makecell{Puer \\ et al.} &  \makecell{Carmen \\ et al.} &  \makecell{Puer et Carmen \\ et al.} &  \makecell{Futuo \\ et al.} \\
+    \midrule
+cunnus   &                  33 &              42 &        43 &         &           &                   &                        $\checkmark$ \\
+fello    &                  11 &              14 &        28 &         &           &                   &                        $\checkmark$ \\
+futuo    &                  46 &              52 &        52 &         &           &                   &                        $\checkmark$ \\
+irrumo   &                  10 &              16 &        16 &         &           &                   &                        $\checkmark$ \\
+lasciuus &                  35 &             155 &       300 &         &           &                   &                        $\checkmark$ \\
+mentula  &                  68 &              75 &        75 &         &           &                   &                        $\checkmark$ \\
+paedico2 &                  17 &              20 &        22 &         &           &                   &                        $\checkmark$ \\
+carmen1  &                  90 &            1~753 &      3~101 &         &           $\checkmark$ &                   $\checkmark$ &                        $\checkmark$ \\
+lego2    &                  95 &            3~030 &     10~252 &         &           $\checkmark$ &                   $\checkmark$ &                        $\checkmark$ \\
+libellus &                 119 &             546 &      1~190 &         &           $\checkmark$ &                   $\checkmark$ &                        $\checkmark$ \\
+liber1   &                  36 &            1~773 &     21~015 &         &           $\checkmark$ &                   $\checkmark$ &                        $\checkmark$ \\
+poeta    &                  53 &            1~366 &      2~944 &         &           $\checkmark$ &                   $\checkmark$ &                        $\checkmark$ \\
+scribo   &                  71 &            6~282 &     20~501 &         &           $\checkmark$ &                   $\checkmark$ &                        $\checkmark$ \\
+dominus  &                 112 &            \textbf{7~420} &     \textbf{48~519} &         $\checkmark$ &           &                   $\checkmark$ &                        $\checkmark$ \\
+mater    &                  43 &            2~132 &      9~271 &         $\checkmark$ &           &                   $\checkmark$ &                        $\checkmark$ \\
+pater    &                  73 &            5~154 &     29~927 &         $\checkmark$ &           &                   $\checkmark$ &                        $\checkmark$ \\
+puella   &                 120 &             989 &      2~036 &         $\checkmark$ &           &                   $\checkmark$ &                        $\checkmark$ \\
+puer     &                 \textbf{159} &            1~812 &      5~824 &         $\checkmark$ &           &                   $\checkmark$ &                        $\checkmark$ \\
+uir      &                  94 &            3~908 &     20~062 &         $\checkmark$ &           &                   $\checkmark$ &                        $\checkmark$ \\
+uxor     &                  63 &            1~306 &      7~832 &         $\checkmark$ &           &                   $\checkmark$ &                        $\checkmark$ \\
+    \bottomrule
+    \end{tabular}
 
-Le flux de travail suivant est ensuite appliqué aux quatre premiers ensembles de mots\footnote{\textit{Top1000} n'est pas utilisé dans toute l'expérience, voir ci-dessous.} en utilisant toutes les combinaisons de $W$ et $F$ pour un total de 16 résultats différents par version du corpus :
+    \caption{Distribution des fréquences des lemmes sur les trois sous-corpus. En gras les plus hautes valeurs}
+    \label{tab:chap1:noise:freq_corpora}
+\end{table}
+
+
+Nos deuxièmes et troisièmes paramètres sont la taille de la fenêtre, $W$, et notre seuil plancher de fréquence, $F$. $W$ varie parmi quatre valeurs ($\left [ 5, 10, 15, 20 \right ]$), capturant ainsi différentes formes de contexte: des mots immédiatement à côté de notre terme étudié à ceux dans les phrases ou ensembles syntaxiques autour de ce dernier. Pour $F$, on filtre le bruit en ne considérant les mots qui ne sont présent qu'au moins $F$ fois dans les contextes récupérés: si \texttt{lemma1} apparaît $2$ fois avec \texttt{pivot1} et $5$ fois avec \texttt{pivot2}, il est conservé comme caractéristique si $F\geq5$. $F$ est sélectionné parmi $\left [ 1, 5, 10, 20 \right ]$: plus le nombre est haut, moins le bruit statistique sera important, les cooccurrences uniques seront ignorées lorsque $F > 1$ par exemple.
+
+
+En utilisant toutes les combinaisons de $W$ et $F$ (16 combinaison possibles par sous-corpus, soit 48 expériences), on passe les quatre premiers ensembles de mots à travers un même ensemble de traitements\footnote{\textit{Top1000} n'est pas utilisé dans toute l'expérience, voir ci-dessous.}:
 \begin{enumerate}
-    \item Nous récupérons et stockons le nombre de cooccurrences dans une matrice où les mots cooccurrents constituent des caractéristiques (colonnes) et des classes pivots (lignes), avec leur nombre de récupération comme valeurs. Nous utilisons la sortie de cette récupération dans la section \ref{sub:manhattan} pour analyser la variation brute entre $U(T)$ et $S(T)$.
-    \item Suivant le travail d'Evert \cite{evert2005statistics}, A. Guerreau \cite{morsel:guerreau} et N. Perreaux \cite{perreaux:cbma}, nous appliquons un algorithme de normalisation appelé \textit{coefficient de dés}.
-    \item Pour chaque pivot, nous gardons leurs 5 caractéristiques les plus corrélées (lemme récupéré dans la fenêtre). Si le score du cinquième mot est partagé par plusieurs mots, nous les gardons tous. Ils constituent un deuxième ensemble de mots que nous appelons \textit{cooccurrences majeures} ($M$).
-    \item Nous récupérons et augmentons la matrice originale à l'étape 1 avec la même stratégie de récupération et de stockage pour chaque mot de $M$. Nous utilisons $M$ dans la section \ref{sub:major-cooccurrences} pour étudier l'impact, post-normalisation, de cette première étape d'analyse.
-    \item Nous normalisons à nouveau la sortie avec le coefficient de Dice : la sortie finale constitue ici notre entrée d'analyse. 
+    \item Nous récupérons la fréquence des cooccurrences dans une matrice où elles constituent des caractéristiques et où les pivots forment des classes. Cette matrice nous permet d'opérer à une première comparaison entre des décomptes bruts des $U(T)$ et $S(T)$.
+    \item Suivant le travail de S. Evert\footcite{evert2005statistics}, A.~Guerreau\footcite{morsel:guerreau} et N.~Perreaux\footcite{perreaux:cbma}, nous appliquons un algorithme de normalisation appelé coefficient de \textit{Dice}. L'usage de ce coefficient permet de faire ressortir les caractéristiques les plus importants de chaque classe.
+    \item Pour chaque pivot, nous gardons leurs 5 caractéristiques les plus corrélées. Si plusieurs termes se retrouvent en cinquième place, ils sont tous considérés. Ces caractéristiques forment un deuxième ensemble de mots que nous appelons \textit{cooccurrences majeures} ($M$).
+    \item Nous récupérons et augmentons la matrice originale à l'étape 1 avec la même stratégie de récupération et de stockage pour chaque mot de $M$. Les classes sont désormais formées des \textit{pivots} et de $M$.
+    \item Nous normalisons à nouveau la sortie avec le coefficient de \textit{Dice}.
 \end{enumerate}
 
-Cette approche par sac de mots et normalisation est préférée dans le contexte de notre expérience aux approches de deep learning telles que Word2Vec. Compte tenu de leur instabilité dans les "petits" corpus (\~20 millions)\cite{antoniak_evaluating_2018} et du risque de ne pas contrôler parfaitement la graine de randomisation au niveau de la bibliothèque (\textit{e.g.}, \textit{Gensim}) ou de Python, nous avons préféré les approches non aléatoires, car toute variation due à la randomisation, y compris l'ordre dans lequel les textes sont vus, pourrait affecter les résultats et cacher le bruit hypothétique de la fenêtre dans son propre caractère aléatoire.
+C'est à ce moment de la chaîne qu'intervient notre quatrième paramètre, le nombre de groupes. La matrice normalisée finale peut être utilisée afin de produire une \textit{clusterisation}, c'est-à-dire un regroupement de classes. Nous avons utilisé un très classique \textit{clustering} agglomératif de Ward à base de distances euclidiennes. Afin de pouvoir comparer les résultats du clustering sur $U(T)$ et $S(T)$, nous harmonisons les cooccurrences majeures en supprimant celles qui ne sont pas partagées entre les analyses effectuées avec les mêmes paramètres sur les deux versions de $T$. Cela produit un ensemble de classes communes $C$ qui peuvent finalement être regroupées selon un quatrième paramètre $k$, où $k$ est le nombre de \textit{clusters} que nous voulons obtenir. Nous faisons varier $k$ de sorte que $\frac{\left | C \right |}{k} < 2$ et $5 \geq k < 15$. L'étude de la variation étant l'objectif de cet article, le nombre de \textit{clusters} n'a pas besoin d'être affiné, puisque nous nous intéressons uniquement à l'égalité ou l'inégalité entre l'analyse de $U(T)$ et $S(T)$.
 
 
-Une fois que nous avons une matrice avec le nombre de cooccurrences, nous pouvons alors effectuer une analyse : bien que l'exécution de Dice soit une première étape de post-traitement, nous voulons voir comment les données réagiraient aux moyens d'analyse traditionnels. Nous avons préféré dans ce contexte utiliser le clustering agglomératif de Ward en utilisant la distance euclidienne sur les pivots et les cooccurrences majeures. Afin de pouvoir comparer les résultats du clustering sur $U(T)$ et $S(T)$, nous harmonisons les cooccurrences majeures en supprimant celles qui ne sont pas partagées entre les analyses effectuées avec les mêmes paramètres sur les deux versions de $T$. Cela produit un ensemble de classes communes $\left | C \right |$ qui peuvent finalement être regroupées selon un cinquième paramètre $k$, où $k$ est le nombre de clusters que nous voulons obtenir. Nous faisons varier $k$ de sorte que $\frac{\left | C \right |}{k} < 2$ et $5 \geq k < 15$. L'étude de la variation étant l'objectif de cet article, le nombre de clusters n'a pas besoin d'être affiné, puisque nous nous intéressons uniquement à l'égalité ou l'inégalité entre l'analyse de $U(T)$ et $S(T)$, faisant ainsi varier $k$ dans une plage dynamique. Le résultat de cette étape finale est finalement étudié dans la section \ref{sub:clustering}.
+\subsubsection{Évaluation de l'impact}
 
-\subsubsection{Evaluation de l'impact}
-
-Une fois que toutes les combinaisons ont été exécutées, nous voulons évaluer trois différents types de différences ou d'effets : un premier effet brut sur les cooccurrences de lemmes et comment les matrices brutes différeraient sans aucune étape de normalisation, le deuxième effet sur la sélection des classes secondaires (cooccurrences majeures) et enfin l'effet sur une analyse plus avancée, ici en utilisant le clustering, à travers l'évolution des caractéristiques.
+Une fois que toutes les combinaisons et chaînes de traitement ont été exécutées, nous voulons évaluer trois différents types de différences potentielles entre les résultats de $U(T)$ et $S(T)$: un premier effet brut sur les éléments trouvés dans les contextes des groupes de mots qui forment les caractéristiques de chaque pivot, un deuxième effet sur la sélection des classes secondaires (co-occurrences majeures), impliquant donc un traitement de normalisation, et enfin l'effet sur une analyse plus avancée, le clustering.
 
 \paragraph{Sur la matrice de cooccurrence}
-\label{sub:manhattan}
+\label{chap1:noise:par:manhattan}
 
-Afin de quantifier l'impact sur la recherche de voisinage, nous proposons d'analyser d'abord l'impact sur les mots les plus fréquents du corpus qui sont soit des adverbes, des adjectifs, des pronoms, des noms ou des verbes. Ensuite, pour chaque corpus, nous exécutons l'étape 1 décrite ci-dessus pour chaque combinaison de $W$ et $F$. Nous calculons pour chaque lemme la distance de Manhattan entre son vecteur dans les matrices de résultat de $S(T)$ et $U(T)$ où chaque caractéristique absente est remplacée par une colonne remplie de 0.
+Pour quantifier l'impact de l'absence de segmentation logique sur la récuparation de contexte, nous opérons d'abord à une analyse des différences assez brutes. Nous utilisons pour cela une simple distance de Manhattan entre les vecteurs de chaque pivot dans les version segmentées et non-segméntées du corpus. Ce calcul de distance est effectué pour chaque combinaison $W$ et $F$. Comme certaines caractéristiques pourraient être absentes de l'une ou l'autre des matrices, leur fréquence avec le pivot concerné est estimée à 0.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=1\linewidth]{figures/chap1/part2/manhattan_martial.png} 
-    \includegraphics[width=1\linewidth]{figures/chap1/part2/manhattan_ATU.png}
-    \includegraphics[width=1\linewidth]{figures/chap1/part2/manhattan_All.png}
-    \caption{Variation des distances basées sur $W,F$ pour le vecteur de chaque lemme pour les 1000 mots les plus fréquents du corpus complet, étant donné trois percentiles (5\%, 10\% et médiane) et la valeur minimale.}
-    \label{fig:manhattan}
+    \begin{minipage}{.49\linewidth}%
+        \includegraphics[width=1\linewidth]{figures/chap1/part2/manhattan_martial.png} 
+    \end{minipage}%
+    \hfill
+    \begin{minipage}{.49\linewidth}
+        \includegraphics[width=1\linewidth]{figures/chap1/part2/manhattan_ATU.png}
+    \end{minipage}
+    \includegraphics[width=.8\linewidth]{figures/chap1/part2/manhattan_All.png}
+    \caption{Variation des percentiles (5, 10, 50) et de la valeur minimale des distances de Manhattan entre les vecteurs de chaque pivot dans $U(T)$ et $S(T)$ en fonction des valeurs de $W,F$. Résultat pour les mots les plus fréquents (\textit{Top 1000}) sur les trois sous-corpus (\textit{Martial et Priapea} en haut à gauche, \textit{ATU} en haut à droite, \textit{All} en bas).}
+    \label{fig:chap1:noise:manhattan}
 \end{figure}
 
-Alors que certains lemmes ne présentent aucune variation entre les versions de $T$, une grande majorité d'entre eux affiche des distances non nulles, comme le montre la figure \ref{fig:manhattan} : la plupart des combinaisons de $W, F,$ Corpus ont leur percentile 5\% de distance qui n'est pas nul. Alors que chaque augmentation de $W$ entraîne des distances plus élevées, l'effet de filtrage attendu de $F$ agit également sur le bruit : en ignorant les lemmes co-occurrents moins fréquents, l'augmentation de la valeur de $F$ diminue effectivement la distance, bien que de façon très minime. En effet, $F$ est le paramètre qui a le moins d'impact sur les distances calculées.
+On distingue nettement trois effets dans résultats (\textit{cf.} figure \ref{fig:chap1:noise:manhattan}):
+\begin{itemize}
+    \item Quelle que soit la fenêtre $W$, le seuil $F$ a un effet très limité. Ce filtrage croît -- même minimalement -- en même temps que sa valeur: plus il est grand, plus il réduit la distance mesurée.
+    \item Le changement de la taille de la fenêtre $W$ a un impact important sur les distances inter-vecteurs, ce qui est attendu: plus le contexte relevé est grand, plus il est probable que ce contexte \enquote{pioche} dans des unités voisines mais indépendantes.
+    \item Tous les sous-corpus sont touchés, mais tous les mots ne sont pas touchés autant. À partir du corpus \textit{ATU}, certains mots sont très peu touchés voir indemnes de toute contamination. Cependant, on aperçoit dès le percentile 5\% des variations de plus en plus importantes en fonction de $W$.
+\end{itemize}
 
+Du point de vue de la collecte brut donc, il est clair qu'une différence existe entre $S(T)$ et $U(T)$.
 
 \paragraph{Sur les classes}
 \label{sub:major-cooccurrences}
 
-Sur la base de cette première observation, nous voulons évaluer ce que ce bruit peut faire à des sélections de caractéristiques plus avancées. Pour comparer l'effet sur la sélection de ces cooccurences majeures, nous comparons simplement pour chaque combinaison des paramètres Word-set$, W, F$ l'ensemble $M$ de $U(T)$ avec l'ensemble $S(T)$. Compte tenu des différences de distances constatées dans \ref{sub:manhattan}, cela permettra de savoir si le bruit accumulé par les fenêtres bruyantes est suffisant pour influencer la notation simple fournie par le coefficient Dice. 
+Sur la base de cette première observation, nous voulons évaluer ce que ce bruit peut faire à des sélections de caractéristiques plus avancées. Chez Guerreau et Perreaux, le coefficient de Dice est utilisé pour trouver des termes \textit{affiliés} aux termes qu'ils veulent étudier pour les placer dans des réseaux plus grands. En appliquant ce coefficient et en sélectionnant les termes les plus proches, on peut alors comparer les co-occurrents majeurs sélectionnés ($M$) dans $U(T)$ et $S(T)$. Compte tenu des différences de distances constatées ci-dessus, on cherche donc à vérifier si ces dernières sont à même d'être gommées par une normalisation. 
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=1\linewidth]{figures/chap1/part2/classes_binary.png} (en anglais)
+    \includegraphics[width=.95\linewidth]{figures/chap1/part2/classes_binary.png}
     \caption{Matrice binaire de $M_{S(T)} = M_{U(T)}$ : les cellules colorées signifient que l'analyse des deux versions du corpus avec les mêmes paramètres a donné lieu aux mêmes cooccurrences majeures.}
-    \label{fig:matrix_classes}
+    \label{fig:chap1:noise:matrix_classes}
 \end{figure}
 
- Nous quantifions d'abord l'effet d'une approche binaire, c'est-à-dire que nous vérifions que $M_{S(T)}$ et $M_{U(T)}$ sont égaux. Toute situation où $M_{S(T)}$ est égal à $M_{U(T)}$. $\neq M_{U(T)}$ est une première preuve que l'absence de segmentation a un impact. En fait, avec cette approche, seuls 21,35 \% (41/192) du tirage atteignent une égalité parfaite de leurs $M$ pour les deux versions de $T$, avec des résultats variables selon le jeu de mots et le corpus (\textit{cf.} Figure~\ref{fig:matrix_classes}) :
+
+ Nous quantifions d'abord cet effet par une approche binaire, c'est-à-dire que nous vérifions que $M_{S(T)}$ et $M_{U(T)}$ sont égaux. Toute situation où $M_{U(T)} \neq M_{S(T)}$ est une autre preuve que l'absence de segmentation a un impact. Or, seuls 21,35\% (41/192) des expériences et combinaisons de paramètres et données étudiées (Mots, Fenêtre, Seuil, Corpus) produisent une sélection de co-occurrents majeurs tout à fait égales pour les deux versions de $T$, avec des résultats variables selon le groupe de mots et le corpus (\textit{cf.} Figure~\ref{fig:chap1:noise:matrix_classes}) :
  
- 
-\begin{itemize}
-    \item Dans l'ensemble, l'ensemble de mots "Futuo et al." ne donne jamais lieu à des ensembles $M$ totalement similaires. Cela est probablement dû aux fréquences très faibles de certains de ses membres et plaiderait, si ces fréquences sont acceptables d'un point de vue statistique, pour une segmentation très attentive des textes analysés.
-    \item Comme prévu, toute analyse utilisant le corpus \textit{Martial \& Priapea} est fortement affectée par sa grande quantité de petites UAT : aucune d'entre elles n'a un résultat similaire sur ses deux versions. La taille de ce corpus ne permet pas d'atténuer le bruit.
-    \item Seule la version ``Puer et al.'' atteint régulièrement l'égalité sur le corpus \textit{ATU Corpus}, mais elle n'est pas constante. Cela plaide simplement en faveur d'une segmentation des corpus (S)ATU riches comme préalable à une analyse similaire à celle que nous menons ici. Il est également possible que la fréquence plutôt faible de ``libellus``~(546) dans le \textit{Carmen et al.} et le \textit{Puer et Carmen et al.} soit responsable d'une partie de l'instabilité.
-    \item Un nombre plus élevé de tokens lisse le bruit des caractéristiques, car le corpus \textit{All} affiche une plus grande stabilité entre $M_{S(T)}$ et $M_{U(T)}$, en particulier pour \textit{Puer et al.}, mais les $M$ sont encore plus souvent différents qu'égaux.
-    \item Le seuil de fréquence des cooccurrences $F$ a un impact très faible sur les cooccurrences majeures, tandis que la fenêtre affecte irrégulièrement les ensembles de mots : à titre d'exemple, $W=15$ n'atteint jamais l'égalité pour la combinaison \textit{Carmen et al. }~+~\textit{Tous} mais elle le fait pour l'analyse \textit{Puer et al.} ; au contraire, $W=15$ échoue sur \textit{Puer et al.}~+~\textit{CorpusATU}. Cette instabilité de l'impact de $W$ plaide également en faveur de l'utilisation de (S)ATU lors d'une telle analyse.
+% [2/1/22] RÉDACTION REPRENDRE ICI
+
+ \begin{itemize}
+    \item Le groupe de mot ``\textit{Futuo et al.}'' ne donne jamais lieu à des $M$ identiques entre $S(T)$ et $U(T)$. Il s'agit du seul groupe de mot ne formant jamais d'identité entre les deux versions du corpus: il est caractérisé par des fréquences plus basses que les autres groupes -- à travers \textit{irrumo} par exemple -- et est donc plus touché par le bruit dû à l'absence de segmentation.
+    \item Tout comme ``\textit{Futuo et al.}'', le corpus \textit{Martial \& Priapea} -- le plus petit et le plus riche en ATU -- est fortement affecté par la différence de traitement des textes: aucune analyse ne produit de $M$ identiques, le bruit n'est pas atténué par la normalisation.
+    \item Le groupe ``Puer et al.'' atteint majoritairement une égalité de résultat sur le corpus \textit{ATU Corpus} (neuf combinaisons sur seize), mais cette attitude est inconstante en regard de $W$ et $F$. Cela plaide simplement en faveur d'une segmentation des corpus (S)ATU riches comme préalable à une analyse similaire à celle que nous menons ici. La fréquence ``plutôt faible'' de \textit{libellus}~(546) dans le \textit{Carmen et al.} et le \textit{Puer et Carmen et al.} pourrait être responsable d'une partie de l'instabilité, bien qu'elle soit bien au-dessus de la fréquence de l'ensemble des termes étudiés dans notre approche de la sexualité.
+    \item La taille des corpus lisse le bruit des caractéristiques, car le corpus \textit{All} affiche une plus grande stabilité entre $M_{S(T)}$ et $M_{U(T)}$, en particulier pour \textit{Puer et al.}, mais les $M$ restent plus souvent inégaux qu'égaux.
+    \item Le seuil de fréquence des cooccurrences $F$ a un impact très faible sur les cooccurrences majeures, comme vu précédemment pour \textit{Top 1000}, tandis que la fenêtre affecte irrégulièrement les ensembles de mots. À titre d'exemple, $W=15$ ne produit jamais de résultats identiques entre $S(T)$ et $U(T)$ pour la combinaison \textit{Carmen et al. }~+~\textit{All} (orange, en bas) mais elle le fait pour  \textit{Puer et al.} (bleu, en bas); au contraire, $W=15$ échoue sur \textit{Puer et al.}~+~\textit{ATU}. Cette instabilité de l'impact de $W$ plaide également en faveur de l'utilisation de (S)ATU lors d'une telle analyse.
 \end{itemize}
 
 \begin{figure}[h]
-    \centering
-    \includegraphics[width=1\linewidth]{figures/chap1/part2/classes_percent.png}
-    \caption{Dispersion du pourcentage de chevauchement ou du \textit{taux de rétention} de $M$ pour chaque combinaison de corpus et de jeux de mots. Pour \textit{Puer et al.} sur Martial et Priapea, les principales cooccurrences ont une similarité médiane inférieure à 80\% sur les 16 combinaisons de $W,F$.}
-    \label{fig:classes_de_violon}
+    \begin{minipage}[t]{.55\linewidth}
+        \centering
+        \includegraphics[width=1\linewidth]{figures/chap1/part2/classes_percent.png}
+        \caption{Dispersion du \textit{taux de similarité} entre $M_{S(T)}$ et $M_{U(T)}$ pour chaque combinaison de corpus et de mots. Pour \textit{Puer et al.} sur \textit{Martial et Priapea}, les principales cooccurrences ont une similarité médiane inférieure à 80\% sur les 16 combinaisons de $W,F$. Les valeurs aberrantes ne sont pas affichées.}
+        \label{fig:classes_de_violon}
+    \end{minipage}%
+    \hfill%
+    \begin{minipage}[t]{.43\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/chap1/part2/major_count.png}
+        \caption{Nombre de cooccurrences majeures par ensemble de mots}
+        \label{fig:chap1:noise:major_count}
+    \end{minipage}
 \end{figure}
 
-Pour le taux relatif et une analyse plus approfondie de la façon dont les classes varient d'une version des corpus à l'autre, nous proposons d'évaluer le \textit{taux de rétention des classes} en fonction des deux ensembles $M$ de cooccurrences majeures, calculés :
+
+
+Cette approche binaire reste limitée et ne donne pas une idée complète de l'impact de l'absence de la segmentation: est-ce un seul mot ou la moitié des composants de $M$ qui diffère entre les deux versions de chaque corpus ? Pour répondre à cette question, nous proposons d'évaluer le \textit{taux de similarité} en fonction des deux ensembles $M$ de cooccurrences majeures, calculés :
 
 \begin{equation*}
     1 - \frac{%
-        \left | M_{S(T)} - M_{T} \right | + \left | M_{T} - M_{S(T)} \right |%
+        \left | M_{S(T)} - M_{U(T)} \right | + \left | M_{U(T)} - M_{S(T)} \right |%
     }{%
-       \left | M_{S(T)} + M_{T} \right |%
+       \left | M_{S(T)} + M_{U(T)} \right |%
     }
-    \label{equ:K}
 \end{equation*}
 
-À quelques exceptions près sur \textit{Martial \& Priapea} et \textit{Corpus ATU}, le taux de rétention est généralement supérieur à 60\% pour le plus petit corpus, 80\% pour les deux autres \footnote{Voir tableau annexe \ref{tab:ratio_classes}} pour un nombre médian de cooccurrences majeures allant de 8 (\textit{Carmen et al. }) à 34 (\textit{Futuo, carmen, puer et al.)}. (\textit{cf.} figure \ref{fig:major_count}). Quelle que soit la taille du corpus et de l'ensemble de mots, le taux de rétention est globalement élevé, en particulier pour les deux plus grands corpus, un ensemble de mots étant moins bon que les autres (\textit{Futuo et al.}).
+À quelques exceptions près sur \textit{Martial \& Priapea} et \textit{Corpus ATU}, le taux de similarité est généralement supérieur à 60\% pour le plus petit corpus, 80\% pour les deux autres \footnote{Voir tableau annexe \ref{tab:anx:noise:capitains:ratio_classes}} alors même que la taille médiane de $M$ se situe entre 8 (\textit{Carmen et al. }) et 34 (\textit{Futuo, carmen, puer et al.)} (\textit{cf.} figure \ref{fig:chap1:noise:major_count}). Quelle que soit la taille du corpus et de l'ensemble de mots, le taux de similarité est globalement élevé: les grand corpus montrent une certaine résistance au bruit, comme nous l'avons vu dans les analyses binaires, et les petits corpus ou groupes de mots à faible fréquence connaissent des variations plus grandes entre $U(T)$ et $S(T)$.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=1\linewidth]{figures/chap1/part2/major_count.png}
-    \caption{Nombre de cooccurrences majeures par ensemble de mots}
-    \label{fig:major_count}
-\end{figure}
-
-Globalement, les deux métriques montrent un effet incontestable sur la sélection des cooccurrences majeures. La croissance du corpus atténue cet effet, comme le montrent les résultats de \textit{All} par rapport aux autres, mais elle ne garantit pas l'égalité des résultats entre $S(T)$ et $U(T)$, comme le montrent $W=20$ pour \textit{Puer et al.} ou $W=10$ et $W=15$ pour \textit{Carmen et al.}. La manipulation minutieuse des (S)ATU dans des corpus relativement petits ($\leq20M$ tokens) doit être une étape importante pour renforcer toute analyse statistique sémantique.
+Globalement, les deux métriques montrent cependant un effet incontestable sur la sélection des cooccurrences majeures. Même si la taille du corpus atténue cet effet, comme le montrent les résultats de \textit{All} par rapport aux autres, elle ne garantit pas l'égalité des résultats entre $S(T)$ et $U(T)$, comme le montrent $W=20$ pour \textit{Puer et al.} ou $W=10$ et $W=15$ pour \textit{Carmen et al.}. La manipulation minutieuse des (S)ATU dans des corpus relativement petits ($\leq20M$ tokens) doit être une étape importante pour renforcer toute analyse statistique sémantique, car on ne saurait garantir que les résultats ne soient pas fortement contaminés par de faux cooccurrents.
 
 
 \paragraph{Sur les caractéristiques}
 \label{sub:clustering}
 
-Sur la base de cette deuxième sortie, nous voulons identifier si les algorithmes plus avancés étaient aussi sujets à des variations avec cette entrée normalisée. Pour chaque combinaison de $W,F$, qui ont les mêmes clusters $K$ tels que $K_{S(T)} = K_{T}$ (\textit{cf. figure \ref{fig:clusters_rates}}).
+Sur la base de la normalisation de la matrice des co-occurrents des pivots et de $M$, nous voulons identifier si des algorithmes plus avancés étaient aussi sujets à des variations avec cette entrée normalisée. Pour chaque combinaison de $W,F$, on cherche à savoir si les \textit{clusters} $K$ produits par les outils précédemment cités forment une identité de sorte que $K_{S(T)} = K_{U(T)}$ (\textit{cf.} figure \ref{fig:chap1:noise:clusters_rates}). Étant donnés les résultats précédents, impliquant une inégalité courante des $M$, et afin de former avec les pivots un $C$ stable, on s'assure d'abord de filtrer les $M$ de sorte que $C = \text{Pivots} + M_{S(T)} \cap M_{U(T)}$ avant de clusteriser. On ne cherche pas à optimiser $k$, le nombre de \textit{clusters}: il doit simplement respecter la condition $\frac{\left | C \right |}{k} \geq 2$ afin d'avoir au moins deux mots par \textit{cluster} cherché.
 
 \begin{figure*}[ht]
     \centering
     \includegraphics[width=1\linewidth]{figures/chap1/part2/cluster_binary_rates.png}
-    \caption{Ratio des expériences où $K_{S(T)} = K_{T}$ étant donné le nombre de clusters pour chaque corpus et ensemble de mots}
-    \label{fig:clusters_rates}
+    \caption{Ratio des expériences où $K_{S(T)} = K_{U(T)}$ étant donné le nombre de \textit{clusters} $k$ et les matrices résultats de chaque expérience variant sur $W,F$ pour chaque corpus et ensemble de mots.}
+    \label{fig:chap1:noise:clusters_rates}
 \end{figure*}
 
 
-Dans ce contexte, les caractéristiques ont un impact qui va au-delà de la simple sélection de classes, notamment pour nos deux premiers corpus : sur \textit{Martial \& Priapea}, pour n'importe quel ensemble de mots, il n'y a pas de situations où toutes les combinaisons de $F,W$ fournissent les mêmes clusters, sauf pour $k=11$ et \textit{Carmen et al.}, tandis qu'aucune n'atteint les mêmes clusters dans le corpus \textit{ATU}. En général, la plupart des combinaisons fournissent moins de 40 \% de regroupements similaires pour le premier corpus et moins de 80 \% pour le second. Comme pour l'analyse des classes, la taille du corpus atténue l'effet de $S(T)$ par rapport à $U(T)$ :  \textit{All} a le plus grand nombre de clusters qui sont égaux entre les deux versions du corpus. Cependant, il est encore instable et imprévisible : alors que \textit{Puer et al.} atteint 100\% d'égalité dans le clustering entre $S(T)$ et $U(T)$ pour $K=5$ et $K=10$, il tombe à 70\% de résultats similaires pour $K=7$ et $K=8$.
+Dans ce contexte, les caractéristiques ont un impact qui va au-delà de la simple sélection de classes, notamment pour nos deux premiers corpus. Sur \textit{Martial \& Priapea}, quel que soit le groupe de mots étudié, seuls \textit{Carmen et al.} avec $k=11$, parmi l'ensemble des analyses (variant sur $F,W$), produit les mêmes \textit{clusters} pour $S(T)$ et $U(T)$. Aucune des clusterisations sur le corpus \textit{ATU} ne produit le même résultat sur l'ensemble des variations $F,W$ d'une version à l'autre du corpus. En général, moins de 40\% des combinaisons $F,W$ produisent les mêmes clusters pour $C$ sur le plus petit corpus. Comme pour l'analyse des classes, ce chiffre augmente avec la taille du corpus, qui atténue donc en partie l'effet de $S$ sur $T$. Avec 80\% de combinaisons $F,W$ à clusterisations similaires maximum pour \textit{ATU} et 100\% pour \textit{All}. Cependant, cet effet est encore instable et imprévisible: alors que \textit{Puer et al.} atteint 100\% d'expériences ($F,W$) égales dans leur clusterisation entre $S(T)$ et $U(T)$ avec $K=5$ et $K=10$, il tombe à 70\% pour $K=7$ et $K=8$. Cette instabilité s'ajoute au fait que les données ont déjà été \enquote{manipulées} en réduisant les $M$ à un set commun $C$.
 
 \subsubsection{Conclusion de l'expérience}
 
 % Rework CONCLUSION
 
-Lorsque J. R. Firth a utilisé le terme "compagnie", qui dans notre expérience devient "quartier" et "fenêtres", ce qu'il veut dire est nettement plus que le fait d'avoir simplement deux mots qui se suivent : deux tweets dans une timeline doivent-ils être traités comme une seule unité simplement parce qu'ils apparaissent dans le même "contexte" HTML ? La réponse devrait être claire pour n'importe quel linguiste, pourtant, les textes et les œuvres composites ont été traités de cette manière par des études en DH ou en PNL\footnote{Voir \cite{kontges_measuring_2020} par exemple.}. 
+Lorsque J. R. Firth a utilisé le terme de \textit{company}, qui dans notre expérience devient contexte et fenêtre, ce qu'il veut dire est nettement plus que le fait d'avoir simplement deux mots qui se suivent: deux tweets dans une \textit{timeline} doivent-ils être traités comme une seule unité simplement parce qu'ils apparaissent dans le même \enquote{contexte} HTML ? La réponse devrait être claire pour n'importe quel linguiste ou littéraire, pourtant, les textes et les œuvres composites ont été traités de cette manière par des études en DH ou en TAL\footnote{\textit{cf.} \textcite{kontges_measuring_2020} par exemple.}. 
 
-Dans cette expérience, nous avons évalué l'impact de la non prise en compte de la composition des textes. Bien que le fait de travailler avec des statistiques sur des corpus aussi petits exige par nature de la prudence, nous avons démontré que le fait de traiter les œuvres numérisées comme des unités cohésives uniques plutôt que comme un patchwork de plus petites unités modifie les résultats de l'analyse distributionnelle avec des corpus d'environ 15 millions de tokens. Dans nos expériences, seules quelques combinaisons des différents paramètres communs à ces applications (taille de la fenêtre, seuil de fréquence, taille du cluster) ont donné des résultats cohérents entre un corpus de textes édités ($S(T)$) et une version brute de celui-ci ($U(T)$). Avec des mots fréquents dans tout le corpus, avec une petite fenêtre ($W=5$) et de grands corpus, l'effet du bruit est atténué. En revanche, si ces mots sont plus fréquents dans des œuvres très segmentées comme la compilation de poèmes, la taille du corpus global aura moins d'impact sur la question. 
+Dans cette expérience, nous avons évalué l'impact de la non prise en compte de la composition des textes. Bien que le fait de travailler avec des statistiques sur des corpus aussi petits exige par nature de la prudence, nous avons démontré que le fait de traiter les œuvres numérisées comme des unités \textit{de facto} homogènes et indissociables plutôt que comme un patchwork de plus petites unités modifie les résultats de l'analyse distributionnelle avec des corpus comptant jusqu'à une vingtaine de millions de mots. Dans nos expériences, seules quelques combinaisons des différents paramètres communs à ces applications (taille de la fenêtre, seuil de fréquence, taille du cluster) ont donné des résultats cohérents entre un corpus de textes édités ($S(T)$) et une version brute de celui-ci ($U(T)$). Avec des mots fréquents dans tout le corpus, avec une petite fenêtre ($W=5$) et de grands corpus, l'effet du bruit est atténué. En revanche, si ces mots sont plus fréquents dans des œuvres très segmentées comme la compilation de poèmes, la taille du corpus global aura moins d'impact sur la question. 
 
-Ces résultats renforcent la nécessité de textes enrichis de métadonnées qui permettent un post-traitement tel que celui permis par CapiTainS et l'environnement TEI XML original. Ils plaident définitivement pour l'utilisation de déclarations de segmentation avec des métadonnées telles que CiteStructure \cite{cayless_fr_2020} afin de rendre ces corpus utilisables par des machines. 
+Ces résultats justifient la nécessité de textes enrichis de métadonnées qui permettent un post-traitement tel que celui permis par CapiTainS et l'environnement TEI XML original. Ils plaident définitivement pour l'utilisation de déclarations de segmentation avec des métadonnées telles que CiteStructure\footcite{cayless_introducing_2021} afin de rendre ces corpus utilisables par des machines. Certes, ils limitent la taille du corpus, et ne permet pas nécessairement d'utiliser toute la richesse des corpus en friche présentés auparavant: mais ils montrent sans appel qu'il n'existe pas de combinaison de paramètres nous assurant une protection complète des contaminations.
 
-Le travail actuel a été volontairement limité à la fois à la langue latine et à l'utilisation de méthodes déterministes. Le corpus latin est limité en taille et ne fournit pas un champ d'essai pour des corpus plus grands. Toute expérience sur des corpus plus grands devra traiter de l'annotation de corpus plus grands à des fins de segmentation. L'utilisation de méthodes déterministes pour représenter les clusters ou les distances entre les mots nous a permis de réaliser une expérience facile et reproductible. L'application de la même approche à des méthodes non déterministes telles que celle de Word2Vec \cite{mikolov_efficient_2013} et l'évaluation de ces résultats fourniraient un deuxième champ d'essai. Cependant, la taille du corpus pourrait déjà être une contrainte difficile à surmonter selon \cite{antoniak_evaluating_2018}.
-% Environ cinq à dix pages
 
-% L’importance du choix de CapiTainS, rerédaction de l’article précédemment écrit
+
 
 \section{Constitution d’un corpus sur l’expression de la sexualité} % Environ dix pages
 
