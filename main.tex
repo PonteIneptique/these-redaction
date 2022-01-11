@@ -4,29 +4,31 @@
 %\syntaxonly
 
 % Langs
-\usepackage{ifxetex}
-\ifxetex
+%\usepackage{ifxetex}
+%\ifxetex
   \usepackage{fontspec}
-  \usepackage{polyglossia}
-  \setmainlanguage{french}
-  \setotherlanguage[variant=poly]{greek}
+ % \usepackage{polyglossia}
+  %\setmainlanguage{french}
+  %\setotherlanguage[variant=poly]{greek}
   \setmainfont{Libertinus Serif}
-\else
-  %\usepackage[LGR,T1]{fontenc}
-  \usepackage[utf8]{inputenc}
   \usepackage[polutonikogreek,main=french]{babel}
+%\else
+  %\usepackage[LGR,T1]{fontenc}
+%  \usepackage[utf8]{inputenc}
+%  \usepackage[polutonikogreek,main=french]{babel}
   %\languageattribute{greek}{ancient}
   %\usepackage{textgreek}
-  \usepackage[GlyphNames]{teubner}
-  \usepackage{alphabeta}
-\fi
+%  \usepackage[GlyphNames]{teubner}
+%  \usepackage{alphabeta}
+%\fi
 
 % Setup typographique
-\usepackage{microtype}
+%\usepackage{microtype}
 \usepackage[onehalfspacing]{setspace}
 
 %\usepackage{textalpha} % https://ctan.org/tex-archive/language/greek/greek-fontenc
 % \usepackage{newtxtext} % Grec ?
+\usepackage[babel]{csquotes}
 
 % Biblio
 \usepackage[backend=biber,sorting=nyt,style=enc,block=ragged]{biblatex}
@@ -51,11 +53,11 @@
 \usepackage{verbatim} %For comments
 \usepackage{listings}
 \usepackage{minted}
-\usepackage{color}
+%\usepackage{xcolor}
 
 % Autres
 \usepackage{glossaries}
-\usepackage{csquotes}
+%\usepackage{csquotes}
 \usepackage{amssymb} % Checkmarks
 \usepackage[hidelinks]{hyperref}
 %\usepackage{dirtytalk}
@@ -107,9 +109,9 @@
 \newcommand{\sectionbreak}{\clearpage}
 
 % Code et couleur de code
-\definecolor{gray}{rgb}{0.4,0.4,0.4}
-\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
-\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+%\definecolor{gray}{rgb}{0.4,0.4,0.4}
+%\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+%\definecolor{cyan}{rgb}{0.0,0.6,0.6}
 
 \lstset{
   basicstyle=\ttfamily,
@@ -121,16 +123,16 @@
   postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}
 }
 
-\lstdefinelanguage{XML}
-{
-  morestring=[b]",
-  morestring=[s]{>}{<},
-  morecomment=[s]{<?}{?>},
-  stringstyle=\color{black},
-  identifierstyle=\color{darkblue},
-  keywordstyle=\color{cyan},
-  morekeywords={xmlns,version,type}% list your attributes here
-}
+%\lstdefinelanguage{XML}
+%{
+%  morestring=[b]",
+%  morestring=[s]{>}{<},
+%  morecomment=[s]{<?}{?>},
+%  stringstyle=\color{black},
+%  identifierstyle=\color{darkblue},
+%  keywordstyle=\color{cyan},
+%  morekeywords={xmlns,version,type}% list your attributes here
+%}
 
 \title{Détection d'isotopies par apprentissage profond: l'exemple de la sexualité en latin classique et tardif}
 \author{Thibault Clérice}
