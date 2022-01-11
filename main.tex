@@ -1,47 +1,112 @@
 \documentclass[12pt]{book}
-
 \usepackage[a4paper]{geometry}
-\usepackage[utf8]{inputenc}
-\usepackage[LGR, T1]{fontenc}
+%\usepackage{syntonly}
+%\syntaxonly
 
-% Biblio ?
-\usepackage[backend=biber, sorting=nyt, style=enc,block=ragged]{biblatex}
+% Langs
+\usepackage{ifxetex}
+\ifxetex
+  \usepackage{fontspec}
+  \usepackage{polyglossia}
+  \setmainlanguage{french}
+  \setotherlanguage[variant=poly]{greek}
+  \setmainfont{Libertinus Serif}
+\else
+  %\usepackage[LGR,T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage[polutonikogreek,main=french]{babel}
+  %\languageattribute{greek}{ancient}
+  %\usepackage{textgreek}
+  \usepackage[GlyphNames]{teubner}
+  \usepackage{alphabeta}
+\fi
 
-\usepackage[greek.polutoniko,french]{babel}
-\usepackage{graphicx}
-\usepackage{booktabs}
-\usepackage{multirow}
+% Setup typographique
+\usepackage{microtype}
+\usepackage[onehalfspacing]{setspace}
+
+%\usepackage{textalpha} % https://ctan.org/tex-archive/language/greek/greek-fontenc
+% \usepackage{newtxtext} % Grec ?
+
+% Biblio
+\usepackage[backend=biber,sorting=nyt,style=enc,block=ragged]{biblatex}
+
+% Figures
 \usepackage{caption}
 \usepackage{subcaption}
-\usepackage{glossaries}
-\usepackage{dirtytalk}
-\usepackage{adjustbox}
+\usepackage{graphicx}
 
-\usepackage{makecell}
-\usepackage{listings}
-\usepackage[onehalfspacing]{setspace}
-\usepackage{microtype}
-\usepackage{newtxtext}
-\usepackage{verbatim} %For comments
-\usepackage{afterpage}
-%\usepackage{showframe}
-\usepackage{titlesec}
+% Tables
+\usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{makecell}
 
-
-
-% permet de faire une table des matieres par chapitre
-\usepackage[french]{minitoc}
-
-% ajoute (entre autre) la bibliographie dans la table des matieres 
-\usepackage[nottoc]{tocbibind}
-\usepackage{minted}
-\usepackage{csquotes}
+% Boites et alignement
+\usepackage{adjustbox}
+\usepackage{afterpage}
 \usepackage{rotating}
-\usepackage[hidelinks]{hyperref}
-\usepackage{color}
-\usepackage{amssymb} % Checkmarks
 
+% Code
+\usepackage{verbatim} %For comments
+\usepackage{listings}
+\usepackage{minted}
+\usepackage{color}
+
+% Autres
+\usepackage{glossaries}
+\usepackage{csquotes}
+\usepackage{amssymb} % Checkmarks
+\usepackage[hidelinks]{hyperref}
+%\usepackage{dirtytalk}
+
+% Organisation des chapitres et autres
+\usepackage{titlesec}
+\usepackage[french]{minitoc} % % permet de faire une table des matieres par chapitreaphie dans la table des matieres 
+\usepackage[nottoc]{tocbibind}
+
+
+\addbibresource{bibliography/chap1/noise.bib}
+\addbibresource{bibliography/1-digital-classics.bib}
+\addbibresource{bibliography/1-introduction-dl.bib}
+\addbibresource{bibliography/1-lemmatisation.bib}
+\addbibresource{bibliography/TAL.bib}
+\addbibresource{bibliography/sources.bib}
+\addbibresource{bibliography/Corpora.bib}
+\addbibresource{bibliography/commentaires.bib}
+\addbibresource{bibliography/4-classification.bib}
+\addbibresource{bibliography/annexes.bib}
+
+% Formattage
+\titleformat{\paragraph}{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\setcounter{secnumdepth}{3} % 4 = Paragraph
+\onehalfspacing
+
+\newcommand{\starbreak}{%
+    \begin{center}%
+    $\ast$~$\ast$~$\ast$%
+    \end{center}%
+}
+\makeglossaries
+\newcommand{\newpara}{%
+    \vskip 0.5cm %
+}
+
+\let\oldquote\quote
+\let\endoldquote\endquote
+\renewenvironment{quote}[2][]
+  {\if\relax\detokenize{#1}\relax
+     \def\quoteauthor{#2}%
+   \else
+     \def\quoteauthor{#2~---~#1}%
+   \fi
+   \oldquote}{\par\nobreak\smallskip\hfill(\quoteauthor)%
+   \endoldquote\addvspace{\bigskipamount}}
+   
+\newcommand{\sectionbreak}{\clearpage}
+
+% Code et couleur de code
 \definecolor{gray}{rgb}{0.4,0.4,0.4}
 \definecolor{darkblue}{rgb}{0.0,0.0,0.6}
 \definecolor{cyan}{rgb}{0.0,0.6,0.6}
@@ -67,54 +132,9 @@
   morekeywords={xmlns,version,type}% list your attributes here
 }
 
-\addbibresource{bibliography/chap1/noise.bib}
-\addbibresource{bibliography/1-digital-classics.bib}
-\addbibresource{bibliography/1-introduction-dl.bib}
-\addbibresource{bibliography/1-lemmatisation.bib}
-\addbibresource{bibliography/TAL.bib}
-\addbibresource{bibliography/sources.bib}
-\addbibresource{bibliography/Corpora.bib}
-\addbibresource{bibliography/commentaires.bib}
-\addbibresource{bibliography/4-classification.bib}
-\addbibresource{bibliography/annexes.bib}
-
-\newcommand{\starbreak}{%
-    \begin{center}%
-    $\ast$~$\ast$~$\ast$%
-    \end{center}%
-}
-%\title{Dire la sexualité  : "une étude lexicographique par apprentissage profond"}
 \title{Détection d'isotopies par apprentissage profond: l'exemple de la sexualité en latin classique et tardif}
 \author{Thibault Clérice}
-\date{\today}
-
-\makeglossaries
-
-\newcommand{\newpara}{%
-    \vskip 0.5cm %
-}
-
-\onehalfspacing
-
-
-
-\let\oldquote\quote
-\let\endoldquote\endquote
-\renewenvironment{quote}[2][]
-  {\if\relax\detokenize{#1}\relax
-     \def\quoteauthor{#2}%
-   \else
-     \def\quoteauthor{#2~---~#1}%
-   \fi
-   \oldquote}{\par\nobreak\smallskip\hfill(\quoteauthor)%
-   \endoldquote\addvspace{\bigskipamount}}
-   
-\newcommand{\sectionbreak}{\clearpage}
-\setcounter{secnumdepth}{3} % 4 = Paragraph
-
-\titleformat{\paragraph}
-{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
-\titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\date{2022}
 
 \begin{document}
 
@@ -151,7 +171,7 @@
 %\include{conclu}
 
 
-\include{annexe}
+%\include{annexe}
 
 \printglossary
 
