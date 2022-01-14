@@ -53,14 +53,14 @@
 \usepackage{verbatim} %For comments
 \usepackage{listings}
 \usepackage{minted}
-%\usepackage{xcolor}
+\usepackage{color}
 
 % Autres
 \usepackage{glossaries}
-%\usepackage{csquotes}
 \usepackage{amssymb} % Checkmarks
 \usepackage[hidelinks]{hyperref}
-%\usepackage{dirtytalk}
+\usepackage{xurl} % Might fix the issue with long URL like Archive.org p. 150 (Lemmatisation)
+
 
 % Organisation des chapitres et autres
 \usepackage{titlesec}
@@ -109,9 +109,9 @@
 \newcommand{\sectionbreak}{\clearpage}
 
 % Code et couleur de code
-%\definecolor{gray}{rgb}{0.4,0.4,0.4}
-%\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
-%\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
 
 \lstset{
   basicstyle=\ttfamily,
@@ -123,16 +123,16 @@
   postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}
 }
 
-%\lstdefinelanguage{XML}
-%{
-%  morestring=[b]",
-%  morestring=[s]{>}{<},
-%  morecomment=[s]{<?}{?>},
-%  stringstyle=\color{black},
-%  identifierstyle=\color{darkblue},
-%  keywordstyle=\color{cyan},
-%  morekeywords={xmlns,version,type}% list your attributes here
-%}
+\lstdefinelanguage{XML}
+{
+  morestring=[b]",
+  morestring=[s]{>}{<},
+  morecomment=[s]{<?}{?>},
+  stringstyle=\color{black},
+  identifierstyle=\color{darkblue},
+  keywordstyle=\color{cyan},
+  morekeywords={xmlns,version,type}% list your attributes here
+}
 
 \title{Détection d'isotopies par apprentissage profond: l'exemple de la sexualité en latin classique et tardif}
 \author{Thibault Clérice}
@@ -173,7 +173,7 @@
 %\include{conclu}
 
 
-%\include{annexe}
+\include{annexe}
 
 \printglossary
 
