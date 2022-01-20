@@ -68,6 +68,7 @@
 \usepackage[nottoc]{tocbibind}
 
 
+\addbibresource{bibliography/intro.bib}
 \addbibresource{bibliography/chap1/noise.bib}
 \addbibresource{bibliography/1-digital-classics.bib}
 \addbibresource{bibliography/1-introduction-dl.bib}
@@ -160,17 +161,17 @@
 \printglossary[type=\acronymtype,nonumberlist]
 
 % inclusion des chapitres
-%\include{introduction}
+\include{introduction}
 \include{chap1_corpus}
-%\include{chap2_deep-learning}
-%\include{chap3_lemmatisation}
-%\include{chap4_modele}
+\include{chap2_deep-learning}
+\include{chap3_lemmatisation}
+\include{chap4_modele}
 
 % Indiquer les annexes disponibles en ligne.
 % Description des fichiers
 % Déposer l'application aussi
 
-%\include{conclu}
+\include{conclu}
 
 
 \include{annexe}
