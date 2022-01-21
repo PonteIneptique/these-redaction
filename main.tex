@@ -141,25 +141,31 @@
 
 \begin{document}
 
+\pagenumbering{gobble}
 % le titre
 \maketitle
 
 
 % inclusion des chapitres
-%\include{dedicace}
-%\include{remerciements}
-
 % preparation des minitocs
 \dominitoc
 
+\include{dedicace}
+
+\pagenumbering{roman}
+\setcounter{page}{1}
+\include{remerciements}
+
 % table des matieres generale
+% pour faire apparaitre l'introduction dans le sommaire
+\addcontentsline{toc}{chapter}{Table des matières}
 \tableofcontents
 
 \include{glossaire2}
-\section*{Acronymes}
 \include{acro}
-\printglossary[type=\acronymtype,nonumberlist]
 
+\pagenumbering{arabic}
+\setcounter{page}{1}
 % inclusion des chapitres
 \include{introduction}
 \include{chap1_corpus}

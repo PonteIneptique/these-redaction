@@ -1,3 +1,10 @@
+\chapter*{Table des abréviations}
+% pour faire apparaitre l'introduction dans le sommaire
+\addcontentsline{toc}{chapter}{Table des abréviations}
+% Pour que l'entete soit correcte car chapter* ne redefinit pas l'entete.
+\markboth{Table des abréviations}{}
+\label{intro}
+
 
 % Institutions
 \newacronym{ehess}{EHES}{École des Hautes Études en Sciences Sociales}
@@ -34,3 +41,5 @@
 \newacronym{csv}{CSV}{Comma Separated Values}
 \newacronym{ohco}{OHCO}{Ordered Hierarchy of Content Object}
 \newacronym{CQL}{CQL}{Corpus Query Language}
+
+\printglossary[type=\acronymtype,nonumberlist,title={Acronymes}]
