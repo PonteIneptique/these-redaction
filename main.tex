@@ -150,41 +150,45 @@
 % preparation des minitocs
 \dominitoc
 
-\include{dedicace}
+\include{00_0_Dedi}
 
 \pagenumbering{roman}
 \setcounter{page}{1}
-\include{remerciements}
+\include{00_1_Remerciements}
 
 % table des matieres generale
 % pour faire apparaitre l'introduction dans le sommaire
 \addcontentsline{toc}{chapter}{Table des matières}
 \tableofcontents
 
+\include{00_2_Acronymes}
 \include{glossaire2}
-\include{acro}
 
 \pagenumbering{arabic}
 \setcounter{page}{1}
 % inclusion des chapitres
-\include{introduction}
-\include{chap1_corpus}
-\include{chap2_deep-learning}
-\include{chap3_lemmatisation}
-\include{chap4_modele}
+\include{00_Introduction}
+\include{01_Chap_corpus}
+\include{02_Chap_deep-learning}
+\include{03_Chap_lemmatisation}
+\include{04_Chap_isotopies}
 
 % Indiquer les annexes disponibles en ligne.
 % Description des fichiers
 % Déposer l'application aussi
 
-\include{conclu}
+\include{05_Conclusion}
 
 
-\include{annexe}
+\include{06_Annexe}
 
-\printglossary
+\printglossary{}
 
 % bibliographie
+\addcontentsline{toc}{chapter}{Bibliographie thématique}
+\printbibliography
+
+\addcontentsline{toc}{chapter}{Bibliographie alphabétique}
 \printbibliography
 
 \end{document}
