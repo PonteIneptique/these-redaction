@@ -34,7 +34,7 @@
 \usepackage[backend=biber,sorting=nyt,style=enc,block=ragged]{biblatex}
 
 % Figures
-\usepackage{caption}
+%\usepackage{caption}
 \usepackage{subcaption}
 \usepackage{graphicx}
 
@@ -68,17 +68,18 @@
 \usepackage[nottoc]{tocbibind}
 
 
-\addbibresource{bibliography/intro.bib}
-\addbibresource{bibliography/chap1/noise.bib}
-\addbibresource{bibliography/1-digital-classics.bib}
-\addbibresource{bibliography/1-introduction-dl.bib}
-\addbibresource{bibliography/1-lemmatisation.bib}
-\addbibresource{bibliography/TAL.bib}
-\addbibresource{bibliography/sources.bib}
-\addbibresource{bibliography/Corpora.bib}
-\addbibresource{bibliography/commentaires.bib}
-\addbibresource{bibliography/4-classification.bib}
-\addbibresource{bibliography/annexes.bib}
+\addbibresource{bibliography/biblio.main.bib}
+%\addbibresource{bibliography/intro.bib}
+%\addbibresource{bibliography/chap1/noise.bib}
+%\addbibresource{bibliography/1-digital-classics.bib}
+%\addbibresource{bibliography/1-introduction-dl.bib}
+%\addbibresource{bibliography/1-lemmatisation.bib}
+%\addbibresource{bibliography/TAL.bib}
+%\addbibresource{bibliography/sources.bib}
+%\addbibresource{bibliography/Corpora.bib}
+%\addbibresource{bibliography/commentaires.bib}
+%\addbibresource{bibliography/4-classification.bib}
+%\addbibresource{bibliography/annexes.bib}
 
 % Formattage
 \titleformat{\paragraph}{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
@@ -182,13 +183,55 @@
 
 \include{06_Annexe}
 
-\printglossary{}
+% \printglossary{}
 
 % bibliographie
+\begingroup
+\renewcommand{\cleardoublepage}{}
+\renewcommand{\clearpage}{}
 \addcontentsline{toc}{chapter}{Bibliographie thématique}
-\printbibliography
+\markboth{Bibliographie thématique}{}
+
+\printbibliography[heading=subbibintoc,keyword={Sources et archives},title={Sources et archives}]
+\printbibliography[heading=subbibintoc,keyword={Productions issues de la thèse},title={Productions issues de la thèse}]
+\printbibliography[heading=subbibintoc,keyword={Définitions},title={Définitions}]
+
+\printbibliography[heading=subbibintoc,keyword={Isotopie},title={Isotopie}]
+
+\printbibliography[heading=subbibintoc,keyword={Latin: Lexiques et lexicographie},title={Latin: Lexiques et lexicographie}]
+\defbibfilter{LatinHistLitt}{%
+    keyword={Latin: Histoire} or keyword={Latin: Littérature}
+}
+\printbibliography[heading=subbibintoc,filter=LatinHistLitt,title={Latin: Littérature et Histoire}]
+\printbibliography[heading=subbibintoc,keyword={Latin: Index et concordances},title={Latin: Index et concordances}]
+\printbibliography[heading=subbibintoc,keyword={Latin: Linguistique},title={Latin: Linguistique}]
+\printbibliography[heading=subbibintoc,keyword={Textes latins et traductions},title={Latin: textes et traductions}]
+
+\printbibliography[heading=subbibintoc,keyword={Sexualité: Lexique latin},title={Sexualité: Lexique latin}]
+\printbibliography[heading=subbibintoc,keyword={Sexualité: Histoire},title={Sexualité: Histoire}]
+
+\printbibliography[heading=subbibintoc,keyword={Lemmatisation et annotation morpho-syntaxique: Généralités},title={Lemmatisation et annotation morpho-syntaxique: Généralités}]
+\printbibliography[heading=subbibintoc,keyword={Lemmatisation et annotation morpho-syntaxique: Latin},title={Lemmatisation et annotation morpho-syntaxique: Latin}]
+
+\printbibliography[heading=subbibintoc,keyword={Corpus: Méthodes},title={Corpus: Méthodes}]
+\printbibliography[heading=subbibintoc,keyword={Corpus: Corpora},title={Corpus: Corpora}]
+\printbibliography[heading=subbibintoc,keyword={Corpus: Histoire},title={Corpus: Histoire}]
+\printbibliography[heading=subbibintoc,keyword={Corpus: OCR et HTR},title={Corpus: OCR et HTR}]
+
+\printbibliography[heading=subbibintoc,keyword={Histoire de l'informatique},title={Informatique: Histoire}]
+\printbibliography[heading=subbibintoc,keyword={Librairies et outils informatiques généraux},title={Informatique: Librairies et outils}]
+\printbibliography[heading=subbibintoc,keyword={Reproductibilité et ingénierie},title={Informatique: Reproductibilité et ingénierie}]
+
+\printbibliography[heading=subbibintoc,keyword={Traitement automatique des langues: Embeddings},title={Traitement automatique des langues: Embeddings}]
+\printbibliography[heading=subbibintoc,keyword={Traitement automatique des langues: Classification de textes},title={Traitement automatique des langues: Classification de textes}]
+\printbibliography[heading=subbibintoc,keyword={Traitement automatique des langues: Divers},title={Traitement automatique des langues: Divers}]
+
+\printbibliography[heading=subbibintoc,keyword={Apprentissage profond: architectures},title={Apprentissage profond: architectures}]
+\printbibliography[heading=subbibintoc,keyword={Apprentissage profond: entraînement et prédiction},title={Apprentissage profond: entraînement et prédiction}]
+\endgroup
 
 \addcontentsline{toc}{chapter}{Bibliographie alphabétique}
+\markboth{Bibliographie alphabétique}{}
 \printbibliography
 
 \end{document}
