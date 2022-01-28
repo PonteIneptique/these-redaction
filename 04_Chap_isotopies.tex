@@ -638,25 +638,20 @@ Les \textit{embeddings} traditionnels (\textit{Word2Vec, GloVe, FastText} entre 
 
 Le résultat est clair: \textit{Latin BERT} n'apporte pas de bénéfices importants en tant que complément d'information, voire enregistre des sous-performances face aux autres modèles (\textit{cf.} figure \ref{fig:chap4:bert-dispersion-fusion}). Le premier modèle mixte \texttt{HAN(Lemme)+BERT->Linéaire} se place en 36\textsuperscript{e} position du classement original avec un score F1 de 76,02\%, un rappel de 70,11\% et 83,01\% de précision, à 2 points du premier modèle n'utilisant pas BERT. La puissance de calcul demandée part BERT étant importante, si ses performances ne sont pas compétitives avec un modèle \enquote{traditionnel}, il n'y a pas d'intérêt à le conserver. Non affichée dans les résultats, une tentative de ré-entraînement de BERT pour le spécialiser (anglais \textit{fine tune}) sur le dataset bloquait les résultats sous la barre des 20\%, probablement à cause de la très petite taille des données\footnote{Un problème d'implémentation ne peut être exclu.}.
 
-\afterpage{%
-\begin{sidewaysfigure}
-    \begin{subfigure}{0.48\hsize}
-        \centering
-        \includegraphics[width=0.9\hsize]{figures/chap4/BertPoolingGeneric.png}
-        \caption{Dispersion des résultats en fonction des catégories de méthodes d'exploitation des encodages BERT: \textit{Pooling} contient les méthodes \texttt{MeanMax}, \texttt{Max}, \texttt{Mean} et l'usage du token \texttt{[CLS]}}
-        \label{fig:chap4:bert-pooling-generic-eval}
-    \end{subfigure}%
-    \hfill%
-    \begin{subfigure}{0.48\hsize}
-        \centering
-        \includegraphics[width=0.9\hsize]{figures/chap4/BertPoolingDetailed.png}
-        \caption{Dispersion des résultats en fonction de la méthode d'exploitation des encodages BERT et de la couche (entre parenthèse) utilisée (-1 étant la dernière couche, -2 l'avant-dernière). Les méthodes de ré-encodages sont les plus performantes, la couche utilisée ayant peu d'effet sur les résultats. Chaque architecture est entraînée 10 fois, avec une couche linéaire comme couche décisionnelle.}
-        \label{fig:chap4:bert-pooling-detailed-eval-fscore}
-    \end{subfigure}%
-    \caption{Étude des dispersions des résultats des modèles utilisant BERT dans leur architecture.}
-\end{sidewaysfigure}
-\clearpage
-}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[height=7cm]{figures/chap4/BertPoolingGeneric.png}
+    \caption{Dispersion des résultats en fonction des catégories de méthodes d'exploitation des encodages BERT: \textit{Pooling} contient les méthodes \texttt{MeanMax}, \texttt{Max}, \texttt{Mean} et l'usage du token \texttt{[CLS]}}
+    \label{fig:chap4:bert-pooling-generic-eval}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[height=7cm]{figures/chap4/BertPoolingDetailed.png}
+    \caption{Dispersion des résultats en fonction de la méthode d'exploitation des encodages BERT et de la couche (entre parenthèse) utilisée (-1 étant la dernière couche, -2 l'avant-dernière). Les méthodes de ré-encodages sont les plus performantes, la couche utilisée ayant peu d'effet sur les résultats. Chaque architecture est entraînée 10 fois, avec une couche linéaire comme couche décisionnelle.}
+    \label{fig:chap4:bert-pooling-detailed-eval-fscore}
+\end{figure}%
+
 Pour ce qui est des architectures reposant sur BERT, sans affinage, celles utilisant une couche d'encodage de type GRU ou HAN fournit des résultats plus convaincants (\textit{c.f.} figure \ref{fig:chap4:bert-pooling-generic-eval}). Les méthodes mentionnées plus tôt en \ref{part:chap4:architectures:variations-architectures:encodage} n'ont pas nécessairement amélioré les résultats face à un usage classique du token \texttt{[CLS]}, mais induisent cependant bien des variations. Là où le \textit{pooling} du token \texttt{[CLS]} est nécessairement dans les 4 plus mauvais modèles en score F1, précision et rappel, la sélection par la valeur maximum (\texttt{Max}) ou par concaténation de la valeur maximum et de la moyenne (\texttt{MeanMax}) sont régulièrement dans le top 4 des modèles à \textit{pooling}. Mais ces architectures n'en restent pas moins très très loin des modèles à ré-encodage, presque 20 points entre les médianes de score F1 des deux catégories d'usage de BERT, avec un maximum pour le \textit{pooling} qui touche à peine le bas de la moustache inférieure des méthodes GRU et HAN.
 
 En général, les encodages des projections BERT par HAN et GRU, potentiellement suivis d'une couche linéaire enrichie, touchent les résultats en Score F1 du meilleur modèle sans métadonnées. L'enrichissement par métadonnées influence clairement les résultats de plusieurs points et inverse même l'intérêt des modèles (HAN est meilleur que GRU sans métadonnées, mais cède sa place de premier avec). GRU montre de très bons résultats dans son premier quartile, à égalité avec les modèles enrichis. Bien que les scores soient largement meilleurs comparés aux modèles \texttt{[CLS]} présentés plus haut, ils restent au niveau d'architectures plus traditionnelles, pour un coût plus élevé en entraînement et calcul d'inférence.

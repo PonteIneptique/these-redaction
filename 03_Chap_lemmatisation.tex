@@ -807,7 +807,7 @@ On pourrait penser qu'un alignement d'un modèle à l'autre est une tâche simpl
 
 La morphologie nécessite par ailleurs un alignement via la suppression du genre pour les formes qui ne sont ni des adjectifs, ni des pronoms, ni des participes. Ensuite, les genres sont alignés via la déclinaison dont relèvent les adjectifs ou les formes. La morphologie est aussi complétée: les indéclinables ne sont pas analysés ainsi par Proiel (mais plutôt comme des absences de morphologie), ce qui nécessite un réalignement. On finit par normaliser l'orthographe des formes et lemmes pour les couples U/V et J/I puis une première conversion est faite. Si cette étape est itérative, l'objectif reste de réduire au maximum les lemmes à corriger manuellement. Enfin, sur les derniers lemmes, plusieurs centaines, on aligne à la main avec le référentiel du LASLA et on crée des entrées quand le lemme est absent, ce qui est souvent le cas pour les noms propres. Cette dernière catégorie est très importante et démontra une nouvelle difficulté pour l'apprentissage, avec des cas d'hapax comme cette généalogie de \textit{Luc}, 3.23:
 
-\begin{quote}
+\begin{quote}{\textit{Luc}, 3.23}
 \enquote{\textit{Et ipse Jesus erat incipiens quasi annorum triginta, ut putabatur, filius Joseph, qui  \\fuit Heli, qui fuit Mathat, \\
 qui fuit Levi, qui fuit Melchi, qui fuit Janne, qui fuit Joseph, \\
 qui fuit Mathathiæ, qui fuit Amos, qui fuit Nahum, qui fuit Hesli, qui fuit Nagge, \\
@@ -837,7 +837,7 @@ Personne        & 99,77  & 99,12  & 98,2   & 99,83     & 99,25     & 98,64     &
 Lemme           & 97,32  & 84,41  & 84,09  & 97,72     & 90,53     & 90,52     & 89,23      & 76,31      & 75,96     & 92,56      & 69,62     & 70,3  \\ \bottomrule   
 \end{tabular}%
 }
-\caption{Résultats du modèle LASLA+. Acc=\textit{Accuracy}, Pre=\textit{Précision},Rec=\textit{Recall}.}
+\caption{Résultats du modèle LASLA+. Acc=\textit{Accuracy}, Pre=\textit{Précision}, Rec=\textit{Recall}.}
 \label{tab:laslaplus}
 \end{table}
 
